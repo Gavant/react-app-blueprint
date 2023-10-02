@@ -13,6 +13,7 @@ const ErrorBox = styled(Box)`
     margin-top: -4rem;
 `;
 
+// TODO componentize into ErrorBox
 const AnimatedErrorBox = animated(ErrorBox);
 
 const GridLeft = styled(Grid)`
@@ -31,6 +32,7 @@ function LoginView() {
         },
     });
 
+    // TODO i believe there's a way to fix this with spring configs w/o extraneous useEffects...
     useEffect(() => {
         // Loading delay to help with react spring pop-in
         setTimeout(() => {
