@@ -1,0 +1,11 @@
+{
+  "tags": ["features"],
+  "exports": [{
+    "modules": "**/public/*",
+    "accessibleTo": ["index", "mainRoutes"]
+  },{
+    "modules": "**/public/**/*",
+    "accessibleTo": ["index", "mainRoutes"]
+  }],
+  "imports": ["core", "assets"]
+}

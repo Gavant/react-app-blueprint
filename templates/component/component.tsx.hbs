@@ -1,0 +1,20 @@
+interface {{pascalCase name}}Props {}
+{{#if styledComponents}}
+import styled from 'styled-components';
+
+const {{pascalCase name}}Root = styled.div``
+{{/if}}
+
+function {{pascalCase name}}(props:{{pascalCase name}}Props) {
+  return (
+    {{#if styledComponents}}
+    <{{pascalCase name}}Root>
+      {{pascalCase name}}
+    </{{pascalCase name}}Root>
+    {{else}}
+    <>{{pascalCase name}}</>
+    {{/if}}
+  );
+};
+
+export default {{pascalCase name}};

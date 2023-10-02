@@ -1,0 +1,5 @@
+{
+  "_comment": "The imports rule is critical here. Its responsible for fencing off features.",
+  "tags": ["core"],
+  "imports": ["assets"]
+}
