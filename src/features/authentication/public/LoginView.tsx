@@ -1,16 +1,42 @@
 import { Alert, Box, Container, Grid, Link, TextField } from '@mui/material';
 import { animated, config, useTransition } from 'react-spring';
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 
 import SubmitButton from '~/core/components/SubmitButton';
 import ToastBar from '~/core/components/ToastBar';
 import FadeElementInDown from '~/core/components/animation/FadeInDown';
 import useLoginForm from '~/features/authentication/public/hooks/useLoginForm';
 
-const AnimatedErrorBox = animated(Box);
+const RootCss = createGlobalStyle`
+    html, body, #root {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+`;
+
+const Root = styled(Container)`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+`;
+
+const AnimatedErrorBox = animated(styled(Box)`
+    margin-top: -3rem;
+`);
 
 const GridLeft = styled(Grid)`
     text-align: left;
+`;
+
+const FormBox = styled(Box)`
+    display: flex;
+    flex-direction: column;
+    margin-top: 3rem;
+    width: 20rem;
 `;
 
 function LoginView() {
@@ -25,17 +51,11 @@ function LoginView() {
 
     return (
         <>
-            <Container component="main" maxWidth="xs">
+            <RootCss />
+            <Root component="main" maxWidth="xs">
                 {/* TODO center form vertically and horizontally */}
                 <FadeElementInDown offset={4}>
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            mt: 6,
-                            width: '20rem',
-                        }}
-                    >
+                    <FormBox>
                         {transition(
                             (style, item) =>
                                 item && (
@@ -86,9 +106,9 @@ function LoginView() {
                                 </Grid>
                             </Grid>
                         </Box>
-                    </Box>
+                    </FormBox>
                 </FadeElementInDown>
-            </Container>
+            </Root>
             <ToastBar />
         </>
     );
