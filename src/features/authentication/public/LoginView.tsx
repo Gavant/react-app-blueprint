@@ -1,62 +1,50 @@
 import { Alert, Box, Container, Grid, Link, TextField } from '@mui/material';
-import { useEffect, useState } from 'react';
-import { animated, config, useSpring } from 'react-spring';
+import { animated, config, useTransition } from 'react-spring';
 import styled from 'styled-components';
 
-import AsyncButton from '~/core/components/AsyncButton';
+import SubmitButton from '~/core/components/SubmitButton';
 import ToastBar from '~/core/components/ToastBar';
 import FadeElementInDown from '~/core/components/animation/FadeInDown';
 import useLoginForm from '~/features/authentication/public/hooks/useLoginForm';
 
-const ErrorBox = styled(Box)`
-    min-height: 4rem;
-    margin-top: -4rem;
-`;
-
-// TODO componentize into ErrorBox
-const AnimatedErrorBox = animated(ErrorBox);
+const AnimatedErrorBox = animated(Box);
 
 const GridLeft = styled(Grid)`
     text-align: left;
 `;
 
 function LoginView() {
-    const { errors, errorText, hasError, invalid, isDirty, onFormSubmit, register } = useLoginForm();
-    const [loaded, setLoaded] = useState(false);
+    const { errorMsg, errors, hasError, onSubmit, register } = useLoginForm();
 
-    const fadeInOut = useSpring({
+    const transition = useTransition(hasError, {
         config: { ...config.stiff },
-        from: { opacity: hasError() ? 0 : 1 },
-        to: {
-            opacity: hasError() ? 1 : 0,
-        },
+        enter: { opacity: 1 },
+        from: { opacity: 0 },
+        leave: { opacity: 0 },
     });
-
-    // TODO i believe there's a way to fix this with spring configs w/o extraneous useEffects...
-    useEffect(() => {
-        // Loading delay to help with react spring pop-in
-        setTimeout(() => {
-            setLoaded(true);
-        }, 250);
-    }, []);
 
     return (
         <>
             <Container component="main" maxWidth="xs">
+                {/* TODO center form vertically and horizontally */}
                 <FadeElementInDown offset={4}>
                     <Box
                         sx={{
                             display: 'flex',
                             flexDirection: 'column',
-                            width: '23rem',
+                            mt: 6,
+                            width: '20rem',
                         }}
                     >
-                        {loaded && (
-                            <AnimatedErrorBox style={fadeInOut}>
-                                <Alert severity="error" variant="filled">
-                                    {errorText(invalid, isDirty, errors)}
-                                </Alert>
-                            </AnimatedErrorBox>
+                        {transition(
+                            (style, item) =>
+                                item && (
+                                    <AnimatedErrorBox style={style} sx={{ mt: -6 }}>
+                                        <Alert severity="error" variant="filled">
+                                            {errorMsg}
+                                        </Alert>
+                                    </AnimatedErrorBox>
+                                )
                         )}
                         <Box component="form" noValidate>
                             <Box sx={{ mt: 2 }}>
@@ -81,9 +69,9 @@ function LoginView() {
                             </Box>
                             <Box sx={{ my: 2 }}>
                                 {/* TODO why is fullWidth not allowed here? */}
-                                <AsyncButton fullWidth onClick={onFormSubmit} size="large" type="submit" variant="contained">
+                                <SubmitButton fullWidth onClick={onSubmit} size="large" type="submit" variant="contained">
                                     Sign In
-                                </AsyncButton>
+                                </SubmitButton>
                             </Box>
                             <Grid container justifyContent="flex-start">
                                 <GridLeft item xs>

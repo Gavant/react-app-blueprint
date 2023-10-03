@@ -5,7 +5,7 @@ import { animated, useSpring } from 'react-spring';
 const wobbleVolume = 5;
 const AnimatedButton = animated(Button);
 
-interface AsyncButtonProps extends ExtendButtonBase<ButtonTypeMap<{}, 'button'>> {
+interface SubmitButtonProps extends ExtendButtonBase<ButtonTypeMap<{}, 'button'>> {
     disableErrorState?: boolean;
     disableSuccessState?: boolean; // TODO
     iconSize?: number;
@@ -13,7 +13,7 @@ interface AsyncButtonProps extends ExtendButtonBase<ButtonTypeMap<{}, 'button'>>
     onClick?: (event: MouseEvent<HTMLButtonElement, Event>) => Promise<unknown>;
 }
 
-export default function AsyncButton({
+export default function SubmitButton({
     children,
     disableErrorState,
     disableSuccessState,
@@ -21,7 +21,7 @@ export default function AsyncButton({
     isLoading,
     onClick,
     ...rest
-}: PropsWithChildren<AsyncButtonProps>) {
+}: PropsWithChildren<SubmitButtonProps>) {
     // TODO default the size based on the Button.size prop
     const progressSize = iconSize ?? 26;
 

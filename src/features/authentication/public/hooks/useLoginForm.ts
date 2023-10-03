@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useState } from 'react';
-import { FormState, SubmitHandler, useForm } from 'react-hook-form';
+import { useMemo, useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
-import { isOk } from 'true-myth/result';
+import Result, { isOk } from 'true-myth/result';
 
 import useAuth from '~/features/authentication/public/hooks/useAuth';
 
@@ -10,75 +10,73 @@ interface LoginForm {
     username: string;
 }
 
-interface LoginFormDirtyAttrs {
-    invalid: boolean;
-    password: boolean;
-    username: boolean;
-}
-
 export default function useLoginForm() {
-    const [invalid, setInvalid] = useState(false);
-    const [isDirty, setIsDirty] = useState<LoginFormDirtyAttrs>({ invalid: false, password: false, username: false });
     const { authenticate } = useAuth();
     const navigate = useNavigate();
-
-    const errorText = (invalid: boolean, isDirty: LoginFormDirtyAttrs, formErrors: FormState<LoginForm>['errors']) => {
-        if (invalid && !isDirty.invalid) {
-            return 'Invalid username or password';
-        }
-
-        if (formErrors.password?.type && formErrors.username?.type) {
-            return 'Username and password are required';
-        }
-
-        return formErrors.password?.type ? 'Password is required' : 'Username is required';
-    };
+    const [submitErrors, setSubmitErrors] = useState<null | Result<boolean, { reason: string }>>(null);
 
     const {
-        formState: { errors },
+        formState: { dirtyFields, errors, isDirty, isSubmitted, isValid },
         handleSubmit,
         register,
-        watch,
-    } = useForm<LoginForm>();
+    } = useForm<LoginForm>({
+        defaultValues: { password: '', username: '' },
+    });
 
-    const hasError = useCallback(() => {
-        return (invalid && !isDirty.invalid) || Boolean(errors.password?.type || errors.username?.type);
-    }, [invalid, isDirty, errors.password?.type, errors.username?.type]);
+    const errorMsg = useMemo(() => {
+        if (isSubmitted && !isValid) {
+            if (errors.password?.type && errors.username?.type) {
+                return 'Username and password are required';
+            }
 
-    const onSubmit: SubmitHandler<LoginForm> = async (data: LoginForm, event) => {
+            if (errors.password?.type) {
+                return 'Password is required';
+            }
+
+            if (errors.username?.type) {
+                return 'Username is required';
+            }
+        }
+
+        if (isSubmitted && isValid && submitErrors) {
+            return 'Invalid username or password';
+        }
+    }, [isValid, isSubmitted, errors.password, errors.username, submitErrors]);
+
+    const hasError = !!errorMsg;
+
+    const onValidSubmit: SubmitHandler<LoginForm> = async (data: LoginForm, event) => {
         const { password, username } = data;
 
         event?.preventDefault();
-        setIsDirty({ invalid: false, password: false, username: false });
+        setSubmitErrors(null);
 
         const result = await authenticate.signIn(username, password);
 
         if (isOk(result)) {
             navigate('/');
         } else {
-            setInvalid(true);
+            setSubmitErrors(result);
+            // forces the SubmitButton failure/shake state
             throw result;
         }
     };
 
-    const onFormSubmit = handleSubmit(onSubmit);
-
-    useEffect(() => {
-        const subscription = watch((_, { name }) => {
-            if (name) {
-                !isDirty[name] && setIsDirty({ ...isDirty, invalid: true, [name]: true });
-            }
-        });
-        return () => subscription.unsubscribe();
-    }, [watch]);
+    // TODO we need to "shake" the SubmitButton when the form is isSubmitted but not isValid
+    // adding an "invalid submit handler" as the 2nd arg here doesn't work, as throw'ing the
+    // errors to reject the promise causes the form state to get mucked up.
+    const onSubmit = handleSubmit(onValidSubmit);
 
     return {
+        dirtyFields,
+        errorMsg,
         errors,
-        errorText,
         hasError,
-        invalid,
         isDirty,
-        onFormSubmit,
+        isSubmitted,
+        isValid,
+        onSubmit,
         register,
+        submitErrors,
     };
 }
