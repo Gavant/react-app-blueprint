@@ -5,7 +5,7 @@ const APP_NAME_TOKEN = '{{APP_NAME}}';
 const APP_NAME = path.basename(process.cwd());
 
 // replace occurrences of app name token
-console.log(`Setting app name as ${APP_NAME}...`);
+console.log(`Setting app name as "${APP_NAME}"...`);
 cp.execSync(`LC_ALL=C find . -type f ! -name "initproject.js" -exec sed -i '' s/${APP_NAME_TOKEN}/${APP_NAME}/g {} +`);
 // TODO use template to replace README.md contents w/app-specific info
 // install deps
