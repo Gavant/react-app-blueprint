@@ -14,3 +14,4 @@ cp.execSync('yarn install');
 // initialize git repo
 console.log(`Initializing new git repo...`);
 cp.execSync('git init');
+console.log("🍻 Your brand spankin' new React app is ready!");
