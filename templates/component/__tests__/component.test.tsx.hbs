@@ -1,0 +1,24 @@
+import type React from 'react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import '@testing-library/jest-dom';
+import { describe, expect, it, vi } from 'vitest';
+
+import {{pascalCase name}} from '~/{{path}}/{{camelCase name}}';
+
+vi.mock('react-router-dom', () => ({
+    Link: ({ to, children }: { to: string; children: React.ReactElement }) => (
+        <>
+            <div data-testid="link-element">{children}</div>
+            <div data-testid="link-destination">{to}</div>
+        </>
+    ),
+}));
+
+describe('{{pascalCase name}}', async () => {
+    it('Should render', async () => {
+        render(<{{ pascalCase name }} />);
+        expect(screen.getByText('{{pascalCase name}}')).toBeInTheDocument();
+        expect(screen.getByText('{{pascalCase name}}')).toBeVisible();
+    });
+});

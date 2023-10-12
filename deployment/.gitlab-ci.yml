@@ -1,0 +1,28 @@
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
+  script:
+    - docker build -t {{APP_NAME}}-build .
+    - docker run -u $(id -u ${USER}):$(id -g ${USER}) -v $(pwd):/output -d --rm -t {{APP_NAME}}-build
+    - sleep 5
+    - docker rmi {{APP_NAME}}-build
+  artifacts:
+    name: "dist-artifacts-$SvcName-$CI_PIPELINE_ID"
+    paths:
+      - dist
+
+ondemand:
+  when: manual
+  stage: deploy
+  script:
+    - bash -x deployment/utilities.sh SetAwsProfile
+    - aws s3 sync /dist s3://$S3_BUCKET
+  artifacts:
+      name: "dist-artifacts-$SvcName-$CI_PIPELINE_ID"
+      paths:
+        - dist
+  only:
+    - master
