@@ -13,7 +13,7 @@ const Img = styled.img<{ $invert?: boolean }>`
         `invert(${$invert ? Number(theme.palette.mode === 'light') : Number(theme.palette.mode !== 'light')})`};
 `;
 
-interface LocalIconProps {
+export interface LocalIconProps {
     className?: string;
     invert?: boolean;
     src: string;

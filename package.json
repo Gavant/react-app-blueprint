@@ -4,7 +4,10 @@
     "version": "0.0.0",
     "type": "module",
     "scripts": {
-        "init:project": "node ./initproject.js"
+        "init:project": "node ./initproject.js",
+        "dev": "yarn workspace app dev",
+        "build": "yarn workspace app build",
+        "docs": "yarn workspace docs start"
     },
     "devDependencies": {
         "prettier": "3.0.2"
@@ -15,6 +18,7 @@
     },
     "workspaces": [
         "app",
-        "deployment"
+        "deployment",
+        "docs"
     ]
 }
