@@ -4,7 +4,7 @@ import { ReactNode } from 'react';
 
 type setToast = (message: string, { key, open }?: { key?: string; open?: boolean }) => void;
 
-interface ToastContextValue {
+export interface ToastContextValue {
     setToast: ({ key, msg, open, severity }: { key: string; msg: string; open: boolean; severity: AlertColor }) => void;
     toast: {
         error: setToast;

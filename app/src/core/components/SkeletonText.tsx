@@ -5,7 +5,7 @@ import { CSSProperties, TypographyStyle, Variant } from '@mui/material/styles/cr
 import { SxProps } from '@mui/system';
 import { OverridableStringUnion } from '@mui/types';
 
-interface SkeletonTextProps {
+export interface SkeletonTextProps {
     className?: string;
     skeletonFontSize?: TypographyStyle;
     sx?: SxProps<Theme>;

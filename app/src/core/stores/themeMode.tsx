@@ -9,7 +9,7 @@ import { getLocalStorageEnvironmentVariable } from '~/core/utils/localStorage';
 
 export const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 
-interface ProviderToggleProps {
+export interface ProviderToggleProps {
     children: ReactElement | ReactNode;
 }
 
