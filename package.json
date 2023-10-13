@@ -3,9 +3,6 @@
     "private": true,
     "version": "0.0.0",
     "type": "module",
-    "scripts": {
-        "init:project": "node ./initproject.js"
-    },
     "devDependencies": {
         "prettier": "3.0.2"
     },
