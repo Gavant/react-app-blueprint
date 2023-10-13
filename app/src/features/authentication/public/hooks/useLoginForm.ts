@@ -2,10 +2,9 @@ import { useMemo, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import Result, { isOk } from 'true-myth/result';
-
 import useAuth from '~/features/authentication/public/hooks/useAuth';
 
-interface LoginForm {
+export interface LoginForm {
     password: string;
     username: string;
 }

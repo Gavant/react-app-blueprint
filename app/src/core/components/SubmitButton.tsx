@@ -5,7 +5,7 @@ import { animated, useSpring } from 'react-spring';
 const wobbleVolume = 5;
 const AnimatedButton = animated(Button);
 
-interface SubmitButtonProps extends ExtendButtonBase<ButtonTypeMap<{}, 'button'>> {
+export interface SubmitButtonProps extends ExtendButtonBase<ButtonTypeMap<{}, 'button'>> {
     disableErrorState?: boolean;
     disableSuccessState?: boolean; // TODO
     iconSize?: number;
