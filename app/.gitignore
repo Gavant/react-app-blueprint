@@ -8,6 +8,8 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
+dist
+dist-ssr
 *.local
 .yarn
 .pnp.*
@@ -33,3 +35,8 @@ node_modules
 # Env
 .env
 .env.*
+
+schema.graphql
+/schema/*
+/src/core/types/generated/*
+/**/*.generated.*
