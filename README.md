@@ -11,4 +11,4 @@ TODO - how to develop, test, and build the app
 ## App Blueprint
 
 TODO - how to develop and contribute to the blueprint itself
-TODO - delete this section cloned apps
+TODO - delete this section when its cloned in real apps
