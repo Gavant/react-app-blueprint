@@ -14,7 +14,12 @@ function ToastBar() {
             autoHideDuration={3000}
             disableWindowBlurListener
             key={toastMsg?.key}
-            onClose={() => setToast({ ...(toastMsg ?? { key: '', msg: '', severity: 'info' }), open: false })}
+            onClose={() =>
+                setToast({
+                    ...(toastMsg ?? { key: '', msg: '', severity: 'info' }),
+                    open: false,
+                })
+            }
             open={toastMsg?.open}
             TransitionComponent={Slide}
         >

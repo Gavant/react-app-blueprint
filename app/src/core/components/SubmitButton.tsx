@@ -1,16 +1,21 @@
-import { Button, ButtonTypeMap, CircularProgress, ExtendButtonBase } from '@mui/material';
+import type { ButtonTypeMap } from '@mui/material';
+import LoadingButton from '@mui/lab/LoadingButton';
 import { MouseEvent, PropsWithChildren } from 'react';
 import { animated, useSpring } from 'react-spring';
 
-const wobbleVolume = 5;
-const AnimatedButton = animated(Button);
+import Result, { isOk, isErr } from 'true-myth/result';
 
-export interface SubmitButtonProps extends ExtendButtonBase<ButtonTypeMap<{}, 'button'>> {
+const wobbleVolume = 5;
+const AnimatedButton = animated(LoadingButton);
+
+type MuiButtonProps = ButtonTypeMap['props'];
+export interface SubmitButtonProps extends MuiButtonProps {
     disableErrorState?: boolean;
     disableSuccessState?: boolean; // TODO
     iconSize?: number;
     isLoading?: boolean;
-    onClick?: (event: MouseEvent<HTMLButtonElement, Event>) => Promise<unknown>;
+    onClick?: (event: MouseEvent<HTMLButtonElement, Event>) => Promise<Result<any, any>>;
+    type: 'submit';
 }
 
 export default function SubmitButton({
@@ -22,9 +27,6 @@ export default function SubmitButton({
     onClick,
     ...rest
 }: PropsWithChildren<SubmitButtonProps>) {
-    // TODO default the size based on the Button.size prop
-    const progressSize = iconSize ?? 26;
-
     const [shakeProps, shakeApi] = useSpring(() => ({
         from: { x: 0 },
     }));
@@ -39,23 +41,26 @@ export default function SubmitButton({
 
     const handleClick = async (event: MouseEvent<HTMLButtonElement, Event>) => {
         if (onClick) {
-            try {
-                await onClick(event);
+            const result = await onClick(event);
 
-                if (!disableSuccessState) {
-                    console.log('TODO show success icon/animation');
-                }
-            } catch (error) {
-                if (!disableErrorState) {
-                    triggerShake();
-                }
+            if (isOk(result) && !disableSuccessState) {
+                console.log('TODO show success icon/animation');
+            } else if (isErr(result) && !disableErrorState) {
+                triggerShake();
             }
         }
     };
 
     return (
-        <AnimatedButton disabled={isLoading} onClick={handleClick} style={{ ...shakeProps }} {...rest}>
-            {isLoading ? <CircularProgress size={progressSize} /> : children}
+        <AnimatedButton
+            disabled={isLoading}
+            onClick={handleClick}
+            loading={isLoading}
+            variant="outlined"
+            style={{ ...shakeProps }}
+            {...rest}
+        >
+            {children}
         </AnimatedButton>
     );
 }

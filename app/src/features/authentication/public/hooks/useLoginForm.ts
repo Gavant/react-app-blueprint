@@ -13,9 +13,10 @@ export default function useLoginForm() {
     const { authenticate } = useAuth();
     const navigate = useNavigate();
     const [submitErrors, setSubmitErrors] = useState<null | Result<boolean, { reason: string }>>(null);
+    const [submitResult, setSubmitResult] = useState<null | Result<boolean, { reason: string }>>(null);
 
     const {
-        formState: { dirtyFields, errors, isDirty, isSubmitted, isValid },
+        formState: { dirtyFields, errors, isDirty, isSubmitted, isValid, isSubmitting, isSubmitSuccessful },
         handleSubmit,
         register,
     } = useForm<LoginForm>({
@@ -49,22 +50,22 @@ export default function useLoginForm() {
 
         event?.preventDefault();
         setSubmitErrors(null);
-
         const result = await authenticate.signIn(username, password);
-
+        setSubmitResult(result);
         if (isOk(result)) {
             navigate('/');
         } else {
             setSubmitErrors(result);
             // forces the SubmitButton failure/shake state
-            throw result;
+            // throw result;
         }
+        return result;
     };
 
-    // TODO we need to "shake" the SubmitButton when the form is isSubmitted but not isValid
-    // adding an "invalid submit handler" as the 2nd arg here doesn't work, as throw'ing the
-    // errors to reject the promise causes the form state to get mucked up.
-    const onSubmit = handleSubmit(onValidSubmit);
+    const onSubmit = async () => {
+        await handleSubmit(onValidSubmit);
+        return submitResult;
+    };
 
     return {
         dirtyFields,
@@ -73,9 +74,11 @@ export default function useLoginForm() {
         hasError,
         isDirty,
         isSubmitted,
+        isSubmitSuccessful,
         isValid,
         onSubmit,
         register,
         submitErrors,
+        isSubmitting,
     };
 }

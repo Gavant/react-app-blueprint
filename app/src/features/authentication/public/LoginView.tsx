@@ -40,8 +40,10 @@ const FormBox = styled(Box)`
 `;
 
 function LoginView() {
-    const { errorMsg, errors, hasError, onSubmit, register } = useLoginForm();
-
+    const { errorMsg, errors, hasError, onSubmit, register, isSubmitting } = useLoginForm();
+    // const onSubmitFunction = () => {
+    //     return onSubmit();
+    // }
     const transition = useTransition(hasError, {
         config: { ...config.stiff },
         enter: { opacity: 1 },
@@ -88,8 +90,7 @@ function LoginView() {
                                 />
                             </Box>
                             <Box sx={{ my: 2 }}>
-                                {/* TODO why is fullWidth not allowed here? */}
-                                <SubmitButton fullWidth onClick={onSubmit} size="large" type="submit" variant="contained">
+                                <SubmitButton fullWidth isLoading={isSubmitting} onClick={onSubmit} size="large" type="submit" variant="contained">
                                     Sign In
                                 </SubmitButton>
                             </Box>
