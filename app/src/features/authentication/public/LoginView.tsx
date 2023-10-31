@@ -40,10 +40,8 @@ const FormBox = styled(Box)`
 `;
 
 function LoginView() {
-    const { errorMsg, errors, hasError, onSubmit, register, isSubmitting } = useLoginForm();
-    // const onSubmitFunction = () => {
-    //     return onSubmit();
-    // }
+    const { errorMsg, errors, hasError, onSubmit, register } = useLoginForm();
+
     const transition = useTransition(hasError, {
         config: { ...config.stiff },
         enter: { opacity: 1 },
@@ -90,7 +88,7 @@ function LoginView() {
                                 />
                             </Box>
                             <Box sx={{ my: 2 }}>
-                                <SubmitButton fullWidth isLoading={isSubmitting} onClick={onSubmit} size="large" type="submit" variant="contained">
+                                <SubmitButton fullWidth onClick={onSubmit} size="large" type="submit" variant="contained">
                                     Sign In
                                 </SubmitButton>
                             </Box>

@@ -1,6 +1,6 @@
 import type { ButtonTypeMap } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { MouseEvent, PropsWithChildren } from 'react';
+import { MouseEvent, PropsWithChildren, useState } from 'react';
 import { animated, useSpring } from 'react-spring';
 
 import Result, { isOk, isErr } from 'true-myth/result';
@@ -13,7 +13,6 @@ export interface SubmitButtonProps extends MuiButtonProps {
     disableErrorState?: boolean;
     disableSuccessState?: boolean; // TODO
     iconSize?: number;
-    isLoading?: boolean;
     onClick?: (event: MouseEvent<HTMLButtonElement, Event>) => Promise<Result<any, any>>;
     type: 'submit';
 }
@@ -23,10 +22,10 @@ export default function SubmitButton({
     disableErrorState,
     disableSuccessState,
     iconSize,
-    isLoading,
     onClick,
     ...rest
 }: PropsWithChildren<SubmitButtonProps>) {
+    const [isLoading, setIsLoading] = useState(false);
     const [shakeProps, shakeApi] = useSpring(() => ({
         from: { x: 0 },
     }));
@@ -41,6 +40,7 @@ export default function SubmitButton({
 
     const handleClick = async (event: MouseEvent<HTMLButtonElement, Event>) => {
         if (onClick) {
+            setIsLoading(true);
             const result = await onClick(event);
 
             if (isOk(result) && !disableSuccessState) {
@@ -48,6 +48,7 @@ export default function SubmitButton({
             } else if (isErr(result) && !disableErrorState) {
                 triggerShake();
             }
+            setIsLoading(false);
         }
     };
 

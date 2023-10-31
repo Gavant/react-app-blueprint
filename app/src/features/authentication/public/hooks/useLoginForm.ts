@@ -1,7 +1,7 @@
-import { useMemo, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { BaseSyntheticEvent, useCallback, useMemo, useState, useTransition } from 'react';
+import { SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
-import Result, { isOk } from 'true-myth/result';
+import Result, { err, isOk } from 'true-myth/result';
 import useAuth from '~/features/authentication/public/hooks/useAuth';
 
 export interface LoginForm {
@@ -13,37 +13,15 @@ export default function useLoginForm() {
     const { authenticate } = useAuth();
     const navigate = useNavigate();
     const [submitErrors, setSubmitErrors] = useState<null | Result<boolean, { reason: string }>>(null);
-    const [submitResult, setSubmitResult] = useState<null | Result<boolean, { reason: string }>>(null);
 
     const {
         formState: { dirtyFields, errors, isDirty, isSubmitted, isValid, isSubmitting, isSubmitSuccessful },
-        handleSubmit,
+        getValues,
         register,
+        trigger,
     } = useForm<LoginForm>({
         defaultValues: { password: '', username: '' },
     });
-
-    const errorMsg = useMemo(() => {
-        if (isSubmitted && !isValid) {
-            if (errors.password?.type && errors.username?.type) {
-                return 'Username and password are required';
-            }
-
-            if (errors.password?.type) {
-                return 'Password is required';
-            }
-
-            if (errors.username?.type) {
-                return 'Username is required';
-            }
-        }
-
-        if (isSubmitted && isValid && submitErrors) {
-            return 'Invalid username or password';
-        }
-    }, [isValid, isSubmitted, errors.password, errors.username, submitErrors]);
-
-    const hasError = !!errorMsg;
 
     const onValidSubmit: SubmitHandler<LoginForm> = async (data: LoginForm, event) => {
         const { password, username } = data;
@@ -51,27 +29,48 @@ export default function useLoginForm() {
         event?.preventDefault();
         setSubmitErrors(null);
         const result = await authenticate.signIn(username, password);
-        setSubmitResult(result);
         if (isOk(result)) {
             navigate('/');
         } else {
             setSubmitErrors(result);
-            // forces the SubmitButton failure/shake state
-            // throw result;
         }
         return result;
     };
 
-    const onSubmit = async () => {
-        await handleSubmit(onValidSubmit);
-        return submitResult;
+    const onInvalidSubmit: SubmitErrorHandler<LoginForm> = async (errors: Object, event) => {
+        event?.preventDefault();
+        let error = '';
+        if (isSubmitted && !isValid) {
+            if (errors.password?.type && errors.username?.type) {
+                error = 'Username and password are required';
+            }
+
+            if (errors.password?.type) {
+                error = 'Password is required';
+            }
+
+            if (errors.username?.type) {
+                error = 'Username is required';
+            }
+        }
+
+        if (isSubmitted && isValid && submitErrors) {
+            error = 'Invalid username or password';
+        }
+        const errorResult = err({ reason: error });
+        return errorResult;
+    };
+
+    const onSubmit = async (event: BaseSyntheticEvent<object, any, any>) => {
+        trigger();
+        if (!isValid) return onInvalidSubmit(errors, event);
+        const result = await onValidSubmit(getValues(), event);
+        return result;
     };
 
     return {
         dirtyFields,
-        errorMsg,
         errors,
-        hasError,
         isDirty,
         isSubmitted,
         isSubmitSuccessful,
