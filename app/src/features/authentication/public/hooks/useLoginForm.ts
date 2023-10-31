@@ -54,7 +54,6 @@ export default function useLoginForm() {
             if (isSubmitted && isValid && submitErrors) {
                 error = 'Invalid username or password';
             }
-            console.log('error', error);
             return error;
         },
         [errors, isSubmitted, isValid, submitErrors]
