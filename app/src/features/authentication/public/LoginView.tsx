@@ -1,12 +1,10 @@
-import { Alert, Box, Container, Grid, Link, TextField } from '@mui/material';
-import { animated, config, useTransition } from 'react-spring';
+import { Box, Container, Grid, Link, TextField } from '@mui/material';
 import styled, { createGlobalStyle } from 'styled-components';
 
 import SubmitButton from '~/core/components/SubmitButton';
 import ToastBar from '~/core/components/ToastBar';
 import FadeElementInDown from '~/core/components/animation/FadeInDown';
 import useLoginForm from '~/features/authentication/public/hooks/useLoginForm';
-
 const RootCss = createGlobalStyle`
     html, body, #root {
         width: 100%;
@@ -24,10 +22,6 @@ const Root = styled(Container)`
     height: 100%;
 `;
 
-const AnimatedErrorBox = animated(styled(Box)`
-    margin-top: -3rem;
-`);
-
 const GridLeft = styled(Grid)`
     text-align: left;
 `;
@@ -40,32 +34,14 @@ const FormBox = styled(Box)`
 `;
 
 function LoginView() {
-    const { errorMsg, errors, hasError, onSubmit, register } = useLoginForm();
-
-    const transition = useTransition(hasError, {
-        config: { ...config.stiff },
-        enter: { opacity: 1 },
-        from: { opacity: 0 },
-        leave: { opacity: 0 },
-    });
+    const { errors, onSubmit, register } = useLoginForm();
 
     return (
         <>
             <RootCss />
             <Root component="main" maxWidth="xs">
-                {/* TODO center form vertically and horizontally */}
                 <FadeElementInDown offset={4}>
                     <FormBox>
-                        {transition(
-                            (style, item) =>
-                                item && (
-                                    <AnimatedErrorBox style={style} sx={{ mt: -6 }}>
-                                        <Alert severity="error" variant="filled">
-                                            {errorMsg}
-                                        </Alert>
-                                    </AnimatedErrorBox>
-                                )
-                        )}
                         <Box component="form" noValidate>
                             <Box sx={{ mt: 2 }}>
                                 <TextField
