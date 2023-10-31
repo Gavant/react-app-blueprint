@@ -13,7 +13,7 @@ export interface SubmitButtonProps extends MuiButtonProps {
     disableErrorState?: boolean;
     disableSuccessState?: boolean; // TODO
     iconSize?: number;
-    onClick?: (event: MouseEvent<HTMLButtonElement, Event>) => Promise<Result<any, any>>;
+    onClick?: (event: MouseEvent<HTMLButtonElement, Event>) => Promise<Result<unknown, unknown>>;
     type: 'submit';
 }
 

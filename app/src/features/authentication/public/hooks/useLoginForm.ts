@@ -1,5 +1,5 @@
 import { BaseSyntheticEvent, useCallback, useMemo, useState, useTransition } from 'react';
-import { SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form';
+import { FieldErrors, SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import Result, { err, isOk } from 'true-myth/result';
 import useAuth from '~/features/authentication/public/hooks/useAuth';
@@ -37,7 +37,7 @@ export default function useLoginForm() {
         return result;
     };
 
-    const onInvalidSubmit: SubmitErrorHandler<LoginForm> = async (errors: Object, event) => {
+    const onInvalidSubmit: SubmitErrorHandler<LoginForm> = async (errors: FieldErrors<LoginForm>, event) => {
         event?.preventDefault();
         let error = '';
         if (isSubmitted && !isValid) {
