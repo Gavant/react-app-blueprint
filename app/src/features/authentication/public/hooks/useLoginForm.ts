@@ -1,5 +1,5 @@
 import { BaseSyntheticEvent, useCallback, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import Result, { err, isOk } from 'true-myth/result';
 import useToast from '~/core/hooks/useToast';

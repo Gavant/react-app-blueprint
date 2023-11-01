@@ -1,4 +1,4 @@
-import type { ButtonTypeMap } from '@mui/material';
+import { ButtonTypeMap } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { MouseEvent, PropsWithChildren, useState } from 'react';
 import { animated, useSpring } from 'react-spring';

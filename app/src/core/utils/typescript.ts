@@ -1,5 +1,3 @@
-import { ApolloError } from '@apollo/client';
-
 /**
  * Generic type guard
  *
