@@ -39,7 +39,7 @@ export default function useLoginForm() {
         [authenticate, navigate]
     );
 
-    const onInvalidSubmit = useCallback((form: ReactHookForm<LoginForm>) => {
+    const onInvalidSubmit = (form: ReactHookForm<LoginForm>) => {
         const {
             formState: { errors, isSubmitted, isValid },
         } = form;
@@ -57,7 +57,7 @@ export default function useLoginForm() {
             error = 'Invalid username or password';
         }
         return error;
-    }, []);
+    };
 
     const onSubmit = useSubmit({ form, onInvalidSubmit, onValidSubmit });
 

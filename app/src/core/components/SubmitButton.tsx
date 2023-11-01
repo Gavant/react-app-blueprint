@@ -12,6 +12,7 @@ export interface SubmitButtonProps extends MuiButtonProps {
     disableErrorState?: boolean;
     disableSuccessState?: boolean; // TODO
     iconSize?: number;
+    isLoading?: boolean;
     onClick?: (event: MouseEvent<HTMLButtonElement, Event>) => Promise<Result<unknown, unknown>>;
     type: 'button' | 'submit';
 }
@@ -21,11 +22,12 @@ export default function SubmitButton({
     disableErrorState,
     disableSuccessState,
     iconSize,
+    isLoading,
     onClick,
     type = 'submit',
     ...rest
 }: PropsWithChildren<SubmitButtonProps>) {
-    const [isLoading, setIsLoading] = useState(false);
+    const [loading, setLoading] = useState(isLoading ?? false);
     const [shakeProps, shakeApi] = useSpring(() => ({
         from: { x: 0 },
     }));
@@ -40,7 +42,7 @@ export default function SubmitButton({
 
     const handleClick = async (event: MouseEvent<HTMLButtonElement, Event>) => {
         if (onClick) {
-            setIsLoading(true);
+            setLoading(true);
             const result = await onClick(event);
 
             if (isOk(result) && !disableSuccessState) {
@@ -48,14 +50,14 @@ export default function SubmitButton({
             } else if (isErr(result) && !disableErrorState) {
                 triggerShake();
             }
-            setIsLoading(false);
+            setLoading(false);
         }
     };
 
     return (
         <AnimatedButton
-            disabled={isLoading}
-            loading={isLoading}
+            disabled={loading}
+            loading={loading}
             onClick={handleClick}
             style={{ ...shakeProps }}
             type={type}
