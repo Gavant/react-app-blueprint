@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import Result, { isOk } from 'true-myth/result';
 
-import useSubmit, { UnknownMouseEvent } from '~/core/hooks/useSubmit';
+import useSubmit, { ReactHookForm } from '~/core/hooks/useSubmit';
 import useAuth from '~/features/authentication/public/hooks/useAuth';
 
 export interface LoginForm {
@@ -14,7 +14,7 @@ export interface LoginForm {
 export default function useLoginForm() {
     const { authenticate } = useAuth();
     const navigate = useNavigate();
-    const [submitErrors, setSubmitErrors] = useState<Result<LoginForm, string> | null>(null);
+    // const [submitErrors, setSubmitErrors] = useState<Result<LoginForm, string> | null>(null);
 
     const form = useForm<LoginForm>({
         defaultValues: { password: '', username: '' },
@@ -25,16 +25,13 @@ export default function useLoginForm() {
     } = form;
 
     const onValidSubmit = useCallback(
-        async (data: LoginForm, event: UnknownMouseEvent): Promise<Result<LoginForm, string>> => {
+        async (data: LoginForm): Promise<Result<LoginForm, string>> => {
             const { password, username } = data;
 
-            event?.preventDefault();
-            setSubmitErrors(null);
+            // setSubmitErrors(null);
             const result = await authenticate.signIn(username, password);
             if (isOk(result)) {
                 navigate('/');
-            } else {
-                setSubmitErrors(result);
             }
 
             return result;
@@ -42,25 +39,25 @@ export default function useLoginForm() {
         [authenticate, navigate]
     );
 
-    const onInvalidSubmit = useCallback(
-        (event: UnknownMouseEvent) => {
-            event?.preventDefault();
-            let error = '';
-            if (errors.password?.type && errors.username?.type) {
-                error = 'Username and password are required';
-            } else if (errors.password?.type) {
-                error = 'Password is required';
-            } else if (errors.username?.type) {
-                error = 'Username is required';
-            }
+    const onInvalidSubmit = useCallback((form: ReactHookForm<LoginForm>) => {
+        const {
+            formState: { errors, isSubmitted, isValid },
+        } = form;
 
-            if (isSubmitted && isValid && submitErrors) {
-                error = 'Invalid username or password';
-            }
-            return error;
-        },
-        [errors.password?.type, errors.username?.type, isSubmitted, isValid, submitErrors]
-    );
+        let error = '';
+        if (errors.password?.type && errors.username?.type) {
+            error = 'Username and password are required';
+        } else if (errors.password?.type) {
+            error = 'Password is required';
+        } else if (errors.username?.type) {
+            error = 'Username is required';
+        }
+
+        if (isSubmitted && isValid) {
+            error = 'Invalid username or password';
+        }
+        return error;
+    }, []);
 
     const onSubmit = useSubmit({ form, onInvalidSubmit, onValidSubmit });
 
@@ -74,6 +71,5 @@ export default function useLoginForm() {
         isValid,
         onSubmit,
         register: form.register,
-        submitErrors,
     };
 }

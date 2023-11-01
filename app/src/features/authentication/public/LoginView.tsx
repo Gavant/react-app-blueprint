@@ -1,7 +1,7 @@
 import { Box, Container, Grid, Link, TextField } from '@mui/material';
 import { MouseEvent, useCallback } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
-import { isOk } from 'true-myth/result';
+import { isErr } from 'true-myth/result';
 
 import SubmitButton from '~/core/components/SubmitButton';
 import ToastBar from '~/core/components/ToastBar';
@@ -43,9 +43,7 @@ function LoginView() {
     const loginSubmit = useCallback(
         async (event: MouseEvent<HTMLButtonElement, Event>) => {
             const result = await onSubmit(event);
-            if (isOk(result)) {
-                toast.success('Login successful');
-            } else {
+            if (isErr(result)) {
                 toast.error(result.error);
             }
             return result;

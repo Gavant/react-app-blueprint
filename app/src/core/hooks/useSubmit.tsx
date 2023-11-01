@@ -5,17 +5,20 @@ import Result, { err } from 'true-myth/result';
 
 export type UnknownMouseEvent = MouseEvent<unknown, Event>;
 
+export type ReactHookForm<T extends FieldValues> = ReturnType<typeof useForm<T>>;
+
 function useSubmit<T extends FieldValues>({
     form,
     onInvalidSubmit,
     onValidSubmit,
 }: {
     form: ReturnType<typeof useForm<T>>;
-    onInvalidSubmit?: (event: UnknownMouseEvent) => string;
-    onValidSubmit: (data: T, event: UnknownMouseEvent) => Promise<Result<T, string>>;
+    onInvalidSubmit?: (form: ReactHookForm<T>) => string;
+    onValidSubmit: (data: T) => Promise<Result<T, string>>;
 }): (event: UnknownMouseEvent) => Promise<Result<T, string>> {
     const onSubmit = useCallback(
         async (event: UnknownMouseEvent) => {
+            event.preventDefault();
             const {
                 formState: { isValid },
                 getValues,
@@ -24,10 +27,10 @@ function useSubmit<T extends FieldValues>({
             await form.trigger();
 
             if (!isValid) {
-                return err<T, string>(onInvalidSubmit?.(event) ?? 'Form is invalid');
+                return err<T, string>(onInvalidSubmit?.(form) ?? 'Form is invalid');
             }
 
-            const result = await onValidSubmit(getValues(), event);
+            const result = await onValidSubmit(getValues());
             return result;
         },
         [form, onInvalidSubmit, onValidSubmit]
