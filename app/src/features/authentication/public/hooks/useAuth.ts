@@ -1,15 +1,15 @@
+import { useMutation } from '@apollo/client';
 import { useContext, useEffect } from 'react';
 import { useAuthHeader, useSignIn, useSignOut } from 'react-auth-kit';
 import AuthContext from 'react-auth-kit/dist/AuthContext';
 import { signInFunctionParams } from 'react-auth-kit/dist/types';
 import { Result } from 'true-myth';
 import { err, ok } from 'true-myth/result';
+
 import useToast from '~/core/hooks/useToast';
 import { LoginAuthenticationResult, MutationLoginArgs, MutationLogoutArgs } from '~/core/types/generated/graphql';
 import { isApolloError } from '~/core/utils/apollo';
 import { LOGIN, LOGOUT } from '~/features/authentication/public/graphql/authentication';
-
-import { useMutation } from '@apollo/client';
 
 const setHeaders = (auth: string) => ({ context: { headers: { token: `Bearer ${auth}` } } });
 

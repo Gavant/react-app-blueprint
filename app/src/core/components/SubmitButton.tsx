@@ -1,9 +1,8 @@
-import { ButtonTypeMap } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
+import { ButtonTypeMap } from '@mui/material';
 import { MouseEvent, PropsWithChildren, useState } from 'react';
 import { animated, useSpring } from 'react-spring';
-
-import Result, { isOk, isErr } from 'true-myth/result';
+import Result, { isErr, isOk } from 'true-myth/result';
 
 const wobbleVolume = 5;
 const AnimatedButton = animated(LoadingButton);
@@ -22,8 +21,8 @@ export default function SubmitButton({
     disableErrorState,
     disableSuccessState,
     iconSize,
-    type = 'submit',
     onClick,
+    type = 'submit',
     ...rest
 }: PropsWithChildren<SubmitButtonProps>) {
     const [isLoading, setIsLoading] = useState(false);
@@ -56,11 +55,11 @@ export default function SubmitButton({
     return (
         <AnimatedButton
             disabled={isLoading}
-            onClick={handleClick}
             loading={isLoading}
-            variant="outlined"
+            onClick={handleClick}
             style={{ ...shakeProps }}
             type={type}
+            variant="outlined"
             {...rest}
         >
             {/* There is a known issue with translating a page using Chrome tools when a Loading Button is present. 

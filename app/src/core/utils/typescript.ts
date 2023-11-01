@@ -33,7 +33,7 @@ export const isArrayOf = <T extends object>(itemToCheck: any[], propertyNames: A
  * @param {(K[] | K)} propertyNames
  * @returns {(T[K][] | T[K])}
  */
-export const pluck = <T, K extends keyof T>(o: T, propertyNames: K[] | K): T[K][] | T[K] => {
+export const pluck = <T, K extends keyof T>(o: T, propertyNames: K | K[]): T[K] | T[K][] => {
     return Array.isArray(propertyNames) ? propertyNames.map((n) => o[n]) : o[propertyNames];
 };
 

@@ -2,6 +2,7 @@ import { BaseSyntheticEvent, useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import Result, { err, isOk } from 'true-myth/result';
+
 import useToast from '~/core/hooks/useToast';
 import useAuth from '~/features/authentication/public/hooks/useAuth';
 
@@ -13,11 +14,11 @@ export interface LoginForm {
 export default function useLoginForm() {
     const { authenticate } = useAuth();
     const navigate = useNavigate();
-    const [submitErrors, setSubmitErrors] = useState<null | Result<boolean, { reason: string }>>(null);
+    const [submitErrors, setSubmitErrors] = useState<Result<boolean, { reason: string }> | null>(null);
     const { toast } = useToast();
 
     const {
-        formState: { dirtyFields, errors, isDirty, isSubmitted, isValid, isSubmitting, isSubmitSuccessful },
+        formState: { dirtyFields, errors, isDirty, isSubmitSuccessful, isSubmitted, isSubmitting, isValid },
         getValues,
         register,
         trigger,
@@ -56,7 +57,7 @@ export default function useLoginForm() {
             }
             return error;
         },
-        [errors, isSubmitted, isValid, submitErrors]
+        [errors]
     );
 
     const onSubmit = useCallback(
@@ -81,12 +82,12 @@ export default function useLoginForm() {
         dirtyFields,
         errors,
         isDirty,
-        isSubmitted,
         isSubmitSuccessful,
+        isSubmitted,
+        isSubmitting,
         isValid,
         onSubmit,
         register,
         submitErrors,
-        isSubmitting,
     };
 }
