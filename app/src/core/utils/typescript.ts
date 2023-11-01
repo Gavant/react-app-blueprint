@@ -4,7 +4,7 @@
  * @template T
  * @param {*} itemToCheck
  * @param {(Array<keyof T> | keyof T)} propertyNames
- * @returns {itemToCheck is T}
+ * @returns {*}  {itemToCheck is T}
  */
 export const guard = <T extends object>(itemToCheck: any, propertyNames: Array<keyof T> | keyof T): itemToCheck is T => {
     return Array.isArray(propertyNames)

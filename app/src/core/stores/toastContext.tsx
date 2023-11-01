@@ -25,7 +25,11 @@ const defaultContext = {
 const ToastContext = createContext<ToastContextValue>(defaultContext);
 ToastContext.displayName = 'ToastContext';
 
-const ToastProvider = ({ children }: { children: ReactNode }) => {
+export interface ToastProviderProps {
+    children: ReactNode;
+}
+
+const ToastProvider = ({ children }: ToastProviderProps) => {
     const [toastMsg, setToastMsg] = useState<ToastMsg | null>(null);
 
     const setToastFunction = (alertType: AlertColor) => (message: string, options?: { key?: string; open?: boolean }) =>

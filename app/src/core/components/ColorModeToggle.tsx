@@ -18,7 +18,11 @@ const ToggleButton = styled(IconButton)`
     padding: ${({ theme }) => theme.spacing(1.5)};
 `;
 
-function ColorModeToggle({ color = 'inherit' }: { color?: MuiIconColor }) {
+export interface ColorModeToggleProps {
+    color?: MuiIconColor;
+}
+
+function ColorModeToggle({ color = 'inherit' }: ColorModeToggleProps) {
     const theme = useTheme();
     const context = useContext(ColorModeContext);
     if (context === undefined) {

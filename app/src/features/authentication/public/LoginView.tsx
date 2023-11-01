@@ -8,6 +8,7 @@ import ToastBar from '~/core/components/ToastBar';
 import FadeElementInDown from '~/core/components/animation/FadeInDown';
 import useToast from '~/core/hooks/useToast';
 import useLoginForm from '~/features/authentication/public/hooks/useLoginForm';
+
 const RootCss = createGlobalStyle`
     html, body, #root {
         width: 100%;

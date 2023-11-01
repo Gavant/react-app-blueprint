@@ -7,15 +7,15 @@ export type UnknownMouseEvent = MouseEvent<unknown, Event>;
 
 export type ReactHookForm<T extends FieldValues> = ReturnType<typeof useForm<T>>;
 
-function useSubmit<T extends FieldValues>({
-    form,
-    onInvalidSubmit,
-    onValidSubmit,
-}: {
-    form: ReturnType<typeof useForm<T>>;
+export interface UseSubmitProps<T extends FieldValues> {
+    form: ReactHookForm<T>;
     onInvalidSubmit?: (form: ReactHookForm<T>) => string;
     onValidSubmit: (data: T) => Promise<Result<T, string>>;
-}): (event: UnknownMouseEvent) => Promise<Result<T, string>> {
+}
+
+export type UseSubmitReturn<T extends FieldValues> = (event: UnknownMouseEvent) => Promise<Result<T, string>>;
+
+function useSubmit<T extends FieldValues>({ form, onInvalidSubmit, onValidSubmit }: UseSubmitProps<T>): UseSubmitReturn<T> {
     const onSubmit = useCallback(
         async (event: UnknownMouseEvent) => {
             event.preventDefault();
