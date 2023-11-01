@@ -1,9 +1,9 @@
-import { BaseSyntheticEvent, useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
-import Result, { err, isOk } from 'true-myth/result';
+import Result, { isOk } from 'true-myth/result';
 
-import useToast from '~/core/hooks/useToast';
+import useSubmit, { UnknownMouseEvent } from '~/core/hooks/useSubmit';
 import useAuth from '~/features/authentication/public/hooks/useAuth';
 
 export interface LoginForm {
@@ -14,34 +14,36 @@ export interface LoginForm {
 export default function useLoginForm() {
     const { authenticate } = useAuth();
     const navigate = useNavigate();
-    const [submitErrors, setSubmitErrors] = useState<Result<boolean, { reason: string }> | null>(null);
-    const { toast } = useToast();
+    const [submitErrors, setSubmitErrors] = useState<Result<LoginForm, string> | null>(null);
 
-    const {
-        formState: { dirtyFields, errors, isDirty, isSubmitSuccessful, isSubmitted, isSubmitting, isValid },
-        getValues,
-        register,
-        trigger,
-    } = useForm<LoginForm>({
+    const form = useForm<LoginForm>({
         defaultValues: { password: '', username: '' },
     });
 
-    const onValidSubmit = async (data: LoginForm, event: BaseSyntheticEvent<object, any, any>) => {
-        const { password, username } = data;
+    const {
+        formState: { dirtyFields, errors, isDirty, isSubmitSuccessful, isSubmitted, isSubmitting, isValid },
+    } = form;
 
-        event?.preventDefault();
-        setSubmitErrors(null);
-        const result = await authenticate.signIn(username, password);
-        if (isOk(result)) {
-            navigate('/');
-        } else {
-            setSubmitErrors(result);
-        }
-        return result;
-    };
+    const onValidSubmit = useCallback(
+        async (data: LoginForm, event: UnknownMouseEvent): Promise<Result<LoginForm, string>> => {
+            const { password, username } = data;
+
+            event?.preventDefault();
+            setSubmitErrors(null);
+            const result = await authenticate.signIn(username, password);
+            if (isOk(result)) {
+                navigate('/');
+            } else {
+                setSubmitErrors(result);
+            }
+
+            return result;
+        },
+        [authenticate, navigate]
+    );
 
     const onInvalidSubmit = useCallback(
-        (event: BaseSyntheticEvent<object, any, any>) => {
+        (event: UnknownMouseEvent) => {
             event?.preventDefault();
             let error = '';
             if (errors.password?.type && errors.username?.type) {
@@ -57,26 +59,10 @@ export default function useLoginForm() {
             }
             return error;
         },
-        [errors]
+        [errors.password?.type, errors.username?.type, isSubmitted, isValid, submitErrors]
     );
 
-    const onSubmit = useCallback(
-        async (event: BaseSyntheticEvent<object, any, any>) => {
-            trigger();
-
-            if (!isValid) {
-                const invalidResult = onInvalidSubmit(event);
-
-                toast.error(invalidResult);
-                const errorResult = err({ reason: invalidResult });
-                return errorResult;
-            }
-
-            const result = await onValidSubmit(getValues(), event);
-            return result;
-        },
-        [trigger, toast, onValidSubmit, onInvalidSubmit, getValues]
-    );
+    const onSubmit = useSubmit({ form, onInvalidSubmit, onValidSubmit });
 
     return {
         dirtyFields,
@@ -87,7 +73,7 @@ export default function useLoginForm() {
         isSubmitting,
         isValid,
         onSubmit,
-        register,
+        register: form.register,
         submitErrors,
     };
 }

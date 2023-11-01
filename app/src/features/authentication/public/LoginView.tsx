@@ -1,9 +1,12 @@
 import { Box, Container, Grid, Link, TextField } from '@mui/material';
+import { MouseEvent, useCallback } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
+import { isOk } from 'true-myth/result';
 
 import SubmitButton from '~/core/components/SubmitButton';
 import ToastBar from '~/core/components/ToastBar';
 import FadeElementInDown from '~/core/components/animation/FadeInDown';
+import useToast from '~/core/hooks/useToast';
 import useLoginForm from '~/features/authentication/public/hooks/useLoginForm';
 const RootCss = createGlobalStyle`
     html, body, #root {
@@ -35,6 +38,20 @@ const FormBox = styled(Box)`
 
 function LoginView() {
     const { errors, onSubmit, register } = useLoginForm();
+    const { toast } = useToast();
+
+    const loginSubmit = useCallback(
+        async (event: MouseEvent<HTMLButtonElement, Event>) => {
+            const result = await onSubmit(event);
+            if (isOk(result)) {
+                toast.success('Login successful');
+            } else {
+                toast.error(result.error);
+            }
+            return result;
+        },
+        [onSubmit, toast]
+    );
 
     return (
         <>
@@ -64,7 +81,7 @@ function LoginView() {
                                 />
                             </Box>
                             <Box sx={{ my: 2 }}>
-                                <SubmitButton fullWidth onClick={onSubmit} size="large" type="submit" variant="contained">
+                                <SubmitButton fullWidth onClick={loginSubmit} size="large" type="submit" variant="contained">
                                     Sign In
                                 </SubmitButton>
                             </Box>
