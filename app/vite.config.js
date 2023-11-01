@@ -11,6 +11,18 @@ import { defineConfig } from 'vite';
 // KICK
 const port = 5425;
 export default defineConfig({
+    build: {
+        rollupOptions: {
+            output: {
+                manualChunks(id) {
+                    if (id.includes('node_modules')) {
+                        // return id.split("/node_modules/").pop()?.split("/")[0]; // if we want to chunk every individual module.
+                        return 'vendor';
+                    }
+                },
+            },
+        },
+    },
     plugins: [
         react({
             babel: {
@@ -18,24 +30,23 @@ export default defineConfig({
                     [
                         'babel-plugin-styled-components',
                         {
+                            apply: 'serve',
                             displayName: true,
                             fileName: true,
-                            apply: 'serve',
                         },
                     ],
                 ],
             },
         }),
         {
-            name: 'HRM-fence-check',
             // TODO: This executes twice. Unsure how to fix it at present. Clearing logs for now.
             handleHotUpdate: async ({ modules, server }) => {
                 run({
+                    ignoreExternalFences: true,
+                    looseRootFileDiscovery: true,
+                    progressBar: false,
                     project: './tsconfig.json',
                     rootDir: './src',
-                    progressBar: false,
-                    looseRootFileDiscovery: true,
-                    ignoreExternalFences: true,
                 }).then((result) => {
                     console.clear();
                     if (result.errors.length) {
@@ -49,6 +60,7 @@ export default defineConfig({
                 });
                 return modules;
             },
+            name: 'HRM-fence-check',
         },
     ],
     resolve: {
@@ -57,24 +69,12 @@ export default defineConfig({
             '~': path.resolve(__dirname, 'src'),
         },
     },
-    build: {
-        rollupOptions: {
-            output: {
-                manualChunks(id) {
-                    if (id.includes('node_modules')) {
-                        // return id.split("/node_modules/").pop()?.split("/")[0]; // if we want to chunk every individual module.
-                        return 'vendor';
-                    }
-                },
-            },
-        },
-    },
     server: {
         port: port,
     },
     test: {
+        environment: 'jsdom',
         globals: true,
         setupFiles: 'vitest/setup.ts',
-        environment: 'jsdom',
     },
 });

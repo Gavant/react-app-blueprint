@@ -1,5 +1,4 @@
 import { Box, CssBaseline } from '@mui/material';
-import { Outlet } from 'react-router';
 import styled, { createGlobalStyle } from 'styled-components';
 
 const Root = styled(Box)``;

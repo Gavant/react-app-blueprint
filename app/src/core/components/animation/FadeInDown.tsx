@@ -1,7 +1,12 @@
 import { ReactNode } from 'react';
 import { animated, useSpring } from 'react-spring';
 
-function FadeElementInDown({ children, offset }: { children: ReactNode; offset: number }) {
+export interface FadeElementInDownProps {
+    children: ReactNode;
+    offset: number;
+}
+
+function FadeElementInDown({ children, offset }: FadeElementInDownProps) {
     const fadeInMove = useSpring({
         from: { opacity: 0, transform: `translateY(-${offset}rem)` },
         opacity: 1,

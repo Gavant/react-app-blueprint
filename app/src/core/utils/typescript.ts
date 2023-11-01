@@ -1,12 +1,10 @@
-import { ApolloError } from '@apollo/client';
-
 /**
  * Generic type guard
  *
  * @template T
  * @param {*} itemToCheck
  * @param {(Array<keyof T> | keyof T)} propertyNames
- * @returns {itemToCheck is T}
+ * @returns {*}  {itemToCheck is T}
  */
 export const guard = <T extends object>(itemToCheck: any, propertyNames: Array<keyof T> | keyof T): itemToCheck is T => {
     return Array.isArray(propertyNames)
@@ -35,7 +33,7 @@ export const isArrayOf = <T extends object>(itemToCheck: any[], propertyNames: A
  * @param {(K[] | K)} propertyNames
  * @returns {(T[K][] | T[K])}
  */
-export const pluck = <T, K extends keyof T>(o: T, propertyNames: K[] | K): T[K][] | T[K] => {
+export const pluck = <T, K extends keyof T>(o: T, propertyNames: K | K[]): T[K] | T[K][] => {
     return Array.isArray(propertyNames) ? propertyNames.map((n) => o[n]) : o[propertyNames];
 };
 

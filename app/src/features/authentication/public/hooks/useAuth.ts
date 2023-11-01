@@ -47,7 +47,7 @@ export default function useAuth() {
         }
     }, [logoutError?.message, resetLogout, toast]);
 
-    const signIn = async (username: string, password: string): Promise<Result<boolean, { reason: string }>> => {
+    const signIn = async (username: string, password: string): Promise<Result<{ password: string; username: string }, string>> => {
         try {
             const result = await loginMutation({ variables: { input: { password, username } } });
             const responseData = (result?.data?.login as LoginAuthenticationResult) ?? undefined;
@@ -60,14 +60,14 @@ export default function useAuth() {
                 tokenType: 'Bearer',
             };
             const signIn = login(sessionData);
-            return signIn ? ok(signIn) : err({ reason: '`access_token` is missing in server response' });
+            return signIn ? ok({ password, username }) : err('`access_token` is missing in server response');
         } catch (error: unknown) {
             if (isApolloError(error)) {
                 toast.error(error.networkError?.message ?? 'Unknown error occurred');
-                return err({ reason: error.networkError?.message ?? 'Unknown error occurred' });
+                return err(error.networkError?.message ?? 'Unknown error occurred');
             } else {
                 toast.error('Unknown error occurred');
-                return err({ reason: 'Unknown error occurred' });
+                return err('Unknown error occurred');
             }
         }
     };

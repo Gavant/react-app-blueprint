@@ -1,6 +1,6 @@
-import { guard } from '~/core/utils/typescript';
-
 import { ApolloError } from '@apollo/client';
+
+import { guard } from '~/core/utils/typescript';
 
 /**
  * Checks if the error is an ApolloError

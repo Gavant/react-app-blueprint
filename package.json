@@ -5,6 +5,7 @@
     "type": "module",
     "scripts": {
         "dev": "yarn workspace app dev",
+        "start": "yarn workspace app dev",
         "build": "yarn workspace app build",
         "docs": "yarn workspace docs start"
     },

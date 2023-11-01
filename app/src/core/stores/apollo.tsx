@@ -23,7 +23,7 @@ const onErrorLink = onError((errors) => {
                 } else {
                     switch (err.extensions?.code) {
                         case 'UNAUTHENTICATED':
-                            // TODO
+                            kickToLogin();
                             break;
                         default:
                             console.error(err.message);

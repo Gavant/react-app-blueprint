@@ -1,4 +1,5 @@
 import { ThemeProvider as MuiProvider } from '@mui/material';
+import type {} from '@mui/lab/themeAugmentation';
 import { createTheme } from '@mui/material/styles';
 import * as React from 'react';
 import { ReactElement, ReactNode } from 'react';

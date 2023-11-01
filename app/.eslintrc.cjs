@@ -1,47 +1,55 @@
 module.exports = {
-  env: {
-    browser: true,
-    node: true,
-    es2021: true,
-  },
-  extends: ['plugin:react/recommended', 'eslint:recommended', 'plugin:perfectionist/recommended-alphabetical'],
-  parser: '@typescript-eslint/parser',
-  parserOptions: {
-    ecmaFeatures: {
-      jsx: true,
+    env: {
+        browser: true,
+        es2021: true,
+        node: true,
     },
-    ecmaVersion: 12,
-    sourceType: 'module',
-  },
-  plugins: ['jsx-a11y', 'prettier', 'import', 'react', 'react-hooks', '@typescript-eslint', 'perfectionist'],
-  rules: {
-    // note you must disable the base rule as it can report incorrect errors
-    'no-use-before-define': 'off',
-    'no-unused-vars': 'off',
-    '@typescript-eslint/no-use-before-define': ['error'],
-    'import/order': [
-    'warn',
-        {
-            groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
-            alphabetize: {
-                order: 'asc',
-            },
-            'newlines-between': 'always',
+    extends: ['plugin:react/recommended', 'eslint:recommended', 'plugin:perfectionist/recommended-alphabetical'],
+    globals: {
+        ImportMetaEnv: true,
+        JSX: true,
+    },
+    parser: '@typescript-eslint/parser',
+    parserOptions: {
+        ecmaFeatures: {
+            jsx: true,
         },
-    ],
-    'import/extensions': ['error', 'never', { 'routes': 'always', 'gql': 'always', 'svg': 'always', 'png': 'always' }],
-    'no-console': ['warn', { 'allow': ['warn', 'error'] }],
-    'no-unexpected-multiline': 'error',
-    'prefer-const': 'error',
-    'react-hooks/rules-of-hooks': 'error',
-    'react-hooks/exhaustive-deps': 'warn',
-    'react/react-in-jsx-scope': 'off',
-    'react/jsx-uses-react': 'off',
-    'prettier/prettier': 'error',
-    'react/prop-types': 'off',
-    'perfectionist/sort-imports': 'off'
-  },
-  globals: {
-      JSX: true,
-  }
+        ecmaVersion: 12,
+        sourceType: 'module',
+    },
+    plugins: ['jsx-a11y', 'prettier', 'import', 'react', 'react-hooks', '@typescript-eslint', 'perfectionist'],
+    rules: {
+        '@typescript-eslint/no-use-before-define': ['error'],
+        'import/extensions': ['error', 'never', { gql: 'always', png: 'always', routes: 'always', svg: 'always' }],
+        'import/order': [
+            'warn',
+            {
+                alphabetize: {
+                    order: 'asc',
+                },
+                groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
+                'newlines-between': 'always',
+            },
+        ],
+        'no-console': ['warn', { allow: ['warn', 'error'] }],
+        'no-undef': 'off',
+        'no-unexpected-multiline': 'error',
+        'no-unused-vars': 'off',
+        // note you must disable the base rule as it can report incorrect errors
+        'no-use-before-define': 'off',
+        'perfectionist/sort-imports': 'off',
+        'perfectionist/sort-union-types': [
+            'error',
+            {
+                'nullable-last': true,
+            },
+        ],
+        'prefer-const': 'error',
+        'prettier/prettier': 'error',
+        'react-hooks/exhaustive-deps': 'warn',
+        'react-hooks/rules-of-hooks': 'error',
+        'react/jsx-uses-react': 'off',
+        'react/prop-types': 'off',
+        'react/react-in-jsx-scope': 'off',
+    },
 };
