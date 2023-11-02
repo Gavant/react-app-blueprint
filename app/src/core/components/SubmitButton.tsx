@@ -27,7 +27,9 @@ export default function SubmitButton({
     type = 'submit',
     ...rest
 }: PropsWithChildren<SubmitButtonProps>) {
-    const [loading, setLoading] = useState(isLoading ?? false);
+    const [isSubmitResolving, setIsSubmitResolving] = useState(false);
+    const isButtonLoading = isSubmitResolving || isLoading;
+
     const [shakeProps, shakeApi] = useSpring(() => ({
         from: { x: 0 },
     }));
@@ -42,7 +44,7 @@ export default function SubmitButton({
 
     const handleClick = async (event: MouseEvent<HTMLButtonElement, Event>) => {
         if (onClick) {
-            setLoading(true);
+            setIsSubmitResolving(true);
             const result = await onClick(event);
 
             if (isOk(result) && !disableSuccessState) {
@@ -50,14 +52,14 @@ export default function SubmitButton({
             } else if (isErr(result) && !disableErrorState) {
                 triggerShake();
             }
-            setLoading(false);
+            setIsSubmitResolving(false);
         }
     };
 
     return (
         <AnimatedButton
-            disabled={loading}
-            loading={loading}
+            disabled={isButtonLoading}
+            loading={isButtonLoading}
             onClick={handleClick}
             style={{ ...shakeProps }}
             type={type}
