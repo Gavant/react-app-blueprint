@@ -1,13 +1,18 @@
 import '@testing-library/jest-dom';
 import { ThemeOptions } from '@mui/material';
+import { ThemeProvider as MuiProvider } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import { render } from '@testing-library/react';
 import { ReactElement } from 'react';
-import { ThemeProvider } from 'styled-components';
+import { ThemeProvider as StyledProvider } from 'styled-components';
 
 export function renderWithTheme(children: ReactElement, overrides?: ThemeOptions) {
     const theme = createTheme(overrides);
-    return render(<ThemeProvider theme={theme}>{children}</ThemeProvider>);
+    return render(
+        <MuiProvider theme={theme}>
+            <StyledProvider theme={theme}>{children}</StyledProvider>
+        </MuiProvider>
+    );
 }
 
 export function resolveWithDelay<T>(result: T, delay = 1) {

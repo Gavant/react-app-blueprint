@@ -1,8 +1,8 @@
 import { act, fireEvent, screen, waitFor } from '@testing-library/react';
+import { renderWithTheme, resolveWithDelay } from '@vitest/utils';
 import { ok } from 'true-myth/result';
 import { describe, expect, it, vi } from 'vitest';
 
-import { renderWithTheme, resolveWithDelay } from '~/../vitest/utils';
 import SubmitButton from '~/core/components/SubmitButton';
 
 const onClickAction = vi.fn(() => {
