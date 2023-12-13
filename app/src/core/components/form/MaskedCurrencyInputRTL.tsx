@@ -74,7 +74,7 @@ const MaskedCurrencyInputRTL = forwardRef<HTMLInputElement, NumberFormatBaseProp
                 format={(value) => rtlFormatter(value, { currency, locale, maximumFractionDigits, minimumFractionDigits })}
                 getInputRef={ref}
                 inputProps={{
-                    inputMode: 'numeric',
+                    inputMode: 'decimal',
                 }}
                 onValueChange={(values, sourceInfo) => {
                     onChange?.({

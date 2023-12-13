@@ -15,6 +15,9 @@ const MaskedCurrencyInput = forwardRef<HTMLInputElement, NumericFormatProps<Mask
             decimalScale={decimalScale}
             fixedDecimalScale={fixedDecimalScale}
             getInputRef={ref}
+            inputProps={{
+                inputMode: 'decimal',
+            }}
             onValueChange={(values, sourceInfo) => {
                 onChange?.({
                     ...(sourceInfo.event ?? {}),

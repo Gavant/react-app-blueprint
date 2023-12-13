@@ -7,6 +7,7 @@ import MaskedCurrencyInput from '~/core/components/form/MaskedCurrencyInput';
 import MaskedCurrencyInputRTL from '~/core/components/form/MaskedCurrencyInputRTL';
 import MaskedExpirationInput from '~/core/components/form/MaskedExpirationInput';
 import MaskedNumberInput from '~/core/components/form/MaskedNumberInput';
+import MaskedPhoneInput from '~/core/components/form/MaskedPhoneInput';
 
 const Form = styled.form`
     margin: 0 auto;
@@ -19,6 +20,7 @@ interface FormValues {
     currency: string;
     currencyRtl: string;
     pct: string;
+    phone: string;
 }
 
 export default function KitchenSinkDemo() {
@@ -26,7 +28,7 @@ export default function KitchenSinkDemo() {
         control,
         formState: { errors },
         handleSubmit,
-    } = useForm<FormValues>({ defaultValues: { currency: '', currencyRtl: '0' } });
+    } = useForm<FormValues>({ defaultValues: { currency: '', currencyRtl: '0', phone: '' } });
 
     const onSubmit: SubmitHandler<FormValues> = (data) => console.log('submitted', data);
 
@@ -63,7 +65,12 @@ export default function KitchenSinkDemo() {
                     rules={{ required: true }}
                 />
                 <div>Pattern Masks</div>
-                {/* TODO Phone Num (with optional ext) */}
+                <Controller
+                    control={control}
+                    name="phone"
+                    render={({ field }) => <MaskedPhoneInput error={!!errors.phone} label="Phone" {...field} />}
+                    rules={{ required: true }}
+                />
                 <Controller
                     control={control}
                     name="ccExpire"

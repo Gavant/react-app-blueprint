@@ -13,6 +13,9 @@ const MaskedNumberInput = forwardRef<HTMLInputElement, NumericFormatProps<Masked
         <NumericFormat
             customInput={TextField}
             getInputRef={ref}
+            inputProps={{
+                inputMode: 'decimal',
+            }}
             onValueChange={(values, sourceInfo) => {
                 onChange?.({
                     ...(sourceInfo.event ?? {}),

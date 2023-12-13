@@ -25,7 +25,7 @@ const patternFormatter = (format?: FormatInputValueFunction) => (val: string) =>
 // TODO documentation
 const MaskedExpirationInput = forwardRef<HTMLInputElement, NumericFormatProps<TextFieldProps>>(function MaskedExpirationInput(props, ref) {
     const { onChange, ...other } = props;
-    const { format, ...rest } = usePatternFormat({ ...props, format: MASK_FORMAT });
+    const { format, ...rest } = usePatternFormat({ ...props, format: MASK_FORMAT, mask: '_' });
     const formatter = patternFormatter(format);
 
     return (
@@ -33,6 +33,9 @@ const MaskedExpirationInput = forwardRef<HTMLInputElement, NumericFormatProps<Te
             customInput={TextField}
             format={formatter}
             getInputRef={ref}
+            inputProps={{
+                inputMode: 'numeric',
+            }}
             onValueChange={(values, sourceInfo) => {
                 onChange?.({
                     ...(sourceInfo.event ?? {}),
