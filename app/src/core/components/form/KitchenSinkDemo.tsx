@@ -7,7 +7,9 @@ import MaskedCurrencyInput from '~/core/components/form/MaskedCurrencyInput';
 import MaskedCurrencyInputRTL from '~/core/components/form/MaskedCurrencyInputRTL';
 import MaskedExpirationInput from '~/core/components/form/MaskedExpirationInput';
 import MaskedNumberInput from '~/core/components/form/MaskedNumberInput';
+import MaskedPatternInput from '~/core/components/form/MaskedPatternInput';
 import MaskedPhoneInput from '~/core/components/form/MaskedPhoneInput';
+import { castNumericMaskedValues } from '~/core/utils/maskedInput';
 
 const Form = styled.form`
     margin: 0 auto;
@@ -17,10 +19,13 @@ const Form = styled.form`
 interface FormValues {
     basic: string;
     ccExpire: string;
+    ccNum: string;
     currency: string;
     currencyRtl: string;
     pct: string;
     phone: string;
+    ssn: string;
+    zip: string;
 }
 
 export default function KitchenSinkDemo() {
@@ -30,7 +35,8 @@ export default function KitchenSinkDemo() {
         handleSubmit,
     } = useForm<FormValues>({ defaultValues: { currency: '', currencyRtl: '0', phone: '' } });
 
-    const onSubmit: SubmitHandler<FormValues> = (data) => console.log('submitted', data);
+    const onSubmit: SubmitHandler<FormValues> = (data) =>
+        console.log('submitted', castNumericMaskedValues<FormValues>(data, ['basic', 'currency', 'currencyRtl', 'pct']));
 
     return (
         <Form noValidate onSubmit={handleSubmit(onSubmit)}>
@@ -77,7 +83,26 @@ export default function KitchenSinkDemo() {
                     render={({ field }) => <MaskedExpirationInput error={!!errors.ccExpire} label="CC Expire" {...field} />}
                     rules={{ required: true }}
                 />
-                {/* TODO CC Num */}
+                <Controller
+                    control={control}
+                    name="ccNum"
+                    render={({ field }) => (
+                        <MaskedPatternInput error={!!errors.ccNum} format="#### #### #### ####" label="CC Number" {...field} />
+                    )}
+                    rules={{ required: true }}
+                />
+                <Controller
+                    control={control}
+                    name="ssn"
+                    render={({ field }) => <MaskedPatternInput error={!!errors.ssn} format="###-##-####" label="SSN" {...field} />}
+                    rules={{ required: true }}
+                />
+                <Controller
+                    control={control}
+                    name="zip"
+                    render={({ field }) => <MaskedPatternInput error={!!errors.zip} format="#####-####" label="Zip Code" {...field} />}
+                    rules={{ required: true }}
+                />
                 <Button type="submit" variant="outlined">
                     Submit
                 </Button>

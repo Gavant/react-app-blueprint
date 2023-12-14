@@ -1,9 +1,12 @@
 import TextField, { TextFieldProps } from '@mui/material/TextField';
-import { ChangeEvent, forwardRef } from 'react';
+import { forwardRef } from 'react';
 import { PatternFormat, PatternFormatProps } from 'react-number-format';
+
+import { formatMaskedValueChangeEvent } from '~/core/utils/maskedInput';
 
 const MASK_FORMAT = '(###) ###-####';
 const MASK_FORMAT_WITH_EXT = '(###) ###-#### x####';
+const MASK_CHARACTER = '_';
 
 type MaskedPhoneInputProps = Omit<PatternFormatProps<TextFieldProps>, 'format'> & {
     includeExtension?: boolean;
@@ -20,19 +23,10 @@ const MaskedPhoneInput = forwardRef<HTMLInputElement, MaskedPhoneInputProps>(fun
             inputProps={{
                 inputMode: 'numeric',
             }}
-            onValueChange={(values, sourceInfo) => {
-                onChange?.({
-                    ...(sourceInfo.event ?? {}),
-                    target: {
-                        ...(sourceInfo.event?.target ?? {}),
-                        name: props.name ?? '',
-                        value: values.value ?? '',
-                    },
-                } as ChangeEvent<HTMLInputElement>);
-            }}
+            onValueChange={(vals, info) => onChange?.(formatMaskedValueChangeEvent(vals, info, props.name))}
             {...other}
             format={includeExtension ? MASK_FORMAT_WITH_EXT : MASK_FORMAT}
-            mask="_"
+            mask={MASK_CHARACTER}
         />
     );
 });

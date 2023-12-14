@@ -1,6 +1,8 @@
 import TextField, { TextFieldProps } from '@mui/material/TextField';
-import { ChangeEvent, forwardRef } from 'react';
+import { forwardRef } from 'react';
 import { NumericFormat, NumericFormatProps } from 'react-number-format';
+
+import { formatMaskedValueChangeEvent } from '~/core/utils/maskedInput';
 
 type MaskedCurrencyInputProps = TextFieldProps;
 
@@ -18,16 +20,7 @@ const MaskedCurrencyInput = forwardRef<HTMLInputElement, NumericFormatProps<Mask
             inputProps={{
                 inputMode: 'decimal',
             }}
-            onValueChange={(values, sourceInfo) => {
-                onChange?.({
-                    ...(sourceInfo.event ?? {}),
-                    target: {
-                        ...(sourceInfo.event?.target ?? {}),
-                        name: rest.name ?? '',
-                        value: values.value ?? '',
-                    },
-                } as ChangeEvent<HTMLInputElement>);
-            }}
+            onValueChange={(vals, info) => onChange?.(formatMaskedValueChangeEvent(vals, info, rest.name))}
             prefix={prefix}
             thousandSeparator
             {...rest}

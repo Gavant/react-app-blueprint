@@ -1,28 +1,28 @@
 import TextField, { TextFieldProps } from '@mui/material/TextField';
 import { forwardRef } from 'react';
-import { NumericFormat, NumericFormatProps } from 'react-number-format';
+import { PatternFormat, PatternFormatProps } from 'react-number-format';
 
 import { formatMaskedValueChangeEvent } from '~/core/utils/maskedInput';
 
-type MaskedNumberInputProps = TextFieldProps;
+const MASK_CHARACTER = '_';
 
 // TODO documentation
-const MaskedNumberInput = forwardRef<HTMLInputElement, NumericFormatProps<MaskedNumberInputProps>>(function MaskedNumberInput(
+const MaskedPatternInput = forwardRef<HTMLInputElement, PatternFormatProps<TextFieldProps>>(function MaskedPatternInput(
     { onChange, ...rest },
     ref
 ) {
     return (
-        <NumericFormat
+        <PatternFormat
             customInput={TextField}
             getInputRef={ref}
             inputProps={{
-                inputMode: 'decimal',
+                inputMode: 'numeric',
             }}
+            mask={MASK_CHARACTER}
             onValueChange={(vals, info) => onChange?.(formatMaskedValueChangeEvent(vals, info, rest.name))}
-            thousandSeparator
             {...rest}
         />
     );
 });
 
-export default MaskedNumberInput;
+export default MaskedPatternInput;

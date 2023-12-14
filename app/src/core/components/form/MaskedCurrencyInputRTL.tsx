@@ -9,7 +9,7 @@ type MaskedCurrencyInputRTLProps = TextFieldProps & {
     locale?: string;
 };
 
-function rtlFormatter(
+function formatter(
     value: string = '',
     {
         currency,
@@ -71,7 +71,7 @@ const MaskedCurrencyInputRTL = forwardRef<HTMLInputElement, NumberFormatBaseProp
         return (
             <NumberFormatBase
                 customInput={TextField}
-                format={(value) => rtlFormatter(value, { currency, locale, maximumFractionDigits, minimumFractionDigits })}
+                format={(value) => formatter(value, { currency, locale, maximumFractionDigits, minimumFractionDigits })}
                 getInputRef={ref}
                 inputProps={{
                     inputMode: 'decimal',

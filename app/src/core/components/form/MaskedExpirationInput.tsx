@@ -1,9 +1,12 @@
 import TextField, { TextFieldProps } from '@mui/material/TextField';
-import { ChangeEvent, forwardRef } from 'react';
+import { forwardRef } from 'react';
 import { NumberFormatBase, NumericFormatProps, usePatternFormat } from 'react-number-format';
 import { FormatInputValueFunction } from 'react-number-format/types/types';
 
+import { formatMaskedValueChangeEvent } from '~/core/utils/maskedInput';
+
 const MASK_FORMAT = '##/##';
+const MASK_CHARACTER = '_';
 
 const patternFormatter = (format?: FormatInputValueFunction) => (val: string) => {
     let month = val.substring(0, 2);
@@ -23,9 +26,11 @@ const patternFormatter = (format?: FormatInputValueFunction) => (val: string) =>
 };
 
 // TODO documentation
-const MaskedExpirationInput = forwardRef<HTMLInputElement, NumericFormatProps<TextFieldProps>>(function MaskedExpirationInput(props, ref) {
-    const { onChange, ...other } = props;
-    const { format, ...rest } = usePatternFormat({ ...props, format: MASK_FORMAT, mask: '_' });
+const MaskedExpirationInput = forwardRef<HTMLInputElement, NumericFormatProps<TextFieldProps>>(function MaskedExpirationInput(
+    { onChange, ...rest },
+    ref
+) {
+    const { format, ...formatProps } = usePatternFormat({ ...rest, format: MASK_FORMAT, mask: MASK_CHARACTER });
     const formatter = patternFormatter(format);
 
     return (
@@ -36,18 +41,9 @@ const MaskedExpirationInput = forwardRef<HTMLInputElement, NumericFormatProps<Te
             inputProps={{
                 inputMode: 'numeric',
             }}
-            onValueChange={(values, sourceInfo) => {
-                onChange?.({
-                    ...(sourceInfo.event ?? {}),
-                    target: {
-                        ...(sourceInfo.event?.target ?? {}),
-                        name: props.name ?? '',
-                        value: values.formattedValue ?? '',
-                    },
-                } as ChangeEvent<HTMLInputElement>);
-            }}
-            {...other}
+            onValueChange={(vals, info) => onChange?.(formatMaskedValueChangeEvent(vals, info, rest.name, 'formattedValue'))}
             {...rest}
+            {...formatProps}
         />
     );
 });
