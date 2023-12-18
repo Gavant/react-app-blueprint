@@ -1,5 +1,5 @@
 import TextField, { TextFieldProps } from '@mui/material/TextField';
-import { forwardRef } from 'react';
+import { forwardRef, useState } from 'react';
 import { PatternFormat, PatternFormatProps } from 'react-number-format';
 
 import { formatMaskedValueChangeEvent } from '~/core/utils/maskedInput';
@@ -11,8 +11,11 @@ const MaskedPatternInput = forwardRef<HTMLInputElement, PatternFormatProps<TextF
     { onChange, ...rest },
     ref
 ) {
+    const [isFocused, setIsFocused] = useState(false);
+
     return (
         <PatternFormat
+            allowEmptyFormatting={isFocused}
             customInput={TextField}
             getInputRef={ref}
             inputProps={{
@@ -21,6 +24,14 @@ const MaskedPatternInput = forwardRef<HTMLInputElement, PatternFormatProps<TextF
             mask={MASK_CHARACTER}
             onValueChange={(vals, info) => onChange?.(formatMaskedValueChangeEvent(vals, info, rest.name))}
             {...rest}
+            onBlur={(event) => {
+                setIsFocused(false);
+                rest.onBlur?.(event);
+            }}
+            onFocus={(event) => {
+                setIsFocused(true);
+                rest.onFocus?.(event);
+            }}
         />
     );
 });

@@ -82,7 +82,7 @@ const MaskedCurrencyInputRTL = forwardRef<HTMLInputElement, NumberFormatBaseProp
                         target: {
                             ...(sourceInfo.event?.target ?? {}),
                             name: rest.name ?? '',
-                            value: `${((values.floatValue ?? 0) / 100).toFixed(decimalScale ?? undefined)}`,
+                            value: ((values.floatValue ?? 0) / 100).toFixed(decimalScale ?? undefined),
                         },
                     } as ChangeEvent<HTMLInputElement>);
                 }}

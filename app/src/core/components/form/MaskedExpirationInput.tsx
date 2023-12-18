@@ -1,5 +1,5 @@
 import TextField, { TextFieldProps } from '@mui/material/TextField';
-import { forwardRef } from 'react';
+import { forwardRef, useState } from 'react';
 import { NumberFormatBase, NumericFormatProps, usePatternFormat } from 'react-number-format';
 import { FormatInputValueFunction } from 'react-number-format/types/types';
 
@@ -30,7 +30,13 @@ const MaskedExpirationInput = forwardRef<HTMLInputElement, NumericFormatProps<Te
     { onChange, ...rest },
     ref
 ) {
-    const { format, ...formatProps } = usePatternFormat({ ...rest, format: MASK_FORMAT, mask: MASK_CHARACTER });
+    const [isFocused, setIsFocused] = useState(false);
+    const { format, ...formatProps } = usePatternFormat({
+        ...rest,
+        allowEmptyFormatting: isFocused,
+        format: MASK_FORMAT,
+        mask: MASK_CHARACTER,
+    });
     const formatter = patternFormatter(format);
 
     return (
@@ -44,6 +50,14 @@ const MaskedExpirationInput = forwardRef<HTMLInputElement, NumericFormatProps<Te
             onValueChange={(vals, info) => onChange?.(formatMaskedValueChangeEvent(vals, info, rest.name, 'formattedValue'))}
             {...rest}
             {...formatProps}
+            onBlur={(event) => {
+                setIsFocused(false);
+                rest.onBlur?.(event);
+            }}
+            onFocus={(event) => {
+                setIsFocused(true);
+                rest.onFocus?.(event);
+            }}
         />
     );
 });
