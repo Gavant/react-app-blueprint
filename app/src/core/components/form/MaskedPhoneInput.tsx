@@ -13,7 +13,6 @@ type MaskedPhoneInputProps = Omit<PatternFormatProps<TextFieldProps>, 'format'> 
     includeExtension?: boolean;
 };
 
-// TODO documentation
 const MaskedPhoneInput = forwardRef<HTMLInputElement, MaskedPhoneInputProps>(function MaskedPhoneInput(
     { includeExtension, onChange, ...rest },
     ref

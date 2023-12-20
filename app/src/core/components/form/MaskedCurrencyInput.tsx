@@ -5,8 +5,7 @@ import { NumericFormat, NumericFormatProps } from 'react-number-format';
 import { formatMaskedValueChangeEvent } from '~/core/utils/maskedInput';
 
 type MaskedCurrencyInputProps = TextFieldProps;
-
-// TODO documentation
+n;
 const MaskedCurrencyInput = forwardRef<HTMLInputElement, NumericFormatProps<MaskedCurrencyInputProps>>(function MaskedCurrencyInput(
     { decimalScale = 2, fixedDecimalScale = true, onChange, prefix = '$', ...rest },
     ref

@@ -6,7 +6,6 @@ import { formatMaskedValueChangeEvent } from '~/core/utils/maskedInput';
 
 const MASK_CHARACTER = '_';
 
-// TODO documentation
 const MaskedPatternInput = forwardRef<HTMLInputElement, PatternFormatProps<TextFieldProps>>(function MaskedPatternInput(
     { onChange, ...rest },
     ref

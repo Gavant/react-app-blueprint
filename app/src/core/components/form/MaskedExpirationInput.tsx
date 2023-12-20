@@ -25,7 +25,6 @@ const patternFormatter = (format?: FormatInputValueFunction) => (val: string) =>
     return format?.(`${month}${year}`) ?? '';
 };
 
-// TODO documentation
 const MaskedExpirationInput = forwardRef<HTMLInputElement, NumericFormatProps<TextFieldProps>>(function MaskedExpirationInput(
     { onChange, ...rest },
     ref

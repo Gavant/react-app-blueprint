@@ -6,7 +6,6 @@ import { formatMaskedValueChangeEvent } from '~/core/utils/maskedInput';
 
 type MaskedNumberInputProps = TextFieldProps;
 
-// TODO documentation
 const MaskedNumberInput = forwardRef<HTMLInputElement, NumericFormatProps<MaskedNumberInputProps>>(function MaskedNumberInput(
     { onChange, ...rest },
     ref

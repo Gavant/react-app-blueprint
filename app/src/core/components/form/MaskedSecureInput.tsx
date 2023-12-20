@@ -5,7 +5,6 @@ import { PatternFormatProps } from 'react-number-format';
 import MaskedPatternInput from '~/core/components/form/MaskedPatternInput';
 import { formatMaskedValueChangeEvent } from '~/core/utils/maskedInput';
 
-// TODO documentation
 const MaskedSecureInput = forwardRef<HTMLInputElement, PatternFormatProps<TextFieldProps>>(function MaskedSecureInput(
     { onChange, ...rest },
     ref

@@ -59,7 +59,6 @@ function setCaretPosition(el: HTMLInputElement, caretPos: number) {
     }
 }
 
-// TODO documentation
 const MaskedCurrencyInputRTL = forwardRef<HTMLInputElement, NumberFormatBaseProps<MaskedCurrencyInputRTLProps>>(
     function MaskedCurrencyInputRTL(
         { currency = 'USD', decimalScale = 2, fixedDecimalScale = true, locale = 'en-US', onChange, onFocus, ...rest },
