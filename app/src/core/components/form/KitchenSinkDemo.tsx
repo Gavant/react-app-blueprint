@@ -9,7 +9,7 @@ import MaskedExpirationInput from '~/core/components/form/MaskedExpirationInput'
 import MaskedNumberInput from '~/core/components/form/MaskedNumberInput';
 import MaskedPatternInput from '~/core/components/form/MaskedPatternInput';
 import MaskedPhoneInput from '~/core/components/form/MaskedPhoneInput';
-import { castNumericMaskedValues } from '~/core/utils/maskedInput';
+import MaskedSecureInput from '~/core/components/form/MaskedSecureInput';
 
 const Form = styled.form`
     margin: 0 auto;
@@ -35,8 +35,7 @@ export default function KitchenSinkDemo() {
         handleSubmit,
     } = useForm<FormValues>({ defaultValues: { currency: '', currencyRtl: '0', phone: '' } });
 
-    const onSubmit: SubmitHandler<FormValues> = (data) =>
-        console.log('submitted', castNumericMaskedValues<FormValues>(data, ['basic', 'currency', 'currencyRtl', 'pct']));
+    const onSubmit: SubmitHandler<FormValues> = (data) => console.log('submitted', data);
 
     return (
         <Form noValidate onSubmit={handleSubmit(onSubmit)}>
@@ -80,7 +79,7 @@ export default function KitchenSinkDemo() {
                 <Controller
                     control={control}
                     name="ccExpire"
-                    render={({ field }) => <MaskedExpirationInput error={!!errors.ccExpire} label="CC Expire" {...field} />}
+                    render={({ field }) => <MaskedExpirationInput error={!!errors.ccExpire} label="CC Expire (MM/YY)" {...field} />}
                     rules={{ required: true }}
                 />
                 <Controller
@@ -94,7 +93,7 @@ export default function KitchenSinkDemo() {
                 <Controller
                     control={control}
                     name="ssn"
-                    render={({ field }) => <MaskedPatternInput error={!!errors.ssn} format="###-##-####" label="SSN" {...field} />}
+                    render={({ field }) => <MaskedSecureInput error={!!errors.ssn} format="###-##-####" label="SSN" {...field} />}
                     rules={{ required: true }}
                 />
                 <Controller

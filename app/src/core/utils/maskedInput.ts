@@ -18,11 +18,3 @@ export function formatMaskedValueChangeEvent(
         },
     } as ChangeEvent<HTMLInputElement>;
 }
-
-export function castNumericMaskedValues<T>(values: T, props: string[]) {
-    return {
-        ...values,
-        // TODO fix TS issues -- can we infer the available props/props that are numbers programmatically with the given type arg?
-        ...props.reduce((agg, prop) => ({ ...agg, [prop]: Number(values[prop]) }), {}),
-    };
-}
