@@ -5,8 +5,12 @@ import { PatternFormatProps } from 'react-number-format';
 import MaskedPatternInput from '~/core/components/form/MaskedPatternInput';
 import { formatMaskedValueChangeEvent } from '~/core/utils/maskedInput';
 
-const MaskedSecureInput = forwardRef<HTMLInputElement, PatternFormatProps<TextFieldProps>>(function MaskedSecureInput(
-    { onChange, ...rest },
+type MaskedSecureProps = PatternFormatProps<TextFieldProps> & {
+    unprotected?: boolean;
+};
+
+const MaskedSecureInput = forwardRef<HTMLInputElement, MaskedSecureProps>(function MaskedSecureInput(
+    { onChange, unprotected, ...rest },
     ref
 ) {
     const [isFocused, setIsFocused] = useState(false);
@@ -28,7 +32,7 @@ const MaskedSecureInput = forwardRef<HTMLInputElement, PatternFormatProps<TextFi
                 setIsFocused(true);
                 rest.onFocus?.(event);
             }}
-            type={isFocused ? 'text' : 'password'}
+            type={isFocused || unprotected ? 'text' : 'password'}
         />
     );
 });
