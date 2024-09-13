@@ -47,3 +47,17 @@ export const pluck = <T, K extends keyof T>(o: T, propertyNames: K | K[]): T[K] 
 export const flattenEnum = <T>(e: any): T[] => {
     return Object.values(e).filter((value) => typeof value === 'string') as T[];
 };
+
+/**
+ * Get all keys of an object that have a specific value type
+ *
+ */
+export type KeyOfType<T, V> = keyof {
+    [P in keyof T as T[P] extends V ? P : never]: any;
+};
+
+export type OmitTypename<T> = Omit<T, '__typename'>;
+
+export type ArrayMemberType<T> = T extends Array<infer U> ? U : never;
+
+export type ElementProps<T> = T extends React.ComponentType<infer Props> ? (Props extends object ? Props : never) : never;

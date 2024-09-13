@@ -15,6 +15,7 @@
     },
     "dependencies": {
         "@apollo/client": "^3.8.1",
+        "@hookform/resolvers": "^3.9.0",
         "@mui/icons-material": "^5.14.3",
         "@mui/lab": "^5.0.0-alpha.151",
         "@mui/material": "^5.14.5",
@@ -23,6 +24,7 @@
         "graphql": "^16.8.0",
         "history": "^5.3.0",
         "js-cookie": "^3.0.5",
+        "libphonenumber-js": "^1.11.8",
         "polished": "^4.2.2",
         "react": "^18.2.0",
         "react-auth-kit": "^2.12.6",
@@ -33,7 +35,8 @@
         "react-router-dom": "^6.15.0",
         "react-spring": "^9.7.3",
         "styled-components": "^6.1.0",
-        "true-myth": "^7.1.0"
+        "true-myth": "^8.0.0",
+        "zod": "^3.23.8"
     },
     "devDependencies": {
         "@emotion/react": "^11.11.1",
