@@ -1,5 +1,3 @@
-// https://coolors.co/palette/001524-15616d-86dba6-f4f1ea-ff7d00-f04336
-// https://coolors.co/palette/001524-15616d-86dba6-f4f1ea-ff7d00-f04336-F82500-FFFFFF
 import { createTheme } from '@mui/material/styles';
 import { TypographyOptions } from '@mui/material/styles/createTypography';
 
