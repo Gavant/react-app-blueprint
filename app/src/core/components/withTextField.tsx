@@ -49,8 +49,6 @@ const withFormField = <T extends FieldValues>(controller: Control<T>) => {
                         autoComplete={field}
                         color="secondary"
                         error={!!error?.type}
-                        InputLabelProps={{ shrink: !!value }}
-                        inputProps={{ maxLength, ...inputProps }}
                         label={`${
                             error?.type === 'invalid_type' && !isDirty
                                 ? `${label} is required`
@@ -60,10 +58,10 @@ const withFormField = <T extends FieldValues>(controller: Control<T>) => {
                                 ? `${label}*`
                                 : label
                         }`}
-                        // label={error?.type}
                         onChange={onChange}
                         slotProps={{
                             htmlInput: { maxLength, ...inputProps },
+                            inputLabel: { shrink: !!value },
                         }}
                         type={type}
                         value={value}
