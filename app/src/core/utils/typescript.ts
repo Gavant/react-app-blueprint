@@ -61,3 +61,9 @@ export type OmitTypename<T> = Omit<T, '__typename'>;
 export type ArrayMemberType<T> = T extends Array<infer U> ? U : never;
 
 export type ElementProps<T> = T extends React.ComponentType<infer Props> ? (Props extends object ? Props : never) : never;
+
+export type DeepPartial<T> = T extends object
+    ? {
+          [P in keyof T]?: DeepPartial<T[P]>;
+      }
+    : T;

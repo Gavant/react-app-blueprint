@@ -9,6 +9,9 @@
         "build": "yarn workspace app build",
         "docs": "yarn workspace docs start"
     },
+    "resolutions": {
+        "@mui/base": "5.0.0-beta.58"
+    },
     "devDependencies": {
         "prettier": "3.0.2"
     },

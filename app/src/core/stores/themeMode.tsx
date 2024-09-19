@@ -1,4 +1,4 @@
-import { ThemeProvider as MuiProvider } from '@mui/material';
+import { ThemeProvider as MuiProvider, useMediaQuery } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import { ReactElement, ReactNode, useMemo } from 'react';
 import { ThemeProvider as StyledProvider } from 'styled-components';
@@ -13,8 +13,14 @@ export default function ThemeMode({ children }: ProviderToggleProps) {
     const theme = useMemo(() => {
         const { overrides } = customTheme;
         return createTheme({
+            colorSchemes: {
+                dark: true,
+                light: true,
+            },
+            cssVariables: {
+                colorSchemeSelector: 'class',
+            },
             palette: {
-                mode: 'light',
                 ...overrides.palette,
             },
             typography: { ...overrides.typography },

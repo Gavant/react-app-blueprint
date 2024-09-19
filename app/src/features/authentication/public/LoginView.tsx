@@ -1,8 +1,9 @@
-import { Box, Container, Grid, Link } from '@mui/material';
+import { Box, Container, Grid2, Link } from '@mui/material';
 import { MouseEvent, useCallback } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import { isErr } from 'true-myth/result';
 
+import ColorModeToggle from '~/core/components/ColorModeToggle';
 import SubmitButton from '~/core/components/SubmitButton';
 import ToastBar from '~/core/components/ToastBar';
 import FadeElementInDown from '~/core/components/animation/FadeInDown';
@@ -27,7 +28,7 @@ const Root = styled(Container)`
     height: 100%;
 `;
 
-const GridLeft = styled(Grid)`
+const GridLeft = styled(Grid2)`
     text-align: left;
 `;
 
@@ -36,7 +37,6 @@ const FormBox = styled(Box)`
     flex-direction: column;
     margin-top: 3rem;
     width: 20rem;
-    background: ${({ theme }) => theme.palette.common.white};
 `;
 
 function LoginView() {
@@ -60,9 +60,10 @@ function LoginView() {
         <>
             <RootCss />
             <Root component="main" maxWidth="xs">
+                <ColorModeToggle />
                 <FadeElementInDown offset={4}>
                     <FormBox>
-                        <Box component="form" noValidate style={{ backgroundColor: '#FFF' }}>
+                        <Box component="form" noValidate>
                             <Box sx={{ mt: 2 }}>
                                 <Text
                                     autoComplete="username"
@@ -90,18 +91,18 @@ function LoginView() {
                                     Sign In
                                 </SubmitButton>
                             </Box>
-                            <Grid container justifyContent="flex-start">
-                                <GridLeft item xs>
+                            <Grid2 container justifyContent="space-between">
+                                <GridLeft>
                                     <Link href="#" variant="body2">
                                         Forgot password?
                                     </Link>
                                 </GridLeft>
-                                <Grid item>
+                                <Grid2>
                                     <Link href="#" variant="body2">
                                         Create Account
                                     </Link>
-                                </Grid>
-                            </Grid>
+                                </Grid2>
+                            </Grid2>
                         </Box>
                     </FormBox>
                 </FadeElementInDown>

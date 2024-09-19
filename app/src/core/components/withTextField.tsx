@@ -35,6 +35,7 @@ const withFormField = <T extends FieldValues>(controller: Control<T>) => {
         label,
         maxLength = 50, // backend default
         options,
+        required,
         requiredMessage,
         type = 'text',
         ...props
@@ -43,18 +44,27 @@ const withFormField = <T extends FieldValues>(controller: Control<T>) => {
             <Controller
                 control={controller}
                 name={field}
-                render={({ field: { onChange, value }, fieldState: { error } }) => (
+                render={({ field: { onChange, value }, fieldState: { error, isDirty } }) => (
                     <TextField
                         autoComplete={field}
                         color="secondary"
                         error={!!error?.type}
-                        helperText={
-                            error?.type ? requiredMessage ?? `${label ?? 'This field'} ${error?.type ? 'is required' : ''}` : undefined
-                        }
                         InputLabelProps={{ shrink: !!value }}
                         inputProps={{ maxLength, ...inputProps }}
-                        label={`${label} ${error?.type === 'required' ? '*' : ''}`}
+                        label={`${
+                            error?.type === 'invalid_type' && !isDirty
+                                ? `${label} is required`
+                                : error?.message
+                                ? error.message
+                                : required
+                                ? `${label}*`
+                                : label
+                        }`}
+                        // label={error?.type}
                         onChange={onChange}
+                        slotProps={{
+                            htmlInput: { maxLength, ...inputProps },
+                        }}
                         type={type}
                         value={value}
                         {...props}

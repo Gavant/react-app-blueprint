@@ -13,7 +13,6 @@ export default function useLoginForm(redirect: string) {
     const navigate = useNavigate();
 
     const form = useForm<LoginForm>({
-        defaultValues: { password: '', username: '' },
         resolver: zodResolver(LoginSchema),
     });
 
