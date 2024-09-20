@@ -1,3 +1,4 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
@@ -5,22 +6,18 @@ import Result, { isOk } from 'true-myth/result';
 
 import useSubmit, { ReactHookForm } from '~/core/hooks/useSubmit';
 import useAuth from '~/features/authentication/public/hooks/useAuth';
+import { LoginForm, LoginSchema } from '~/features/schemas/Login';
 
-export interface LoginForm {
-    password: string;
-    username: string;
-}
-
-export default function useLoginForm() {
+export default function useLoginForm(redirect: string) {
     const { authenticate } = useAuth();
     const navigate = useNavigate();
-    // const [submitErrors, setSubmitErrors] = useState<Result<LoginForm, string> | null>(null);
 
     const form = useForm<LoginForm>({
-        defaultValues: { password: '', username: '' },
+        resolver: zodResolver(LoginSchema),
     });
 
     const {
+        control,
         formState: { dirtyFields, errors, isDirty, isSubmitSuccessful, isSubmitted, isSubmitting, isValid },
     } = form;
 
@@ -28,10 +25,9 @@ export default function useLoginForm() {
         async (data: LoginForm): Promise<Result<LoginForm, string>> => {
             const { password, username } = data;
 
-            // setSubmitErrors(null);
             const result = await authenticate.signIn(username, password);
             if (isOk(result)) {
-                navigate('/');
+                navigate(redirect ?? '/');
             }
 
             return result;
@@ -62,6 +58,7 @@ export default function useLoginForm() {
     const onSubmit = useSubmit({ form, onInvalidSubmit, onValidSubmit });
 
     return {
+        control,
         dirtyFields,
         errors,
         isDirty,

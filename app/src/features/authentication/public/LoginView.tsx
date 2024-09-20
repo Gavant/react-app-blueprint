@@ -1,11 +1,13 @@
-import { Box, Container, Grid, Link, TextField } from '@mui/material';
+import { Box, Container, Grid2, Link } from '@mui/material';
 import { MouseEvent, useCallback } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import { isErr } from 'true-myth/result';
 
+import ColorModeToggle from '~/core/components/ColorModeToggle';
 import SubmitButton from '~/core/components/SubmitButton';
 import ToastBar from '~/core/components/ToastBar';
 import FadeElementInDown from '~/core/components/animation/FadeInDown';
+import useFormFields from '~/core/hooks/useFormFields';
 import useToast from '~/core/hooks/useToast';
 import useLoginForm from '~/features/authentication/public/hooks/useLoginForm';
 
@@ -26,7 +28,7 @@ const Root = styled(Container)`
     height: 100%;
 `;
 
-const GridLeft = styled(Grid)`
+const GridLeft = styled(Grid2)`
     text-align: left;
 `;
 
@@ -38,7 +40,9 @@ const FormBox = styled(Box)`
 `;
 
 function LoginView() {
-    const { errors, onSubmit, register } = useLoginForm();
+    const { control, onSubmit } = useLoginForm('');
+
+    const { Text } = useFormFields(control);
     const { toast } = useToast();
 
     const loginSubmit = useCallback(
@@ -56,26 +60,29 @@ function LoginView() {
         <>
             <RootCss />
             <Root component="main" maxWidth="xs">
+                <ColorModeToggle />
                 <FadeElementInDown offset={4}>
                     <FormBox>
                         <Box component="form" noValidate>
                             <Box sx={{ mt: 2 }}>
-                                <TextField
-                                    fullWidth
-                                    {...register('username', { required: 'Please enter a username' })}
+                                <Text
                                     autoComplete="username"
                                     autoFocus
-                                    error={!!errors.username?.type}
-                                    label={`Username ${errors.username?.type ? '- Required' : ''}`}
+                                    color="secondary"
+                                    field="username"
+                                    fullWidth
+                                    label="User Name"
+                                    required
                                 />
                             </Box>
                             <Box sx={{ mt: 2 }}>
-                                <TextField
-                                    fullWidth
-                                    {...register('password', { required: 'Please enter your password' })}
+                                <Text
                                     autoComplete="current-password"
-                                    error={!!errors.password?.type}
-                                    label={`Password ${errors.password?.type ? '- Required' : ''}`}
+                                    color="secondary"
+                                    field="password"
+                                    fullWidth
+                                    label="Password"
+                                    required
                                     type="password"
                                 />
                             </Box>
@@ -84,18 +91,18 @@ function LoginView() {
                                     Sign In
                                 </SubmitButton>
                             </Box>
-                            <Grid container justifyContent="flex-start">
-                                <GridLeft item xs>
+                            <Grid2 container justifyContent="space-between">
+                                <GridLeft>
                                     <Link href="#" variant="body2">
                                         Forgot password?
                                     </Link>
                                 </GridLeft>
-                                <Grid item>
+                                <Grid2>
                                     <Link href="#" variant="body2">
                                         Create Account
                                     </Link>
-                                </Grid>
-                            </Grid>
+                                </Grid2>
+                            </Grid2>
                         </Box>
                     </FormBox>
                 </FadeElementInDown>
