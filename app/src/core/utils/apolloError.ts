@@ -53,7 +53,7 @@ export const TryGetApolloErrorEntity = (error: ApolloError): string | null => {
 export const getStatusCode = (error: ApolloError): number | null => (error?.networkError as ServerError)?.statusCode;
 
 // TODO: Want to come up with a better pattern for error handling than these error specific handlers. At some point the decision
-// was made to have the FE manage the error messages, but than that seems to have randomly changed at some point because the BE sends full
+// was made to have the FE manage the error messages, but than that seems to have changed at some point because the BE sends full
 // errors back in PLUT with user presentable error text.
 export const handle400Error = (
     error: ApolloError,
