@@ -38,7 +38,7 @@ if (import.meta.env.DEV) {
 
 const cookieOpts = {
     domain: cookieDomain,
-    expires: 30, // Days
+    expires: 30, // Days - Cognito refresh tokens default duration
 };
 
 export default function useAuth() {
