@@ -6053,7 +6053,7 @@ __metadata:
     polished: "npm:^4.2.2"
     prettier: "npm:3.0.2"
     react: "npm:^18.2.0"
-    react-auth-kit: "npm:^2.12.6"
+    react-auth-kit: "npm:^3.1.3"
     react-dom: "npm:^18.2.0"
     react-helmet-async: "npm:^1.3.0"
     react-hook-form: "npm:^7.45.4"
@@ -12236,13 +12236,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jwt-decode@npm:^3.1.2":
-  version: 3.1.2
-  resolution: "jwt-decode@npm:3.1.2"
-  checksum: 20a4b072d44ce3479f42d0d2c8d3dabeb353081ba4982e40b83a779f2459a70be26441be6c160bfc8c3c6eadf9f6380a036fbb06ac5406b5674e35d8c4205eeb
-  languageName: node
-  linkType: hard
-
 "keyv@npm:^3.0.0":
   version: 3.1.0
   resolution: "keyv@npm:3.1.0"
@@ -14986,21 +14979,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-auth-kit@npm:^2.12.6":
-  version: 2.12.7
-  resolution: "react-auth-kit@npm:2.12.7"
+"react-auth-kit@npm:^3.1.3":
+  version: 3.1.3
+  resolution: "react-auth-kit@npm:3.1.3"
   dependencies:
     js-cookie: "npm:^3.0.1"
-    jwt-decode: "npm:^3.1.2"
-    react: "npm:>=16.8.0 || ^17.x || ^18.x"
-    react-router-dom: "npm:^6.2.0"
+    rxjs: "npm:^7.8.1"
   peerDependencies:
-    js-cookie: ^3.0.1
-    jwt-decode: ^3.1.2
+    next: ">=13.0 || ^14.x"
     react: ">=16.8.0 || ^17.x || ^18.x"
     react-dom: ">=16.8.0 || ^17.x || ^18.x"
-    react-router-dom: ^6.2.0
-  checksum: e498dd1ba57e27371d05a5b754e78f2d2842d037e22f6538e42ee6423435e875a84b94dd28a076aa6487c01cc90e871c886dde6ea88c05af33deddcb8de2aef9
+  checksum: bdc2c017d1954ce28441d1f3ffa9556ccc09808ab5c85652f4aa743e6e7aafc2f06418e19aa81596e28b87dd7dc64e6e02edb70fc34d2aec05eb2304a79b988c
   languageName: node
   linkType: hard
 
@@ -15210,7 +15199,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router-dom@npm:^6.15.0, react-router-dom@npm:^6.2.0":
+"react-router-dom@npm:^6.15.0":
   version: 6.18.0
   resolution: "react-router-dom@npm:6.18.0"
   dependencies:
@@ -15298,15 +15287,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:>=16.8.0 || ^17.x || ^18.x, react@npm:^18.2.0":
-  version: 18.2.0
-  resolution: "react@npm:18.2.0"
-  dependencies:
-    loose-envify: "npm:^1.1.0"
-  checksum: b9214a9bd79e99d08de55f8bef2b7fc8c39630be97c4e29d7be173d14a9a10670b5325e94485f74cd8bff4966ef3c78ee53c79a7b0b9b70cba20aa8973acc694
-  languageName: node
-  linkType: hard
-
 "react@npm:^17.0.2":
   version: 17.0.2
   resolution: "react@npm:17.0.2"
@@ -15314,6 +15294,15 @@ __metadata:
     loose-envify: "npm:^1.1.0"
     object-assign: "npm:^4.1.1"
   checksum: ece60c31c1d266d132783aaaffa185d2e4c9b4db144f853933ec690cee1e0600c8929a1dd0a9e79323eea8e2df636c9a06d40f6cfdc9f797f65225433e67f707
+  languageName: node
+  linkType: hard
+
+"react@npm:^18.2.0":
+  version: 18.2.0
+  resolution: "react@npm:18.2.0"
+  dependencies:
+    loose-envify: "npm:^1.1.0"
+  checksum: b9214a9bd79e99d08de55f8bef2b7fc8c39630be97c4e29d7be173d14a9a10670b5325e94485f74cd8bff4966ef3c78ee53c79a7b0b9b70cba20aa8973acc694
   languageName: node
   linkType: hard
 
@@ -15898,7 +15887,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rxjs@npm:^7.2.0, rxjs@npm:^7.5.4, rxjs@npm:^7.5.5":
+"rxjs@npm:^7.2.0, rxjs@npm:^7.5.4, rxjs@npm:^7.5.5, rxjs@npm:^7.8.1":
   version: 7.8.1
   resolution: "rxjs@npm:7.8.1"
   dependencies:

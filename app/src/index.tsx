@@ -1,27 +1,35 @@
 import React from 'react';
-import { AuthProvider } from 'react-auth-kit';
+import AuthProvider from 'react-auth-kit';
+import createStore from 'react-auth-kit/createStore';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import { HelmetProvider } from 'react-helmet-async';
-import { createBrowserRouter, createRoutesFromElements, RouterProvider } from 'react-router-dom';
+import { RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
 
 import ApolloClientProvider from '~/core/stores/apollo';
 import ThemeModeProvider from '~/core/stores/themeMode';
 import { ToastProvider } from '~/core/stores/toastContext';
 import { refresh } from '~/features/authentication/public/utils/apolloRefresh';
 import MainRoutes from '~/main.routes';
+
+const cookieName = import.meta.env.VITE_AUTH_COOKIE_NAME;
+const secure = Boolean(import.meta.env.VITE_HOST_IS_SECURE);
+
+let cookieDomain;
+if (import.meta.env.DEV) {
+    cookieDomain = 'localhost';
+} else {
+    cookieDomain = import.meta.env.VITE_AUTH_HOST_DOMAIN;
+}
+
+const store = createStore({ authName: cookieName, authType: 'cookie', cookieDomain: cookieDomain, cookieSecure: secure, refresh });
+
 export const router = createBrowserRouter(createRoutesFromElements(MainRoutes));
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <React.StrictMode>
         <ThemeModeProvider>
-            <AuthProvider
-                authName={import.meta.env.VITE_AUTH_COOKIE_NAME}
-                authType="cookie"
-                cookieDomain={import.meta.env.VITE_HOST_DOMAIN}
-                cookieSecure={Boolean(import.meta.env.VITE_HOST_IS_SECURE)}
-                refresh={refresh}
-            >
+            <AuthProvider store={store}>
                 <ToastProvider>
                     <ApolloClientProvider>
                         <HelmetProvider>

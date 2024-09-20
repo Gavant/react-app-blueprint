@@ -4,7 +4,7 @@ module.exports = {
         es2021: true,
         node: true,
     },
-    extends: ['plugin:react/recommended', 'eslint:recommended', 'plugin:perfectionist/recommended-alphabetical'],
+    extends: ['plugin:react/recommended', 'eslint:recommended', 'plugin:perfectionist/recommended-natural'],
     globals: {
         ImportMetaEnv: true,
         JSX: true,

@@ -1,26 +1,34 @@
 import { AlertColor } from '@mui/material';
-import { createContext, useState } from 'react';
-import { ReactNode } from 'react';
+import { ReactNode, createContext, useState } from 'react';
 
-type setToast = (message: string, { key, open }?: { key?: string; open?: boolean }) => void;
+type SetToast = (message: string, options?: { autohideDuration?: number; key?: string; open?: boolean }) => void;
 
-export type ToastMsg = { key: string; msg: string; open?: boolean; severity: AlertColor };
+export type Toast = {
+    error: SetToast;
+    info: SetToast;
+    success: SetToast;
+    warning: SetToast;
+};
+
+export type ToastMsg = {
+    autohideOverride?: number;
+    key: string;
+    msg: string;
+    open?: boolean;
+    severity: AlertColor;
+};
+
 export interface ToastContextValue {
-    setToast: ({ key, msg, open, severity }: { key: string; msg: string; open: boolean; severity: AlertColor }) => void;
-    toast: {
-        error: setToast;
-        info: setToast;
-        success: setToast;
-        warning: setToast;
-    };
+    setToast: (toastMsg: ToastMsg) => void;
+    toast: Toast;
     toastMsg: ToastMsg | null;
 }
 
-const defaultContext = {
-    setToast: () => '',
-    toast: { error: () => '', info: () => '', success: () => '', warning: () => '' },
-    toastMsg: { key: '', msg: '', open: false, severity: 'info' },
-} satisfies ToastContextValue;
+const defaultContext: ToastContextValue = {
+    setToast: () => {},
+    toast: { error: () => {}, info: () => {}, success: () => {}, warning: () => {} },
+    toastMsg: null,
+};
 
 const ToastContext = createContext<ToastContextValue>(defaultContext);
 ToastContext.displayName = 'ToastContext';
@@ -32,23 +40,27 @@ export interface ToastProviderProps {
 const ToastProvider = ({ children }: ToastProviderProps) => {
     const [toastMsg, setToastMsg] = useState<ToastMsg | null>(null);
 
-    const setToastFunction = (alertType: AlertColor) => (message: string, options?: { key?: string; open?: boolean }) =>
-        setToastMsg({ key: options?.key ?? message.toLowerCase().replace(' ', '-'), msg: message, open: true, severity: alertType });
+    const createSetToastFunction =
+        (severity: AlertColor): SetToast =>
+        (message, options) =>
+            setToastMsg({
+                autohideOverride: options?.autohideDuration ?? undefined,
+                key: options?.key ?? message.toLowerCase().replace(/ /g, '-'),
+                msg: message,
+                open: options?.open ?? true,
+                severity,
+            });
 
-    const setToast = (value: ToastMsg) => {
-        setToastMsg(value);
+    const setToast = (toastMsg: ToastMsg) => setToastMsg(toastMsg);
+
+    const toast: Toast = {
+        error: createSetToastFunction('error'),
+        info: createSetToastFunction('info'),
+        success: createSetToastFunction('success'),
+        warning: createSetToastFunction('warning'),
     };
 
-    const toast = {
-        error: setToastFunction('error'),
-        info: setToastFunction('info'),
-        success: setToastFunction('success'),
-        warning: setToastFunction('warning'),
-    };
-
-    const value = { setToast, toast, toastMsg };
-
-    return <ToastContext.Provider value={value}>{children}</ToastContext.Provider>;
+    return <ToastContext.Provider value={{ setToast, toast, toastMsg }}>{children}</ToastContext.Provider>;
 };
 
 export { ToastContext, ToastProvider };

@@ -1,35 +1,63 @@
-import { useMutation } from '@apollo/client';
-import { useContext, useEffect } from 'react';
-import { useAuthHeader, useSignIn, useSignOut } from 'react-auth-kit';
-import AuthContext from 'react-auth-kit/dist/AuthContext';
-import { signInFunctionParams } from 'react-auth-kit/dist/types';
+import { useApolloClient, useMutation } from '@apollo/client';
+import Cookies from 'js-cookie';
+import { useEffect } from 'react';
+import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
+import useSignIn from 'react-auth-kit/hooks/useSignIn';
+import useSignOut from 'react-auth-kit/hooks/useSignOut';
+import { useNavigate } from 'react-router';
 import { Result } from 'true-myth';
 import { err, ok } from 'true-myth/result';
 
 import useToast from '~/core/hooks/useToast';
-import { LoginAuthenticationResult, MutationLoginArgs, MutationLogoutArgs } from '~/core/types/generated/graphql';
-import { isApolloError } from '~/core/utils/apollo';
-import { LOGIN, LOGOUT } from '~/features/authentication/public/graphql/authentication';
+import {
+    LoginMutation,
+    LogoutMutation,
+    MutationLoginArgs,
+    MutationLogoutArgs,
+    RefreshTokenMutation,
+    RefreshTokenMutationVariables,
+} from '~/core/types/generated/graphql';
+import { isApolloError } from '~/core/utils/apolloError';
+import { LOGIN, LOGOUT, REFRESH_TOKEN } from '~/features/authentication/graphql/authentication.gql';
+import { handleApolloAuthError } from '~/features/authentication/utils/error';
+import { createSessionData } from '~/features/authentication/utils/session';
 
 const setHeaders = (auth: string) => ({ context: { headers: { token: `Bearer ${auth}` } } });
+
+export interface IUserData {
+    username: string;
+}
+
+let cookieDomain;
+
+if (import.meta.env.DEV) {
+    cookieDomain = 'localhost';
+} else {
+    cookieDomain = import.meta.env.VITE_AUTH_HOST_DOMAIN;
+}
+
+const cookieOpts = {
+    domain: cookieDomain,
+    expires: 30, // Days
+};
 
 export default function useAuth() {
     const login = useSignIn();
     const logout = useSignOut();
-    const getAuth = useAuthHeader();
+    const client = useApolloClient();
+
+    const authHeader = useAuthHeader() ?? '';
+    const navigate = useNavigate();
     const { toast } = useToast();
-    const authContext = useContext(AuthContext);
-    // TODO: GQL Codegen just suddenly started omitting my LoginMutation type. Swapping to any for now.
-    const [loginMutation, { error: loginError, loading: loginLoading, reset: resetLogin }] = useMutation<any, MutationLoginArgs>(LOGIN, {
-        fetchPolicy: 'no-cache',
-    });
-    // TODO: GQL Codegen just suddenly started omitting my LogoutMutation type. Swapping to any for now.
-    const [logoutMutation, { error: logoutError, loading: logoutLoading, reset: resetLogout }] = useMutation<any, MutationLogoutArgs>(
-        LOGOUT,
-        {
-            fetchPolicy: 'no-cache',
-        }
+    const [loginMutation, { error: loginError, loading: loginLoading, reset: resetLogin }] = useMutation<LoginMutation, MutationLoginArgs>(
+        LOGIN
     );
+    const [logoutMutation, { error: logoutError, loading: logoutLoading, reset: resetLogout }] = useMutation<
+        LogoutMutation,
+        MutationLogoutArgs
+    >(LOGOUT);
+
+    const [refreshMutation, { loading: refreshLoading }] = useMutation<RefreshTokenMutation, RefreshTokenMutationVariables>(REFRESH_TOKEN);
 
     useEffect(() => {
         if (loginError?.message) {
@@ -47,24 +75,24 @@ export default function useAuth() {
         }
     }, [logoutError?.message, resetLogout, toast]);
 
-    const signIn = async (username: string, password: string): Promise<Result<{ password: string; username: string }, string>> => {
+    const signIn = async (
+        username: string,
+        password: string
+    ): Promise<Result<{ password: string; username: string }, string | undefined>> => {
         try {
             const result = await loginMutation({ variables: { input: { password, username } } });
-            const responseData = (result?.data?.login as LoginAuthenticationResult) ?? undefined;
-            const sessionData: signInFunctionParams = {
-                authState: { username },
-                expiresIn: responseData?.ExpiresIn ?? 0,
-                refreshToken: responseData?.RefreshToken ?? '',
-                refreshTokenExpireIn: responseData?.ExpiresIn ?? 0,
-                token: responseData?.AccessToken ?? '',
-                tokenType: 'Bearer',
-            };
+            const responseData = result?.data?.login ?? undefined;
+            const sessionData = createSessionData(responseData, username);
+
+            Cookies.set(import.meta.env.VITE_REFRESH_COOKIE_NAME, responseData?.RefreshToken ?? '', cookieOpts);
+            Cookies.set(import.meta.env.VITE_USER_COOKIE_NAME, username, cookieOpts);
+
             const signIn = login(sessionData);
             return signIn ? ok({ password, username }) : err('`access_token` is missing in server response');
         } catch (error: unknown) {
             if (isApolloError(error)) {
-                toast.error(error.networkError?.message ?? 'Unknown error occurred');
-                return err(error.networkError?.message ?? 'Unknown error occurred');
+                const errorContext = { navigate, password, toast, username };
+                return handleApolloAuthError(error, errorContext);
             } else {
                 toast.error('Unknown error occurred');
                 return err('Unknown error occurred');
@@ -72,12 +100,43 @@ export default function useAuth() {
         }
     };
 
-    const signOut = async () => {
+    const signOut = async (redirect?: string) => {
         try {
-            const refreshToken = authContext?.authState?.refresh?.token ?? '';
-            await logoutMutation({ variables: { refreshToken }, ...setHeaders(getAuth()) });
+            const refreshToken = Cookies.get(import.meta.env.VITE_REFRESH_COOKIE_NAME);
+            if (refreshToken) {
+                await logoutMutation({ variables: { refreshToken }, ...setHeaders(authHeader) });
+            }
+            await client.resetStore(); // TODO: According to Apollo docs this is all we need. But haven't tested it completely.
         } finally {
+            Cookies.remove(import.meta.env.VITE_REFRESH_COOKIE_NAME, cookieOpts);
+            Cookies.remove(import.meta.env.VITE_USER_COOKIE_NAME, cookieOpts);
             logout();
+
+            if (redirect) {
+                window.location.href = `${window.location.origin}${redirect}`;
+            } else {
+                window.location.reload();
+            }
+        }
+    };
+
+    const refresh = async () => {
+        const refreshToken = Cookies.get(import.meta.env.VITE_REFRESH_COOKIE_NAME);
+        const username = Cookies.get(import.meta.env.VITE_USER_COOKIE_NAME) ?? '';
+        if (refreshToken) {
+            try {
+                const result = await refreshMutation({
+                    mutation: REFRESH_TOKEN,
+                    variables: { refreshToken: refreshToken ?? '' },
+                });
+                const responseData = result?.data?.refreshToken ?? undefined;
+                const sessionData = createSessionData(responseData, username);
+                const signIn = login(sessionData);
+                return signIn ? ok({ username }) : err('`access_token` is missing in server response');
+            } catch (error: unknown) {
+                console.log('Refresh error. See error below');
+                console.log(error);
+            }
         }
     };
 
@@ -89,6 +148,10 @@ export default function useAuth() {
         invalidate: {
             loading: logoutLoading,
             signOut,
+        },
+        renew: {
+            loading: refreshLoading,
+            refresh,
         },
     };
 }

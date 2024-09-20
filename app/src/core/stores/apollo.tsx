@@ -1,59 +1,87 @@
-import { ApolloClient, ApolloProvider, createHttpLink, InMemoryCache } from '@apollo/client';
+import {
+    ApolloClient,
+    ApolloProvider,
+    createHttpLink,
+    from,
+    InMemoryCache,
+    NormalizedCacheObject,
+    Observable,
+    ServerError,
+} from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { onError } from '@apollo/client/link/error';
-import React from 'react';
+import Cookies from 'js-cookie';
+import { ReactNode, useContext } from 'react';
 
-const getAuthCookie = () => document.cookie.match(`(^|;)\\s*${import.meta.env.VITE_AUTH_COOKIE_NAME}\\s*=\\s*([^;]+)`)?.pop() || '';
+import { RefreshContext } from '~/features/authentication/public/stores/refresh';
 
-const kickToLogin = () => (window.location.href = `${window.location.protocol + '//' + window.location.host}/login`);
+const getAuthCookie = () => Cookies.get(import.meta.env.VITE_AUTH_COOKIE_NAME);
 
 const httpLink = createHttpLink({
-    uri: `${import.meta.env.VITE_API_BASE_URI}/graphql`,
+    uri: `${import.meta.env.VITE_API_BASE_URI}graphql`,
 });
 
-const onErrorLink = onError((errors) => {
-    if (errors?.graphQLErrors) {
-        for (const err of errors.graphQLErrors) {
-            if (err?.path?.[0] !== 'login') {
-                if (err.extensions?.status_code) {
-                    switch (err.extensions?.status_code) {
-                        case 401:
-                            kickToLogin();
-                    }
-                } else {
-                    switch (err.extensions?.code) {
-                        case 'UNAUTHENTICATED':
-                            kickToLogin();
-                            break;
-                        default:
-                            console.error(err.message);
-                            break;
-                    }
-                }
-            }
+const createErrorLink = ({ refreshToken }: { refreshToken: () => Promise<boolean> }) =>
+    onError(({ forward, networkError, operation }) => {
+        if (networkError && (networkError as ServerError).statusCode === 401) {
+            return new Observable((observer) => {
+                refreshToken()
+                    .then((success) => {
+                        if (success) {
+                            // Retry the request since the token has been refreshed
+                            forward(operation).subscribe(observer);
+                        } else {
+                            observer.error(new Error("Couldn't automatically log in"));
+                        }
+                    })
+                    .catch(observer.error.bind(observer));
+            });
         }
-    } else if (errors?.networkError) {
-        if (window.location.pathname !== '/login') {
-            kickToLogin();
-        }
-    }
-});
+        // If it's not a 401 error, or refreshToken fails, proceed with the default error handling
+        return forward(operation);
+    });
 
-const authLink = setContext((_, { headers }) => {
+const nonAuthUris = [import.meta.env.VITE_CMS_BASE_URI];
+
+const authLink = setContext((_, { headers, uri }) => {
     const token = getAuthCookie();
+    const resultHeaders = {
+        ...headers,
+    };
+
+    if (!nonAuthUris.includes(uri)) {
+        resultHeaders.authorization = token ? `Bearer ${token}` : '';
+    }
+
     return {
-        headers: {
-            ...headers,
-            authorization: token ? `Bearer ${token}` : '',
-        },
+        headers: resultHeaders,
     };
 });
 
-export const client = new ApolloClient({
-    cache: new InMemoryCache(),
-    link: authLink.concat(onErrorLink).concat(httpLink),
-});
+const cache = new InMemoryCache();
 
-export default function ApolloClientProvider({ children }: { children: React.ReactNode }) {
+export let client: ApolloClient<NormalizedCacheObject>;
+
+export default function ApolloClientProvider({ children }: { children: ReactNode }) {
+    const refresh = useContext(RefreshContext);
+
+    client = new ApolloClient({
+        cache,
+        defaultOptions: {
+            mutate: {
+                errorPolicy: 'all',
+            },
+            query: {
+                errorPolicy: 'all',
+            },
+            watchQuery: {
+                errorPolicy: 'all',
+                fetchPolicy: 'cache-and-network',
+                nextFetchPolicy: 'cache-first',
+            },
+        },
+        link: from([authLink, createErrorLink(refresh), httpLink]),
+    });
+
     return <ApolloProvider client={client}>{children}</ApolloProvider>;
 }
