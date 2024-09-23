@@ -72,8 +72,6 @@ export const handle400Error = (
                 case 'UsernameExistsException':
                 case 'EmailAlreadyInUse':
                     return 'Email address already in use';
-                case 'YearlySubRequiresDonation':
-                    return 'A donation selection is required';
                 default:
                     return error.networkError?.message ?? 'Unknown error occurred';
             }
@@ -120,9 +118,6 @@ export const handle400Error = (
             switch (TryGetApolloErrorResponseMessage(error)) {
                 case 'entityNotFound':
                     return 'Not found';
-                case 'NotYourPet':
-                    kickTo('my-profile');
-                    return 'Invalid Profile';
                 default:
                     return 'Unknown Error';
             }
