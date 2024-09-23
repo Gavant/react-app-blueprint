@@ -3,7 +3,7 @@ import {} from '@apollo/client/errors';
 import Result, { err } from 'true-myth/result';
 
 import { Options } from '~/core/hooks/useApolloError';
-import { kickTo, kickToLogin } from '~/core/utils/redirect';
+import { kickToLogin } from '~/core/utils/redirect';
 import { guard } from '~/core/utils/typescript';
 
 type ErrMessage = string | undefined;
