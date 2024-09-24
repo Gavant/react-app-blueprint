@@ -40,9 +40,9 @@ const FormBox = styled(Box)`
 `;
 
 function LoginView() {
-    const { control, onSubmit } = useLoginForm('');
+    const { control, onSubmit, schema } = useLoginForm('');
 
-    const { Text } = useFormFields(control);
+    const { Text } = useFormFields({ control, schema });
     const { toast } = useToast();
 
     const loginSubmit = useCallback(
@@ -65,15 +65,7 @@ function LoginView() {
                     <FormBox>
                         <Box component="form" noValidate>
                             <Box sx={{ mt: 2 }}>
-                                <Text
-                                    autoComplete="username"
-                                    autoFocus
-                                    color="secondary"
-                                    field="username"
-                                    fullWidth
-                                    label="User Name"
-                                    required
-                                />
+                                <Text autoComplete="username" autoFocus color="secondary" field="username" fullWidth label="User Name" />
                             </Box>
                             <Box sx={{ mt: 2 }}>
                                 <Text
@@ -82,7 +74,7 @@ function LoginView() {
                                     field="password"
                                     fullWidth
                                     label="Password"
-                                    required
+                                    slotProps={{ htmlInput: { maxLength: 50 } }}
                                     type="password"
                                 />
                             </Box>

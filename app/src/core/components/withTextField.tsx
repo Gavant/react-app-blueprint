@@ -1,6 +1,9 @@
 import { TextField as MuiTextField, TextFieldProps } from '@mui/material';
 import { Control, Controller, FieldPath, FieldValues, Path, RegisterOptions } from 'react-hook-form';
 import styled from 'styled-components';
+import { SomeZodObject } from 'zod';
+
+import { getLabelFromSchema } from '~/core/utils/zod';
 
 export interface WithFormFieldProps<T extends FieldValues, P extends FieldPath<T> = FieldPath<T>> extends FieldValues {
     field: P;
@@ -28,15 +31,14 @@ const TextField = styled(MuiTextField)`
     }
 `;
 
-const withFormField = <T extends FieldValues>(controller: Control<T>) => {
+const withFormField = <T extends FieldValues, Z extends SomeZodObject>(controller: Control<T>, schema: Z) => {
     const ResultComponent = ({
         field,
-        inputProps,
         label,
         maxLength = 50, // backend default
         options,
-        required,
         requiredMessage,
+        slotProps,
         type = 'text',
         ...props
     }: WithFormFieldProps<T> & TextFieldProps) => {
@@ -44,23 +46,15 @@ const withFormField = <T extends FieldValues>(controller: Control<T>) => {
             <Controller
                 control={controller}
                 name={field}
-                render={({ field: { onChange, value }, fieldState: { error, isDirty } }) => (
+                render={({ field: { onChange, value }, fieldState: { error } }) => (
                     <TextField
                         autoComplete={field}
                         color="secondary"
                         error={!!error?.type}
-                        label={`${
-                            error?.type === 'invalid_type' && !isDirty
-                                ? `${label} is required`
-                                : error?.message
-                                ? error.message
-                                : required
-                                ? `${label}*`
-                                : label
-                        }`}
+                        label={`${getLabelFromSchema({ error, field, label, schema })}`}
                         onChange={onChange}
                         slotProps={{
-                            htmlInput: { maxLength, ...inputProps },
+                            htmlInput: { maxLength, ...slotProps?.htmlInput },
                             inputLabel: { shrink: !!value },
                         }}
                         type={type}

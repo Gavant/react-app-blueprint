@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import { AsYouType, CountryCode } from 'libphonenumber-js';
 import { z } from 'zod';
 
-export const emailSchema = z.string().min(1).email("This doesn't look like a valid email address").trim().toLowerCase();
+export const emailSchema = z.string().email("This doesn't look like a valid email address").trim().toLowerCase();
 
 export const firstNameSchema = z.string().min(1, 'Please enter your first name');
 
