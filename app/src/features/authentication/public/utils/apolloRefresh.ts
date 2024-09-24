@@ -2,7 +2,7 @@ import { createRefresh } from 'react-auth-kit';
 
 import { client } from '~/core/stores/apollo';
 import { Mutation, MutationRefreshTokenArgs } from '~/core/types/generated/graphql';
-import { REFRESH_TOKEN } from '~/features/authentication/public/graphql/authentication';
+import { REFRESH_TOKEN } from '~/features/authentication/graphql/authentication.gql';
 
 // TODO: :not-sure-if: Not sure if this is working :hmmm:
 export const refresh = createRefresh({
