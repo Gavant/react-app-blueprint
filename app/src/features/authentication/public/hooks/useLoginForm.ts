@@ -68,5 +68,6 @@ export default function useLoginForm(redirect: string) {
         isValid,
         onSubmit,
         register: form.register,
+        schema: LoginSchema,
     };
 }

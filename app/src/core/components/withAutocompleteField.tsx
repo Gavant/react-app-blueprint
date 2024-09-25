@@ -2,8 +2,10 @@ import { AutocompleteProps, FormControl, Autocomplete as MuiAutocomplete, TextFi
 import { FC } from 'react';
 import { Control, Controller, FieldValues, Path, PathValue } from 'react-hook-form';
 import styled from 'styled-components';
+import { SomeZodObject } from 'zod';
 
 import { ArrayMemberType } from '~/core/utils/typescript';
+import { getLabelFromSchema } from '~/core/utils/zod';
 
 const Autocomplete = styled(MuiAutocomplete)`
     && {
@@ -34,7 +36,7 @@ export interface WithAutocompleteProps<
     type?: string;
 }
 
-const withAutocompleteField = <FV extends FieldValues>(controller: Control<FV>) => {
+const withAutocompleteField = <FV extends FieldValues, Z extends SomeZodObject>(controller: Control<FV>, schema: Z) => {
     const ResultComponent = <O extends Options, Opt extends ArrayMemberType<O> = ArrayMemberType<O>, P extends Path<FV> = Path<FV>>({
         field,
         getOptionLabel,
@@ -81,7 +83,7 @@ const withAutocompleteField = <FV extends FieldValues>(controller: Control<FV>) 
                                             autoComplete="off"
                                             error={!!error?.type}
                                             helperText={error?.type ? `${label} ${error?.type ? 'is required' : ''}` : undefined}
-                                            label={`${label} ${error?.type === 'required' ? '*' : ''}`}
+                                            label={`${getLabelFromSchema({ error, field, label, schema })}`}
                                             onChange={formOnChange}
                                             value={value}
                                         />
