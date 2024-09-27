@@ -5,8 +5,7 @@ import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 import useSignIn from 'react-auth-kit/hooks/useSignIn';
 import useSignOut from 'react-auth-kit/hooks/useSignOut';
 import { useNavigate } from 'react-router';
-import { Result } from 'true-myth';
-import { err, ok } from 'true-myth/result';
+import Result, { err, ok, orElse, unwrapOr } from 'true-myth/result';
 
 import useToast from '~/core/hooks/useToast';
 import {
@@ -75,10 +74,7 @@ export default function useAuth() {
         }
     }, [logoutError?.message, resetLogout, toast]);
 
-    const signIn = async (
-        username: string,
-        password: string
-    ): Promise<Result<{ password: string; username: string }, string | undefined>> => {
+    const signIn = async (username: string, password: string): Promise<Result<{ password: string; username: string }, string>> => {
         try {
             const result = await loginMutation({ variables: { input: { password, username } } });
             const responseData = result?.data?.login ?? undefined;
@@ -92,7 +88,8 @@ export default function useAuth() {
         } catch (error: unknown) {
             if (isApolloError(error)) {
                 const errorContext = { navigate, password, toast, username };
-                return handleApolloAuthError(error, errorContext);
+                const result = handleApolloAuthError(error, errorContext);
+                return err(unwrapOr('Unknown error occurred', result));
             } else {
                 toast.error('Unknown error occurred');
                 return err('Unknown error occurred');

@@ -22,7 +22,7 @@ export default function useLoginForm(redirect: string) {
     } = form;
 
     const onValidSubmit = useCallback(
-        async (data: LoginForm): Promise<Result<LoginForm, string>> => {
+        async (data: LoginForm) => {
             const { password, username } = data;
 
             const result = await authenticate.signIn(username, password);
