@@ -1,13 +1,13 @@
 import { ApolloError, ServerError } from '@apollo/client';
 import {} from '@apollo/client/errors';
-import Result, { err, map, mapOr, ok, unwrapOr } from 'true-myth/result';
+import Result, { err, map, mapOr, ok } from 'true-myth/result';
 
 import { StatusCodeType, StatusCodes, StatusCodes400, StringErrorCodes } from '~/core/constants/errors';
-import { Options } from '~/core/hooks/useApolloError';
 import { kickToLogin } from '~/core/utils/redirect';
 import { guard } from '~/core/utils/typescript';
 
 export interface OptionsFor400Error {
+    [StatusCodes.BadRequest]?: () => string;
     [StatusCodes.Conflict]?: () => string;
     [StatusCodes.Forbidden]?: () => string;
     [StatusCodes.Unauthorized]?: () => string;
@@ -127,9 +127,8 @@ export const handle400Error = (
             );
         }
     };
-    const stringCode = map(mapFn, statusCode);
 
-    return stringCode;
+    return map(mapFn, statusCode);
 };
 
 export const handle500Error = (error: ApolloError, { ...opts }: OptionsFor500Error = {}) => {
