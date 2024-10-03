@@ -86,9 +86,6 @@ export const getStatusCode = (error: ApolloError): Result<StatusCodeType, Apollo
     }
 };
 
-// TODO: Want to come up with a better pattern for error handling than these error specific handlers. At some point the decision
-// was made to have the FE manage the error messages, but than that seems to have changed at some point because the BE sends full
-// errors back in PLUT with user presentable error text.
 export const handle400Error = (
     error: ApolloError,
     { navigate, redirectOn401, signOut, ...opts }: OptionsFor400Error = { redirectOn401: false }
