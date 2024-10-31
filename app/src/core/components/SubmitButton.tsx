@@ -2,7 +2,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { ButtonTypeMap } from '@mui/material';
 import { MouseEvent, PropsWithChildren, useState } from 'react';
 import { animated, useSpring } from 'react-spring';
-import Result, { isErr, isOk } from 'true-myth/result';
+import Result, { isErr, isOk } from 'true-myth/src/result';
 
 const wobbleVolume = 5;
 const AnimatedButton = animated(LoadingButton);

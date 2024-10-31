@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
-import Result, { isOk } from 'true-myth/result';
+import Result, { isOk } from 'true-myth/src/result';
 
 import useSubmit, { ReactHookForm } from '~/core/hooks/useSubmit';
 import useAuth from '~/features/authentication/public/hooks/useAuth';

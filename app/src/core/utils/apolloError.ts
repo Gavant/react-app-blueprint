@@ -1,6 +1,6 @@
 import { ApolloError, ServerError } from '@apollo/client';
 import {} from '@apollo/client/errors';
-import Result, { err, map, mapOr, ok } from 'true-myth/result';
+import Result, { err, map, mapOr, ok } from 'true-myth/src/result';
 
 import { StatusCodeType, StatusCodes, StatusCodes400, StringErrorCodes } from '~/core/constants/errors';
 import { kickToLogin } from '~/core/utils/redirect';

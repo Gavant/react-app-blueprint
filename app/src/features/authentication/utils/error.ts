@@ -1,5 +1,5 @@
 import { ApolloError } from '@apollo/client';
-import Result, { err, mapOr } from 'true-myth/result';
+import Result, { err, mapOr } from 'true-myth/src/result';
 
 import { StatusCodeType } from '~/core/constants/errors';
 import { Toast } from '~/core/stores/toastContext';

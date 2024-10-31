@@ -1,7 +1,7 @@
 import { Box, Container, Grid2, Link } from '@mui/material';
 import { MouseEvent, useCallback } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
-import { isErr } from 'true-myth/result';
+import { isErr } from 'true-myth/src/result';
 
 import ColorModeToggle from '~/core/components/ColorModeToggle';
 import SubmitButton from '~/core/components/SubmitButton';

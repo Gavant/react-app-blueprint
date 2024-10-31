@@ -5,7 +5,7 @@ import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 import useSignIn from 'react-auth-kit/hooks/useSignIn';
 import useSignOut from 'react-auth-kit/hooks/useSignOut';
 import { useNavigate } from 'react-router';
-import Result, { err, ok, orElse, unwrapOr } from 'true-myth/result';
+import Result, { err, ok, unwrapOr } from 'true-myth/src/result';
 
 import useToast from '~/core/hooks/useToast';
 import {

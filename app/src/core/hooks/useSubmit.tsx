@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { MouseEvent } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
-import Result, { err } from 'true-myth/result';
+import Result, { err } from 'true-myth/src/result';
 
 export type UnknownMouseEvent = MouseEvent<unknown, Event>;
 

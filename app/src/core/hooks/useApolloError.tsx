@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import useSignOut from 'react-auth-kit/hooks/useSignOut';
-import Result, { err, unwrapOr } from 'true-myth/result';
+import Result, { err, unwrapOr } from 'true-myth/src/result';
 
 import { StringErrorCodes } from '~/core/constants/errors';
 import useToast from '~/core/hooks/useToast';
