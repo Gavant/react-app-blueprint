@@ -1,4 +1,5 @@
-import { Box, Container, Grid2 } from '@mui/material';
+import { Password } from '@mui/icons-material';
+import { Box, Container, CssBaseline, Grid2 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import Lottie from 'react-lottie-player';
 import { useLocation } from 'react-router';
@@ -23,7 +24,7 @@ const FormBoxContainer = styled(Box)`
         flex-direction: row;
         width: 100%;
         height: 100%;
-        background: ${theme.palette.common.white};
+        background: ${theme.palette.background.default};
     `}
 `;
 
@@ -44,7 +45,6 @@ const FormBox = styled(Box)`
         flex-direction: column;
         width: 50%;
         height: 100%;
-        background: ${theme.palette.grey[100]};
         border-radius: ${theme.shape.borderRadius}px;
     `}
 `;
@@ -57,7 +57,7 @@ const FullWidthBox = styled(Box)`
 const CenteredContainer = styled(Container)`
     align-items: center;
     display: flex;
-    height: 100vh;
+    height: 100%;
     justify-content: center;
 `;
 
@@ -67,7 +67,6 @@ const Form = styled(Box)`
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        padding: ${theme.spacing(4)};
         height: 100%;
     `}
 `;
@@ -91,25 +90,6 @@ const Link = styled(RouteLink)`
 `;
 
 function Login() {
-    // const theme = useTheme();
-    // const { state } = useLocation();
-    // const [searchParams] = useSearchParams();
-    // const [showPasswordView, setShowPasswordView] = useState(false);
-    // const redirect =
-    //     (state?.redirect?.pathname ?? searchParams.get('redirect') ?? '/') + (state?.redirect?.search ? state.redirect?.search : '');
-    // const { errors, onSubmit, register } = useLoginForm(redirect);
-    // const { toast } = useToast();
-
-    // const loginSubmit = useCallback(
-    //     async (event: MouseEvent<HTMLButtonElement, Event>) => {
-    //         const result = await onSubmit(event);
-    //         if (isErr(result)) {
-    //             toast.error(result.error as string);
-    //         }
-    //         return result;
-    //     },
-    //     [onSubmit, toast]
-    // );
     const { state } = useLocation();
     const [searchParams] = useSearchParams();
     const [showPasswordView, setShowPasswordView] = useState(false);
@@ -158,7 +138,6 @@ function Login() {
                                     field="username"
                                     fullWidth
                                     label="Email"
-                                    marginTop={0}
                                     slotProps={{ inputLabel: { shrink: true } }}
                                     style={{
                                         width: '350px',
@@ -171,7 +150,6 @@ function Login() {
                                     field="password"
                                     fullWidth
                                     label="Password"
-                                    marginTop={0}
                                     slotProps={{
                                         input: {
                                             endAdornment: (
@@ -181,9 +159,10 @@ function Login() {
                                                     visible={showPasswordView}
                                                 />
                                             ),
+                                            // startAdornment: <Password />,
                                         },
                                     }}
-                                    style={{ marginTop: 0, width: '350px' }}
+                                    style={{ width: '350px' }}
                                 />
                             </Box>
                             <FullWidthBox sx={{ my: 2 }}>

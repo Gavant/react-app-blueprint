@@ -1,4 +1,5 @@
 import { TextField as MuiTextField, TextFieldProps } from '@mui/material';
+import { useState } from 'react';
 import { Control, Controller, FieldPath, FieldValues, Path, RegisterOptions } from 'react-hook-form';
 import styled from 'styled-components';
 import { SomeZodObject } from 'zod';
@@ -42,6 +43,8 @@ const withFormField = <T extends FieldValues, Z extends SomeZodObject>(controlle
         type = 'text',
         ...props
     }: TextFieldProps & WithFormFieldProps<T>) => {
+        const [shrink, setShrink] = useState(false);
+
         return (
             <Controller
                 control={controller}
@@ -52,14 +55,15 @@ const withFormField = <T extends FieldValues, Z extends SomeZodObject>(controlle
                         color="secondary"
                         error={!!error?.type}
                         label={`${getLabelFromSchema({ error, field, label, schema })}`}
+                        onBlur={(e) => setShrink(!!e.target.value)}
                         onChange={onChange}
-                        size="small"
+                        onFocus={() => setShrink(true)}
                         slotProps={{
                             htmlInput: { maxLength, ...slotProps?.htmlInput },
                             input: {
                                 ...slotProps?.input,
                             },
-                            inputLabel: { shrink: !!value },
+                            inputLabel: { shrink: shrink || !!value },
                         }}
                         type={type}
                         value={value}

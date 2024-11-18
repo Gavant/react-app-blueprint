@@ -76,6 +76,7 @@
         "eslint-plugin-testing-library": "^6.4.0",
         "good-fences": "^1.2.0",
         "jsdom": "^22.1.0",
+        "lodash.debounce": "^4.0.8",
         "lottie-web": "^5.12.2",
         "plop": "^3.1.2",
         "prettier": "3.0.2",
@@ -87,7 +88,8 @@
         "vitest-preview": "^0.0.1"
     },
     "resolutions": {
-        "@mui/base": "5.0.0-beta.58"
+        "@mui/base": "5.0.0-beta.58",
+        "@mui/styled-engine": "npm:@mui/styled-engine-sc@latest"
     },
     "volta": {
         "extends": "../package.json"
