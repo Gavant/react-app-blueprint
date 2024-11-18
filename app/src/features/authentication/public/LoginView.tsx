@@ -1,107 +1,197 @@
-import { Box, Container, Grid2, Link } from '@mui/material';
-import { MouseEvent, useCallback } from 'react';
-import styled, { createGlobalStyle } from 'styled-components';
-import { isErr } from 'true-myth/result';
+import { Box, Grid2 } from '@mui/material';
+import { useEffect, useState } from 'react';
+import Lottie from 'react-lottie-player';
+import { useLocation } from 'react-router';
+import { Link as RouteLink, useSearchParams } from 'react-router-dom';
+import styled, { css } from 'styled-components';
 
+import LoginImage from '~/assets/images/login.jpg';
+import logo from '~/assets/logo.png';
 import ColorModeToggle from '~/core/components/ColorModeToggle';
+import ShowHideTextAdornment from '~/core/components/ShowHideTextAdornment';
 import SubmitButton from '~/core/components/SubmitButton';
-import ToastBar from '~/core/components/ToastBar';
-import FadeElementInDown from '~/core/components/animation/FadeInDown';
 import useFormFields from '~/core/hooks/useFormFields';
-import useToast from '~/core/hooks/useToast';
+import { UnauthorizedRootCss } from '~/features/app/constants/UnauthorizedRootCss';
 import useLoginForm from '~/features/authentication/public/hooks/useLoginForm';
-
-const RootCss = createGlobalStyle`
-    html, body, #root {
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        padding: 0;
-    }
-`;
-
-const Root = styled(Container)`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-`;
-
 const GridLeft = styled(Grid2)`
     text-align: left;
 `;
 
-const FormBox = styled(Box)`
-    display: flex;
-    flex-direction: column;
-    margin-top: 3rem;
-    width: 20rem;
+const FormBoxContainer = styled(Box)`
+    ${({ theme }) => css`
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        height: 100%;
+        background: ${theme.palette.common.white};
+    `}
 `;
 
-function LoginView() {
-    const { control, onSubmit, schema } = useLoginForm('');
+const ImageBox = styled(Box)`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 50%;
+    height: 100%;
+    background-position: 50% 20%;
+    background-image: url(${LoginImage});
+`;
+
+const FormBox = styled(Box)`
+    ${({ theme }) => css`
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+        height: 100%;
+        background: ${theme.palette.grey[100]};
+        border-radius: ${theme.shape.borderRadius}px;
+    `}
+`;
+
+const Form = styled(Box)`
+    ${({ theme }) => css`
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: ${theme.spacing(4)};
+        height: 100%;
+    `}
+`;
+
+const Logo = styled.img`
+    max-width: 17rem;
+    margin: 0 auto;
+`;
+
+const Link = styled(RouteLink)`
+    ${({ theme }) => `${theme.typography.body2}`}
+    color: ${({ theme }) => theme.palette.primary.main};
+
+    &:visited {
+        color: ${({ theme }) => theme.palette.primary.main};
+    }
+
+    &:hover {
+        color: ${({ theme }) => theme.palette.primary.dark};
+    }
+`;
+
+function Login() {
+    // const theme = useTheme();
+    // const { state } = useLocation();
+    // const [searchParams] = useSearchParams();
+    // const [showPasswordView, setShowPasswordView] = useState(false);
+    // const redirect =
+    //     (state?.redirect?.pathname ?? searchParams.get('redirect') ?? '/') + (state?.redirect?.search ? state.redirect?.search : '');
+    // const { errors, onSubmit, register } = useLoginForm(redirect);
+    // const { toast } = useToast();
+
+    // const loginSubmit = useCallback(
+    //     async (event: MouseEvent<HTMLButtonElement, Event>) => {
+    //         const result = await onSubmit(event);
+    //         if (isErr(result)) {
+    //             toast.error(result.error as string);
+    //         }
+    //         return result;
+    //     },
+    //     [onSubmit, toast]
+    // );
+    const { state } = useLocation();
+    const [searchParams] = useSearchParams();
+    const [showPasswordView, setShowPasswordView] = useState(false);
+    const redirect =
+        (state?.redirect?.pathname ?? searchParams.get('redirect') ?? '/') + (state?.redirect?.search ? state.redirect?.search : '');
+    const { control, onSubmit, schema } = useLoginForm(redirect);
 
     const { Text } = useFormFields({ control, schema });
-    const { toast } = useToast();
 
-    const loginSubmit = useCallback(
-        async (event: MouseEvent<HTMLButtonElement, Event>) => {
-            const result = await onSubmit(event);
-            if (isErr(result)) {
-                toast.error(result.error);
-            }
-            return result;
-        },
-        [onSubmit, toast]
-    );
+    const [animationData, setAnimationData] = useState<object>();
+
+    useEffect(() => {
+        import('~/assets/lottie/landing.json').then(setAnimationData);
+    }, []);
 
     return (
         <>
-            <RootCss />
-            <Root component="main" maxWidth="xs">
-                <ColorModeToggle />
-                <FadeElementInDown offset={4}>
-                    <FormBox>
-                        <Box component="form" noValidate>
-                            <Box sx={{ mt: 2 }}>
-                                <Text autoComplete="username" autoFocus color="secondary" field="username" fullWidth label="User Name" />
-                            </Box>
-                            <Box sx={{ mt: 2 }}>
-                                <Text
-                                    autoComplete="current-password"
-                                    color="secondary"
-                                    field="password"
-                                    fullWidth
-                                    label="Password"
-                                    slotProps={{ htmlInput: { maxLength: 50 } }}
-                                    type="password"
+            <UnauthorizedRootCss />
+
+            <FormBoxContainer>
+                <ImageBox>
+                    <Link to="/">
+                        <Logo alt="" src={logo} />
+                    </Link>
+                </ImageBox>
+                <FormBox>
+                    <ColorModeToggle style={{ position: 'absolute', right: 10, top: 10 }} />
+
+                    <Form as="form" noValidate>
+                        <Box height="150px">
+                            {animationData && (
+                                <Lottie
+                                    animationData={animationData}
+                                    loop={false}
+                                    play
+                                    segments={[0, 150]}
+                                    speed={1.5}
+                                    style={{
+                                        height: 150,
+                                    }}
                                 />
-                            </Box>
-                            <Box sx={{ my: 2 }}>
-                                <SubmitButton fullWidth onClick={loginSubmit} size="large" type="submit" variant="contained">
-                                    Sign In
-                                </SubmitButton>
-                            </Box>
-                            <Grid2 container justifyContent="space-between">
-                                <GridLeft>
-                                    <Link href="#" variant="body2">
-                                        Forgot password?
-                                    </Link>
-                                </GridLeft>
-                                <Grid2>
-                                    <Link href="#" variant="body2">
-                                        Create Account
-                                    </Link>
-                                </Grid2>
-                            </Grid2>
+                            )}
                         </Box>
-                    </FormBox>
-                </FadeElementInDown>
-            </Root>
-            <ToastBar />
+                        <Box sx={{ mt: 2 }}>
+                            <Text
+                                field="username"
+                                fullWidth
+                                label="Email"
+                                marginTop={0}
+                                slotProps={{ inputLabel: { shrink: true } }}
+                                style={{
+                                    width: '350px',
+                                }}
+                            />
+                        </Box>
+                        <Box sx={{ mt: 2 }}>
+                            <Text
+                                autoComplete="current-password"
+                                field="password"
+                                fullWidth
+                                label="Password"
+                                marginTop={0}
+                                slotProps={{
+                                    input: {
+                                        endAdornment: (
+                                            <ShowHideTextAdornment
+                                                IconButtonProps={{ color: 'secondary' }}
+                                                change={() => setShowPasswordView(!showPasswordView)}
+                                                visible={showPasswordView}
+                                            />
+                                        ),
+                                    },
+                                }}
+                                style={{ marginTop: 0, width: '350px' }}
+                            />
+                        </Box>
+                        <Box sx={{ my: 2 }}>
+                            <SubmitButton fullWidth onClick={onSubmit} size="medium" type="submit" variant="contained">
+                                Sign In
+                            </SubmitButton>
+                        </Box>
+                        <Grid2 container justifyContent="flex-start">
+                            <GridLeft>
+                                <Link to="/forgot-password">Forgot password?</Link>
+                            </GridLeft>
+                            <Grid2>
+                                <Link to="/create-account">Create Account</Link>
+                            </Grid2>
+                        </Grid2>
+                    </Form>
+                </FormBox>
+            </FormBoxContainer>
         </>
     );
 }
 
-export default LoginView;
+export default Login;

@@ -4,7 +4,7 @@ module.exports = {
         es2021: true,
         node: true,
     },
-    extends: ['plugin:react/recommended', 'eslint:recommended', 'plugin:perfectionist/recommended-natural'],
+    extends: ['plugin:react/recommended', 'eslint:recommended', 'plugin:perfectionist/recommended-natural', 'plugin:testing-library/react'],
     globals: {
         ImportMetaEnv: true,
         JSX: true,
@@ -18,6 +18,13 @@ module.exports = {
         sourceType: 'module',
     },
     plugins: ['jsx-a11y', 'prettier', 'import', 'react', 'react-hooks', '@typescript-eslint', 'perfectionist'],
+    overrides: [
+        {
+            // 3) Now we enable eslint-plugin-testing-library rules or preset only for matching testing files!
+            files: ['**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)'],
+            extends: ['plugin:testing-library/react'],
+        },
+    ],
     rules: {
         '@typescript-eslint/no-use-before-define': ['error'],
         'import/extensions': ['error', 'never', { gql: 'always', png: 'always', routes: 'always', svg: 'always' }],
@@ -46,10 +53,10 @@ module.exports = {
         ],
         'prefer-const': 'error',
         'prettier/prettier': 'error',
-        'react-hooks/exhaustive-deps': 'warn',
-        'react-hooks/rules-of-hooks': 'error',
         'react/jsx-uses-react': 'off',
         'react/prop-types': 'off',
         'react/react-in-jsx-scope': 'off',
+        'react-hooks/exhaustive-deps': 'warn',
+        'react-hooks/rules-of-hooks': 'error',
     },
 };

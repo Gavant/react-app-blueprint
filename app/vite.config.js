@@ -118,9 +118,12 @@ export default defineConfig(({ mode }) => {
             port: 5173,
         },
         test: {
+            css: true,
+            disableConsoleIntercept: true,
             environment: 'jsdom',
             globals: true,
-            setupFiles: 'vitest/setup.ts',
+            reporters: ['default'],
+            setupFiles: 'src/vitest/setup.ts',
         },
     };
 });

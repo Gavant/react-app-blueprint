@@ -33,3 +33,5 @@ node_modules
 # Env
 .env
 .env.*
+
+.vitest-preview

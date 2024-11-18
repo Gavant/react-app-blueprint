@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "ESNext",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "types": ["vitest/jsdom"],
     "module": "ESNext",
     "baseUrl": "./src",
     "paths": {

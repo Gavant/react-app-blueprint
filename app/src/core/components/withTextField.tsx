@@ -41,7 +41,7 @@ const withFormField = <T extends FieldValues, Z extends SomeZodObject>(controlle
         slotProps,
         type = 'text',
         ...props
-    }: WithFormFieldProps<T> & TextFieldProps) => {
+    }: TextFieldProps & WithFormFieldProps<T>) => {
         return (
             <Controller
                 control={controller}
@@ -53,8 +53,12 @@ const withFormField = <T extends FieldValues, Z extends SomeZodObject>(controlle
                         error={!!error?.type}
                         label={`${getLabelFromSchema({ error, field, label, schema })}`}
                         onChange={onChange}
+                        size="small"
                         slotProps={{
                             htmlInput: { maxLength, ...slotProps?.htmlInput },
+                            input: {
+                                ...slotProps?.input,
+                            },
                             inputLabel: { shrink: !!value },
                         }}
                         type={type}
