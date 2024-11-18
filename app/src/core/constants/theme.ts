@@ -5,11 +5,11 @@ import { TypographyOptions } from '@mui/material/styles/createTypography';
 export const colors = {
     black: '#000000',
     gray: {
+        50: '#FFFFFF',
         100: '#FAFAFA',
         200: '#F5F5F5',
         300: '#F0F0F0',
         400: '#DEDEDE',
-        50: '#FFFFFF',
         500: '#C2C2C2',
         600: '#979797',
         700: '#818181',
@@ -45,14 +45,6 @@ export type ThemeCustomOverrideOptions = {
 const overrides: ThemeCustomOverrideOptions = {
     palette,
     typography: {
-        button: {
-            fontFamily: fontFamilySecondary,
-            fontSize: '1.25rem',
-            fontWeight: '800',
-            letterSpacing: '0',
-            lineHeight: '1',
-            textTransform: 'capitalize',
-        } as TypographyOptions['button'],
         fontFamily: fontFamilyPrimary,
 
         h1: heading(2.25),

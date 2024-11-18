@@ -1,4 +1,4 @@
-import { Box, Grid2 } from '@mui/material';
+import { Box, Container, Grid2 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import Lottie from 'react-lottie-player';
 import { useLocation } from 'react-router';
@@ -47,6 +47,18 @@ const FormBox = styled(Box)`
         background: ${theme.palette.grey[100]};
         border-radius: ${theme.shape.borderRadius}px;
     `}
+`;
+
+const FullWidthBox = styled(Box)`
+    width: calc(100% - 57px);
+    padding: 0 ${({ theme }) => theme.spacing(10)};
+`;
+
+const CenteredContainer = styled(Container)`
+    align-items: center;
+    display: flex;
+    height: 100vh;
+    justify-content: center;
 `;
 
 const Form = styled(Box)`
@@ -125,69 +137,72 @@ function Login() {
                 </ImageBox>
                 <FormBox>
                     <ColorModeToggle style={{ position: 'absolute', right: 10, top: 10 }} />
-
-                    <Form as="form" noValidate>
-                        <Box height="150px">
-                            {animationData && (
-                                <Lottie
-                                    animationData={animationData}
-                                    loop={false}
-                                    play
-                                    segments={[0, 150]}
-                                    speed={1.5}
+                    <CenteredContainer>
+                        <Form as="form" noValidate>
+                            <Box height="150px">
+                                {animationData && (
+                                    <Lottie
+                                        animationData={animationData}
+                                        loop={false}
+                                        play
+                                        segments={[0, 150]}
+                                        speed={1.5}
+                                        style={{
+                                            height: 150,
+                                        }}
+                                    />
+                                )}
+                            </Box>
+                            <Box sx={{ mt: 2 }}>
+                                <Text
+                                    field="username"
+                                    fullWidth
+                                    label="Email"
+                                    marginTop={0}
+                                    slotProps={{ inputLabel: { shrink: true } }}
                                     style={{
-                                        height: 150,
+                                        width: '350px',
                                     }}
                                 />
-                            )}
-                        </Box>
-                        <Box sx={{ mt: 2 }}>
-                            <Text
-                                field="username"
-                                fullWidth
-                                label="Email"
-                                marginTop={0}
-                                slotProps={{ inputLabel: { shrink: true } }}
-                                style={{
-                                    width: '350px',
-                                }}
-                            />
-                        </Box>
-                        <Box sx={{ mt: 2 }}>
-                            <Text
-                                autoComplete="current-password"
-                                field="password"
-                                fullWidth
-                                label="Password"
-                                marginTop={0}
-                                slotProps={{
-                                    input: {
-                                        endAdornment: (
-                                            <ShowHideTextAdornment
-                                                IconButtonProps={{ color: 'secondary' }}
-                                                change={() => setShowPasswordView(!showPasswordView)}
-                                                visible={showPasswordView}
-                                            />
-                                        ),
-                                    },
-                                }}
-                                style={{ marginTop: 0, width: '350px' }}
-                            />
-                        </Box>
-                        <Box sx={{ my: 2 }}>
-                            <SubmitButton fullWidth onClick={onSubmit} size="medium" type="submit" variant="contained">
-                                Sign In
-                            </SubmitButton>
-                        </Box>
-                        <Grid2 container justifyContent="flex-start">
-                            <GridLeft>
-                                <Link to="/forgot-password">Forgot password?</Link>
-                            </GridLeft>
-                            <Grid2>
-                                <Link to="/create-account">Create Account</Link>
-                            </Grid2>
-                        </Grid2>
-                    </Form>
+                            </Box>
+                            <Box sx={{ mt: 2 }}>
+                                <Text
+                                    autoComplete="current-password"
+                                    field="password"
+                                    fullWidth
+                                    label="Password"
+                                    marginTop={0}
+                                    slotProps={{
+                                        input: {
+                                            endAdornment: (
+                                                <ShowHideTextAdornment
+                                                    IconButtonProps={{ color: 'secondary' }}
+                                                    change={() => setShowPasswordView(!showPasswordView)}
+                                                    visible={showPasswordView}
+                                                />
+                                            ),
+                                        },
+                                    }}
+                                    style={{ marginTop: 0, width: '350px' }}
+                                />
+                            </Box>
+                            <FullWidthBox sx={{ my: 2 }}>
+                                <SubmitButton fullWidth onClick={onSubmit} size="medium" type="submit" variant="contained">
+                                    Sign In
+                                </SubmitButton>
+                            </FullWidthBox>
+                            <FullWidthBox>
+                                <Grid2 container justifyContent="space-between">
+                                    <GridLeft>
+                                        <Link to="/forgot-password">Forgot password?</Link>
+                                    </GridLeft>
+                                    <Grid2>
+                                        <Link to="/create-account">Create Account</Link>
+                                    </Grid2>
+                                </Grid2>
+                            </FullWidthBox>
+                        </Form>
+                    </CenteredContainer>
                 </FormBox>
             </FormBoxContainer>
         </>
