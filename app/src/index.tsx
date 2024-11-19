@@ -9,6 +9,7 @@ import { RouterProvider, createBrowserRouter, createRoutesFromElements } from 'r
 import ApolloClientProvider from '~/core/stores/apollo';
 import ThemeModeProvider from '~/core/stores/themeMode';
 import { ToastProvider } from '~/core/stores/toastContext';
+import { WindowSizeProvider } from '~/core/stores/windowSizeContext';
 import MainRoutes from '~/main.routes';
 
 const cookieName = import.meta.env.VITE_AUTH_COOKIE_NAME;
@@ -32,7 +33,9 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
                 <ToastProvider>
                     <ApolloClientProvider>
                         <HelmetProvider>
-                            <RouterProvider router={router} />
+                            <WindowSizeProvider>
+                                <RouterProvider router={router} />
+                            </WindowSizeProvider>
                         </HelmetProvider>
                     </ApolloClientProvider>
                 </ToastProvider>

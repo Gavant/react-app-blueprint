@@ -1,7 +1,4 @@
-import { Palette, PaletteOptions } from '@mui/material';
 import { TypographyOptions } from '@mui/material/styles/createTypography';
-
-import { lightPalette } from '~/core/constants/palette';
 
 // Official mui color theme tool: https://m2.material.io/inline-tools/color/
 export const colors = {
@@ -21,8 +18,6 @@ export const colors = {
     white: '#FFFFFF',
 } as const;
 
-const palette: Partial<Palette> = {};
-
 const fontFamilyPrimary = ['Poppins', 'sans-serif'].join(',');
 const fontFamilySecondary = ['Nunito', 'sans-serif'].join(',');
 
@@ -36,17 +31,12 @@ const heading = (size: number) => ({
 });
 
 export type ThemeCustomOverrideOptions = {
-    palette: Partial<PaletteOptions>;
     typography: Partial<TypographyOptions>;
 };
 
 const overrides: ThemeCustomOverrideOptions = {
-    palette: {
-        ...lightPalette,
-    },
     typography: {
         fontFamily: fontFamilyPrimary,
-
         h1: heading(2.25),
         h2: heading(2),
         h3: heading(1.75),
@@ -59,7 +49,6 @@ const overrides: ThemeCustomOverrideOptions = {
 const Options = {
     colors,
     overrides,
-    // palette,
 };
 
 export default Options;

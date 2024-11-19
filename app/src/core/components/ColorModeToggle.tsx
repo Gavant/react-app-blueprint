@@ -2,9 +2,12 @@ import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import { SvgIconPropsColorOverrides } from '@mui/material/SvgIcon/SvgIcon';
-import { useColorScheme } from '@mui/material/styles';
+import { useColorScheme, useTheme } from '@mui/material/styles';
 import { OverridableStringUnion } from '@mui/types';
+import { useContext } from 'react';
 import styled from 'styled-components';
+
+import { ColorModeContext } from '~/core/stores/themeMode';
 
 type MuiIconColor = OverridableStringUnion<
     'error' | 'info' | 'inherit' | 'primary' | 'secondary' | 'success' | 'warning',
@@ -20,11 +23,22 @@ export interface ColorModeToggleProps extends IconButtonProps {
 }
 
 function ColorModeToggle({ color = 'inherit', ...others }: ColorModeToggleProps) {
-    const { mode, setMode } = useColorScheme();
+    const theme = useTheme();
+    const context = useContext(ColorModeContext);
+    if (context === undefined) {
+        throw new Error('ColorModeToggle must be used within a ThemeProvider');
+    }
 
     return (
-        <ToggleButton color="inherit" onClick={() => setMode(mode === 'dark' ? 'light' : 'dark')} {...others}>
-            {mode === 'dark' ? <Brightness7Icon color={color} /> : <Brightness4Icon color={color} />}
+        <ToggleButton
+            color="inherit"
+            onClick={() => {
+                context.toggleColorMode();
+                // setMode(mode === 'dark' ? 'light' : 'dark');
+            }}
+            {...others}
+        >
+            {theme.palette.mode === 'dark' ? <Brightness7Icon color={color} /> : <Brightness4Icon color={color} />}
         </ToggleButton>
     );
 }

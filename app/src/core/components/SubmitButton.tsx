@@ -1,7 +1,7 @@
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { ButtonTypeMap } from '@mui/material';
-import { MouseEvent, PropsWithChildren, useCallback, useEffect, useState } from 'react';
+import { MouseEvent, PropsWithChildren, useCallback, useState } from 'react';
 import { animated, useSpring } from 'react-spring';
 import Result, { isErr, isOk } from 'true-myth/result';
 
@@ -73,7 +73,6 @@ export default function SubmitButton({
             onClick={handleClick}
             style={{ ...shakeProps }}
             type={type}
-            variant="outlined"
             {...rest}
         >
             {/* There is a known issue with translating a page using Chrome tools when a Loading Button is present. 

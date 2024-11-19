@@ -1,23 +1,17 @@
-import { Box, Container, Grid2, decomposeColor } from '@mui/material';
+import { Box, Container } from '@mui/material';
 import { useEffect, useState } from 'react';
 import Lottie from 'react-lottie-player';
-import { useLocation } from 'react-router';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
-import LoginImage from '~/assets/images/login.jpg';
+import LoginImage from '~/assets/images/forgot-password.jpg';
 import logo from '~/assets/images/logo.png';
 import ColorModeToggle from '~/core/components/ColorModeToggle';
-import ShowHideTextAdornment from '~/core/components/ShowHideTextAdornment';
 import SubmitButton from '~/core/components/SubmitButton';
 import useFormFields from '~/core/hooks/useFormFields';
 import useWindowSize from '~/core/hooks/useWindowSize';
 import { UnauthorizedRootCss } from '~/features/app/constants/UnauthorizedRootCss';
-import useLoginForm from '~/features/authentication/public/hooks/useLoginForm';
-
-const GridLeft = styled(Grid2)`
-    text-align: left;
-`;
+import useForgotPasswordForm from '~/features/authentication/public/hooks/useForgotPasswordForm';
 
 const FormBoxContainer = styled(Box)`
     ${({ theme }) => css`
@@ -96,28 +90,28 @@ const Logo = styled.img`
     margin: 0 auto;
 `;
 
-function Login() {
-    const { state } = useLocation();
-    const [searchParams] = useSearchParams();
-    const [showPasswordView, setShowPasswordView] = useState(false);
-    const redirect =
-        (state?.redirect?.pathname ?? searchParams.get('redirect') ?? '/') + (state?.redirect?.search ? state.redirect?.search : '');
-    const { control, onSubmit, schema } = useLoginForm(redirect);
+const InfoText = styled(Box)`
+    ${({ theme }) => css`
+        text-align: center;
+        max-width: 350px;
+        margin-bottom: ${theme.spacing(3)};
+        color: ${theme.palette.text.secondary};
+    `}
+`;
 
+function ForgotPasswordView() {
+    const { control, onSubmit, schema } = useForgotPasswordForm();
     const { Text } = useFormFields({ control, schema });
-
     const { isDesktop } = useWindowSize();
-
     const [animationData, setAnimationData] = useState<object>();
 
     useEffect(() => {
-        import('~/assets/lottie/landing.json').then(setAnimationData);
+        import('~/assets/lottie/ForgotPassword.json').then(setAnimationData);
     }, []);
 
     return (
         <>
             <UnauthorizedRootCss />
-
             <FormBoxContainer>
                 {isDesktop && (
                     <ImageBox>
@@ -144,56 +138,18 @@ function Login() {
                                     />
                                 )}
                             </Box>
-                            <h3>Sign into Gavant</h3>
-                            <Box sx={{ mt: 2 }}>
-                                <Text
-                                    field="username"
-                                    fullWidth
-                                    label="Email"
-                                    slotProps={{ inputLabel: { shrink: true } }}
-                                    style={{
-                                        width: '350px',
-                                    }}
-                                />
+                            <InfoText>Enter your email address and we&apos;ll send you instructions to reset your password.</InfoText>
+                            <Box sx={{ mt: 2, width: '350px' }}>
+                                <Text field="username" fullWidth label="Email" slotProps={{ inputLabel: { shrink: true } }} />
                             </Box>
-                            <Box sx={{ mt: 2 }}>
-                                <Text
-                                    autoComplete="current-password"
-                                    field="password"
-                                    fullWidth
-                                    label="Password"
-                                    slotProps={{
-                                        input: {
-                                            endAdornment: (
-                                                <ShowHideTextAdornment
-                                                    IconButtonProps={{ color: 'secondary' }}
-                                                    change={() => setShowPasswordView(!showPasswordView)}
-                                                    visible={showPasswordView}
-                                                />
-                                            ),
-                                        },
-                                    }}
-                                    style={{ width: '350px' }}
-                                    type={showPasswordView ? 'text' : 'password'}
-                                />
-                            </Box>
-                            <FullWidthBox sx={{ my: 2 }}>
-                                <SubmitButton color="primary" fullWidth onClick={onSubmit} size="medium" type="submit" variant="contained">
-                                    Sign In
+                            <Box sx={{ mb: 2, mt: 3, width: '350px' }}>
+                                <SubmitButton fullWidth onClick={onSubmit} size="medium" type="button" variant="contained">
+                                    Reset Password
                                 </SubmitButton>
-                            </FullWidthBox>
-                            <FullWidthBox>
-                                <Grid2 container justifyContent="space-between">
-                                    <GridLeft>
-                                        <Link color="dark" to="/forgot-password">
-                                            Forgot password?
-                                        </Link>
-                                    </GridLeft>
-                                    <Grid2>
-                                        <Link to="/create-account">Create Account</Link>
-                                    </Grid2>
-                                </Grid2>
-                            </FullWidthBox>
+                            </Box>
+                            <Box>
+                                <Link to="/login">Back to Login</Link>
+                            </Box>
                         </Form>
                     </CenteredContainer>
                 </FormBox>
@@ -202,4 +158,4 @@ function Login() {
     );
 }
 
-export default Login;
+export default ForgotPasswordView;
