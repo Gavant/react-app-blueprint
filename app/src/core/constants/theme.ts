@@ -22,7 +22,7 @@ const fontFamilyPrimary = ['Poppins', 'sans-serif'].join(',');
 const fontFamilySecondary = ['Nunito', 'sans-serif'].join(',');
 
 const heading = (size: number) => ({
-    color: colors.gray[900],
+    // color: colors.gray[900],
     fontFamily: fontFamilySecondary,
     fontSize: `${size}rem`,
     fontStyle: 'normal',

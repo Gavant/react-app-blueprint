@@ -9,6 +9,13 @@ module.exports = {
         ImportMetaEnv: true,
         JSX: true,
     },
+    overrides: [
+        {
+            extends: ['plugin:testing-library/react'],
+            // 3) Now we enable eslint-plugin-testing-library rules or preset only for matching testing files!
+            files: ['**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)'],
+        },
+    ],
     parser: '@typescript-eslint/parser',
     parserOptions: {
         ecmaFeatures: {
@@ -18,16 +25,13 @@ module.exports = {
         sourceType: 'module',
     },
     plugins: ['jsx-a11y', 'prettier', 'import', 'react', 'react-hooks', '@typescript-eslint', 'perfectionist'],
-    overrides: [
-        {
-            // 3) Now we enable eslint-plugin-testing-library rules or preset only for matching testing files!
-            files: ['**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)'],
-            extends: ['plugin:testing-library/react'],
-        },
-    ],
     rules: {
         '@typescript-eslint/no-use-before-define': ['error'],
-        'import/extensions': ['error', 'never', { gql: 'always', png: 'always', routes: 'always', svg: 'always' }],
+        'import/extensions': [
+            'error',
+            'never',
+            { gql: 'always', jpg: 'always', json: 'always', png: 'always', routes: 'always', svg: 'always' },
+        ],
         'import/order': [
             'warn',
             {

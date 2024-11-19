@@ -122,7 +122,7 @@ function Login() {
                 {isDesktop && (
                     <ImageBox>
                         <Link to="/">
-                            <Logo alt="" src={logo} />
+                            <Logo alt="logo" src={logo} />
                         </Link>
                     </ImageBox>
                 )}
