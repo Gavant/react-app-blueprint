@@ -31,10 +31,10 @@ function ColorModeToggle({ color = 'inherit', ...others }: ColorModeToggleProps)
 
     return (
         <ToggleButton
+            aria-label="toggle-color-mode"
             color="inherit"
             onClick={() => {
                 context.toggleColorMode();
-                // setMode(mode === 'dark' ? 'light' : 'dark');
             }}
             {...others}
         >

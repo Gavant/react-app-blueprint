@@ -5,8 +5,6 @@ import { useLocation } from 'react-router';
 import { Link, useSearchParams } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
-import LoginImage from '~/assets/images/login.jpg';
-import logo from '~/assets/images/logo.png';
 import ColorModeToggle from '~/core/components/ColorModeToggle';
 import ShowHideTextAdornment from '~/core/components/ShowHideTextAdornment';
 import SubmitButton from '~/core/components/SubmitButton';

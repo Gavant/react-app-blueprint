@@ -4,9 +4,7 @@ const lightPalette: PaletteOptions = {
     error: {
         main: '#FF5252',
     },
-
     mode: 'light',
-
     primary: {
         main: '#2e7bd5',
     },
