@@ -8,7 +8,7 @@ const lightPalette: PaletteOptions = {
     mode: 'light',
 
     primary: {
-        main: '#C9E9D2',
+        main: '#2e7bd5',
     },
     secondary: {
         main: '#789DBC',
@@ -21,7 +21,7 @@ const darkPalette: PaletteOptions = {
     },
     mode: 'dark',
     primary: {
-        main: '#C9E9D2',
+        main: '#2e7bd5',
     },
     secondary: {
         main: '#789DBC',

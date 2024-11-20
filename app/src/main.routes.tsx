@@ -5,6 +5,7 @@ import FourOhFour from '~/features/404/public/FourOhFourView';
 import App from '~/features/app/public/AppView';
 import ForgotPasswordView from '~/features/authentication/public/ForgotPasswordView';
 import Login from '~/features/authentication/public/LoginView';
+import Splash from '~/core/components/G-splash';
 
 const MainRoutes = (
     <>
@@ -14,6 +15,7 @@ const MainRoutes = (
             {/* add authenticated routes here */}
         </Route>
         <Route element={<FourOhFour />} path="*" />
+        <Route element={<Splash />} path="/splash" />
     </>
 );
 

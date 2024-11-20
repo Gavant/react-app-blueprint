@@ -14,6 +14,7 @@ import useFormFields from '~/core/hooks/useFormFields';
 import useWindowSize from '~/core/hooks/useWindowSize';
 import { UnauthorizedRootCss } from '~/features/app/constants/UnauthorizedRootCss';
 import useLoginForm from '~/features/authentication/public/hooks/useLoginForm';
+import GSplash from '~/core/components/G-splash';
 
 const GridLeft = styled(Grid2)`
     text-align: left;
@@ -38,11 +39,11 @@ const ImageBox = styled(Box)`
     height: 98%;
     background-position: 50% 20%;
     background-size: cover;
-    background-image: url(${LoginImage});
     border-radius: 10px;
     margin-top: 0.5%;
     margin-left: 0.5%;
-    position: relative;
+    position: relative;box-shadow: -1px 3px 26px 3px rgba(0,0,0,0.2);
+    overflow: hidden;
     /* &:after {
         content: '';
         position: absolute;
@@ -54,6 +55,8 @@ const ImageBox = styled(Box)`
         `rgba(${decomposeColor(theme.palette.common.black).values}, ${theme.palette.mode === 'dark' ? 0.2 : 0})`};
         z-index: 2;
     } */
+    
+    background: ${({ theme }) => theme.palette.mode === 'dark' ? '#081533' : 'rgba(221,230,250,0.81)'};
 `;
 
 const FormBox = styled(Box)`
@@ -121,9 +124,7 @@ function Login() {
             <FormBoxContainer>
                 {isDesktop && (
                     <ImageBox>
-                        <Link to="/">
-                            <Logo alt="" src={logo} />
-                        </Link>
+                        <GSplash />
                     </ImageBox>
                 )}
                 <FormBox>
