@@ -19,7 +19,7 @@ const darkPalette: PaletteOptions = {
     },
     mode: 'dark',
     primary: {
-        main: '#2e7bd5',
+        main: '#081533',
     },
     secondary: {
         main: '#789DBC',
