@@ -1,5 +1,5 @@
 // import { useTheme } from '@emotion/react';
-import { Theme, useTheme, darken, lighten } from '@mui/material';
+import { Theme, darken, lighten, useTheme } from '@mui/material';
 import { Sphere } from '@react-three/drei';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useRef } from 'react';
@@ -41,8 +41,12 @@ const getGradientStop = (ratio: number, theme: Theme): Color => {
     // just clamp to 0
     ratio = ratio > 1 ? 1 : ratio < 0 ? 0 : ratio;
 
-    const c0 = `${covertRgbToHex(lighten(theme.palette.primary[theme.palette.mode === 'dark' ? 'light' : 'dark'], 0.25))}`.match(/.{1,2}/g)!.map((oct) => parseInt(oct, 16) * (1 - ratio));
-    const c1 = `${covertRgbToHex(darken(theme.palette.primary[theme.palette.mode === 'dark' ? 'light' : 'dark'], 0.25))}`.match(/.{1,2}/g)!.map((oct) => parseInt(oct, 16) * ratio);
+    const c0 = `${covertRgbToHex(lighten(theme.palette.primary[theme.palette.mode === 'dark' ? 'light' : 'dark'], 0.25))}`
+        .match(/.{1,2}/g)!
+        .map((oct) => parseInt(oct, 16) * (1 - ratio));
+    const c1 = `${covertRgbToHex(darken(theme.palette.primary[theme.palette.mode === 'dark' ? 'light' : 'dark'], 0.25))}`
+        .match(/.{1,2}/g)!
+        .map((oct) => parseInt(oct, 16) * ratio);
     const ci = [0, 1, 2].map((i) => Math.min(Math.round(c0[i] + c1[i]), 255));
     const color = ci
         .reduce((a, v) => (a << 8) + v, 0)
