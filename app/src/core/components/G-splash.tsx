@@ -60,7 +60,7 @@ const pointsInner = Array.from(new Array(NUM_POINTS), (element,index) => index +
     const color = calcColor(x);
 
     return {
-        idx: num,
+        index: num,
         position: [x,y,z],
         color
     }
@@ -89,7 +89,6 @@ function GSplash() {
     return (<Container className="relative">
         <Logo />
         <Canvas camera={{ position: [3, -7, -7] as Vector3}} styles={{ height: '100vh' }}>
-            <OrbitControls />
             <directionalLight />
             <pointLight position={[-30, 0, -30]} power={10.0}/>
             <Points />
