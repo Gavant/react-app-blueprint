@@ -1,4 +1,4 @@
-import { Box, Container, Grid2, decomposeColor } from '@mui/material';
+import { Box, Container, Grid2 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import Lottie from 'react-lottie-player';
 import { useLocation } from 'react-router';
@@ -43,18 +43,6 @@ const ImageBox = styled(Box)`
     position: relative;
     box-shadow: -1px 3px 26px 3px rgba(0, 0, 0, 0.2);
     overflow: hidden;
-    /* &:after {
-        content: '';
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        background-color: ${({ theme }) =>
-        `rgba(${decomposeColor(theme.palette.common.black).values}, ${theme.palette.mode === 'dark' ? 0.2 : 0})`};
-        z-index: 2;
-    } */
-
     background: ${({ theme }) => (theme.palette.mode === 'dark' ? theme.palette.primary.dark : theme.palette.primary.main)};
 `;
 
@@ -88,14 +76,6 @@ const Form = styled(Box)`
     justify-content: center;
     align-items: center;
     height: 100%;
-`;
-
-const Logo = styled.img`
-    max-width: 5rem;
-    position: absolute;
-    left: 20px;
-    top: 20px;
-    margin: 0 auto;
 `;
 
 function Login() {

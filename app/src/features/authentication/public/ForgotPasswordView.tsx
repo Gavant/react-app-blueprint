@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
 import LoginImage from '~/assets/images/forgot-password.jpg';
-import logo from '~/assets/images/logo.png';
 import ColorModeToggle from '~/core/components/ColorModeToggle';
+import GSplash from '~/core/components/G-splash';
 import SubmitButton from '~/core/components/SubmitButton';
 import useFormFields from '~/core/hooks/useFormFields';
 import useWindowSize from '~/core/hooks/useWindowSize';
@@ -37,17 +37,7 @@ const ImageBox = styled(Box)`
     margin-top: 0.5%;
     margin-left: 0.5%;
     position: relative;
-    /* &:after {
-        content: '';
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        background-color: ${({ theme }) =>
-        `rgba(${decomposeColor(theme.palette.common.black).values}, ${theme.palette.mode === 'dark' ? 0.2 : 0})`};
-        z-index: 2;
-    } */
+    background: ${({ theme }) => (theme.palette.mode === 'dark' ? theme.palette.primary.dark : theme.palette.primary.main)};
 `;
 
 const FormBox = styled(Box)`
@@ -63,10 +53,6 @@ const FormBox = styled(Box)`
     }
 `;
 
-const FullWidthBox = styled(Box)`
-    width: calc(100% - 57px);
-`;
-
 const CenteredContainer = styled(Container)`
     align-items: center;
     display: flex;
@@ -80,14 +66,6 @@ const Form = styled(Box)`
     justify-content: center;
     align-items: center;
     height: 100%;
-`;
-
-const Logo = styled.img`
-    max-width: 5rem;
-    position: absolute;
-    left: 20px;
-    top: 20px;
-    margin: 0 auto;
 `;
 
 const InfoText = styled(Box)`
@@ -115,9 +93,7 @@ function ForgotPasswordView() {
             <FormBoxContainer>
                 {isDesktop && (
                     <ImageBox>
-                        <Link to="/">
-                            <Logo alt="" src={logo} />
-                        </Link>
+                        <GSplash />
                     </ImageBox>
                 )}
                 <FormBox>

@@ -1,13 +1,16 @@
 import userEvent from '@testing-library/user-event';
 import { act } from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { debug } from 'vitest-preview';
 
 import useWindowSize from '~/core/hooks/useWindowSize';
 import LoginView from '~/features/authentication/public/LoginView';
 import { render, screen, waitFor } from '~/vitest/utils';
 // Mock dependencies
 vi.mock('~/core/hooks/useWindowSize');
+
+vi.mock('~/core/components/G-splash', () => ({
+    default: () => <div data-testid="g-splash" />,
+}));
 
 describe('LoginView', () => {
     beforeEach(() => {
@@ -60,22 +63,21 @@ describe('LoginView', () => {
         });
     });
 
-    it('displays logo when isDesktop is true', () => {
+    it('displays GSplash when isDesktop is true', () => {
         render(<LoginView />);
-        const logo = screen.getByAltText('logo');
-        expect(logo).toBeInTheDocument();
+        const gSplash = screen.getByTestId('g-splash');
+        expect(gSplash).toBeInTheDocument();
     });
 
-    it('does not display logo when isMobile is true', () => {
+    it('does not display GSplash when isDesktop is false', () => {
         vi.mocked(useWindowSize).mockReturnValue({
             isDesktop: false,
             isMobile: true,
             size: { height: 500, width: 350 },
         });
         render(<LoginView />);
-
-        const logo = screen.queryByAltText('logo');
-        expect(logo).not.toBeInTheDocument();
+        const gSplash = screen.queryByTestId('g-splash');
+        expect(gSplash).not.toBeInTheDocument();
     });
 
     it('toggles color mode when color mode toggle button is clicked', async () => {
