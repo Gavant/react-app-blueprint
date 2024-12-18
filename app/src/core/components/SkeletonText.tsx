@@ -16,12 +16,13 @@ export interface SkeletonTextProps {
 export default function SkeletonText({ className, skeletonFontSize, sx, typographyVariant, value }: SkeletonTextProps) {
     const theme = useTheme();
     return value ? (
-        <Typography className={className} sx={{ ...sx }} variant={typographyVariant}>
+        <Typography className={className} data-testid="text" sx={{ ...sx }} variant={typographyVariant}>
             {value}
         </Typography>
     ) : (
         <Skeleton
             className={className}
+            data-testid="skeleton"
             sx={{
                 fontSize: skeletonFontSize ?? (theme.typography[typographyVariant as keyof typeof theme.typography] as CSSProperties),
                 ...sx,

@@ -5,13 +5,14 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "yarn fences && tsc && vite build",
+        "build": "tsc && vite build",
         "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
         "preview": "vite preview",
         "test": "vitest",
         "generate": "plop",
         "codegen": "graphql-codegen --config codegen.ts",
-        "fences": "gf -p ./tsconfig.json -r ./src --progressBar true -x -i"
+        "fences": "gf -p ./tsconfig.json -r ./src --progressBar true -x -i",
+        "vitest-preview": "vitest-preview"
     },
     "dependencies": {
         "@apollo/client": "^3.8.1",
@@ -49,6 +50,7 @@
         "@graphql-codegen/typescript-operations": "^4.0.1",
         "@testing-library/jest-dom": "^6.0.0",
         "@testing-library/react": "^14.0.0",
+        "@testing-library/react-hooks": "^8.0.1",
         "@testing-library/user-event": "^14.4.3",
         "@types/js-cookie": "^3.0.3",
         "@types/react": "^18.2.20",
@@ -56,6 +58,7 @@
         "@typescript-eslint/eslint-plugin": "^6.4.0",
         "@typescript-eslint/parser": "^6.4.0",
         "@vitejs/plugin-react": "^4.0.4",
+        "@vitest/coverage-v8": "^2.1.5",
         "babel-plugin-styled-components": "^2.1.4",
         "eslint": "^8.47.0",
         "eslint-config-airbnb": "^19.0.4",
@@ -63,23 +66,30 @@
         "eslint-config-prettier": "^9.0.0",
         "eslint-config-standard": "^17.1.0",
         "eslint-plugin-import": "^2.28.0",
+        "eslint-plugin-jest-dom": "^5.4.0",
         "eslint-plugin-jsx-a11y": "^6.7.1",
         "eslint-plugin-perfectionist": "^2.1.0",
         "eslint-plugin-prettier": "^5.0.0",
         "eslint-plugin-react": "^7.33.1",
         "eslint-plugin-react-hooks": "^4.6.0",
         "eslint-plugin-react-refresh": "^0.4.3",
+        "eslint-plugin-testing-library": "^6.4.0",
         "good-fences": "^1.2.0",
         "jsdom": "^22.1.0",
+        "lodash.debounce": "^4.0.8",
+        "lottie-web": "^5.12.2",
         "plop": "^3.1.2",
         "prettier": "3.0.2",
+        "react-lottie-player": "^2.1.0",
         "typescript": "^5.1.6",
         "vite": "4.4.9",
         "vite-plugin-run": "^0.4.1",
-        "vitest": "^0.34.1"
+        "vitest": "^2.1.2",
+        "vitest-preview": "^0.0.1"
     },
     "resolutions": {
-        "@mui/base": "5.0.0-beta.58"
+        "@mui/base": "5.0.0-beta.58",
+        "@mui/styled-engine": "npm:@mui/styled-engine-sc@latest"
     },
     "volta": {
         "extends": "../package.json"

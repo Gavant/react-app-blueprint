@@ -1,13 +1,20 @@
 import { AlertColor } from '@mui/material';
 import { ReactNode, createContext, useState } from 'react';
 
+enum ToastSeverity {
+    ERROR = 'error',
+    INFO = 'info',
+    SUCCESS = 'success',
+    WARNING = 'warning',
+}
+
 type SetToast = (message: string, options?: { autohideDuration?: number; key?: string; open?: boolean }) => void;
 
 export type Toast = {
-    error: SetToast;
-    info: SetToast;
-    success: SetToast;
-    warning: SetToast;
+    [ToastSeverity.ERROR]: SetToast;
+    [ToastSeverity.INFO]: SetToast;
+    [ToastSeverity.SUCCESS]: SetToast;
+    [ToastSeverity.WARNING]: SetToast;
 };
 
 export type ToastMsg = {
@@ -26,7 +33,10 @@ export interface ToastContextValue {
 
 const defaultContext: ToastContextValue = {
     setToast: () => {},
-    toast: { error: () => {}, info: () => {}, success: () => {}, warning: () => {} },
+    toast: Object.keys(ToastSeverity).reduce((acc, severity) => {
+        acc[severity as ToastSeverity] = () => {};
+        return acc;
+    }, {} as Toast),
     toastMsg: null,
 };
 
@@ -41,7 +51,7 @@ const ToastProvider = ({ children }: ToastProviderProps) => {
     const [toastMsg, setToastMsg] = useState<ToastMsg | null>(null);
 
     const createSetToastFunction =
-        (severity: AlertColor): SetToast =>
+        (severity: ToastSeverity): SetToast =>
         (message, options) =>
             setToastMsg({
                 autohideOverride: options?.autohideDuration ?? undefined,
@@ -54,10 +64,10 @@ const ToastProvider = ({ children }: ToastProviderProps) => {
     const setToast = (toastMsg: ToastMsg) => setToastMsg(toastMsg);
 
     const toast: Toast = {
-        error: createSetToastFunction('error'),
-        info: createSetToastFunction('info'),
-        success: createSetToastFunction('success'),
-        warning: createSetToastFunction('warning'),
+        error: createSetToastFunction(ToastSeverity.ERROR),
+        info: createSetToastFunction(ToastSeverity.INFO),
+        success: createSetToastFunction(ToastSeverity.SUCCESS),
+        warning: createSetToastFunction(ToastSeverity.WARNING),
     };
 
     return <ToastContext.Provider value={{ setToast, toast, toastMsg }}>{children}</ToastContext.Provider>;

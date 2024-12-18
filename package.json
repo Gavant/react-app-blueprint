@@ -7,20 +7,24 @@
         "dev": "yarn workspace app dev",
         "start": "yarn workspace app dev",
         "build": "yarn workspace app build",
-        "docs": "yarn workspace docs start"
+        "docs": "yarn workspace docs start",
+        "test": "yarn workspace app test"
     },
     "resolutions": {
         "@mui/base": "5.0.0-beta.58"
     },
     "devDependencies": {
         "@types/jsonwebtoken": "^9.0.7",
+        "@vitest/browser": "^2.1.2",
+        "playwright": "^1.48.0",
         "prettier": "3.0.2",
         "rollup-plugin-visualizer": "^5.12.0",
-        "vite-plugin-node-polyfills": "^0.22.0"
+        "vite-plugin-node-polyfills": "^0.22.0",
+        "vitest": "^2.1.2"
     },
     "volta": {
         "node": "18.16.0",
-        "yarn": "4.0.0-rc.48"
+        "yarn": "4.0.2"
     },
     "workspaces": [
         "app",
@@ -28,6 +32,10 @@
         "docs"
     ],
     "dependencies": {
-        "jsonwebtoken": "^9.0.2"
+        "@react-three/drei": "^9.117.3",
+        "@react-three/fiber": "^8.17.10",
+        "@types/three": "^0.170.0",
+        "jsonwebtoken": "^9.0.2",
+        "three": "^0.170.0"
     }
 }

@@ -1,4 +1,5 @@
 import { TextField as MuiTextField, TextFieldProps } from '@mui/material';
+import { useState } from 'react';
 import { Control, Controller, FieldPath, FieldValues, Path, RegisterOptions } from 'react-hook-form';
 import styled from 'styled-components';
 import { SomeZodObject } from 'zod';
@@ -16,7 +17,7 @@ export interface WithFormFieldProps<T extends FieldValues, P extends FieldPath<T
 const TextField = styled(MuiTextField)`
     && {
         & > .MuiInputBase-root {
-            background: ${({ theme }) => theme.palette.common.white};
+            background: ${({ theme }) => theme.palette.background.paper};
         }
 
         & .MuiInputBase-input.Mui-disabled {
@@ -41,7 +42,9 @@ const withFormField = <T extends FieldValues, Z extends SomeZodObject>(controlle
         slotProps,
         type = 'text',
         ...props
-    }: WithFormFieldProps<T> & TextFieldProps) => {
+    }: TextFieldProps & WithFormFieldProps<T>) => {
+        const [shrink, setShrink] = useState(false);
+
         return (
             <Controller
                 control={controller}
@@ -49,13 +52,18 @@ const withFormField = <T extends FieldValues, Z extends SomeZodObject>(controlle
                 render={({ field: { onChange, value }, fieldState: { error } }) => (
                     <TextField
                         autoComplete={field}
-                        color="secondary"
+                        color="primary"
                         error={!!error?.type}
                         label={`${getLabelFromSchema({ error, field, label, schema })}`}
+                        onBlur={(e) => setShrink(!!e.target.value)}
                         onChange={onChange}
+                        onFocus={() => setShrink(true)}
                         slotProps={{
                             htmlInput: { maxLength, ...slotProps?.htmlInput },
-                            inputLabel: { shrink: !!value },
+                            input: {
+                                ...slotProps?.input,
+                            },
+                            inputLabel: { shrink: shrink || !!value },
                         }}
                         type={type}
                         value={value}

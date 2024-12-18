@@ -4,11 +4,18 @@ module.exports = {
         es2021: true,
         node: true,
     },
-    extends: ['plugin:react/recommended', 'eslint:recommended', 'plugin:perfectionist/recommended-natural'],
+    extends: ['plugin:react/recommended', 'eslint:recommended', 'plugin:perfectionist/recommended-natural', 'plugin:testing-library/react'],
     globals: {
         ImportMetaEnv: true,
         JSX: true,
     },
+    overrides: [
+        {
+            extends: ['plugin:testing-library/react'],
+            // 3) Now we enable eslint-plugin-testing-library rules or preset only for matching testing files!
+            files: ['**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)'],
+        },
+    ],
     parser: '@typescript-eslint/parser',
     parserOptions: {
         ecmaFeatures: {
@@ -20,7 +27,11 @@ module.exports = {
     plugins: ['jsx-a11y', 'prettier', 'import', 'react', 'react-hooks', '@typescript-eslint', 'perfectionist'],
     rules: {
         '@typescript-eslint/no-use-before-define': ['error'],
-        'import/extensions': ['error', 'never', { gql: 'always', png: 'always', routes: 'always', svg: 'always' }],
+        'import/extensions': [
+            'error',
+            'never',
+            { gql: 'always', jpg: 'always', json: 'always', png: 'always', routes: 'always', svg: 'always' },
+        ],
         'import/order': [
             'warn',
             {
@@ -46,10 +57,10 @@ module.exports = {
         ],
         'prefer-const': 'error',
         'prettier/prettier': 'error',
-        'react-hooks/exhaustive-deps': 'warn',
-        'react-hooks/rules-of-hooks': 'error',
         'react/jsx-uses-react': 'off',
         'react/prop-types': 'off',
         'react/react-in-jsx-scope': 'off',
+        'react-hooks/exhaustive-deps': 'warn',
+        'react-hooks/rules-of-hooks': 'error',
     },
 };

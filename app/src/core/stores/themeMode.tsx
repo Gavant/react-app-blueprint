@@ -1,35 +1,60 @@
 import { ThemeProvider as MuiProvider, useMediaQuery } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
-import { ReactElement, ReactNode, useMemo } from 'react';
+import * as React from 'react';
+import { ReactElement, ReactNode, useState } from 'react';
 import { ThemeProvider as StyledProvider } from 'styled-components';
 
-import customTheme from '~/core/constants/theme';
+import { darkPalette, lightPalette } from '~/core/constants/palette';
+import ThemeOverrides from '~/core/constants/theme';
+import { getLocalStorageEnvironmentVariable } from '~/core/utils/localStorage';
 
-export interface ProviderToggleProps {
+export const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
+
+interface ProviderToggleProps {
     children: ReactElement | ReactNode;
 }
 
 export default function ThemeMode({ children }: ProviderToggleProps) {
-    const theme = useMemo(() => {
-        const { overrides } = customTheme;
+    const storedMode = getLocalStorageEnvironmentVariable('VITE_THEME_STORAGE_KEY');
+    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+    let defaultMode: Mode = storedMode ?? 'light';
+    if (!storedMode) {
+        if (prefersDarkMode) {
+            defaultMode = 'dark';
+        }
+    }
+
+    const [mode, setMode] = useState<Mode>(defaultMode);
+
+    const colorMode = React.useMemo(
+        () => ({
+            toggleColorMode: () => {
+                setMode((prevMode) => {
+                    localStorage.setItem('VITE_THEME_STORAGE_KEY', prevMode === 'light' ? 'dark' : 'light');
+                    return prevMode === 'light' ? 'dark' : 'light';
+                });
+            },
+        }),
+        []
+    );
+
+    const theme = React.useMemo(() => {
+        const theme = mode === 'light' ? lightPalette : darkPalette;
+        const { overrides } = ThemeOverrides;
+
         return createTheme({
-            colorSchemes: {
-                dark: true,
-                light: true,
-            },
-            cssVariables: {
-                colorSchemeSelector: 'class',
-            },
             palette: {
-                ...overrides.palette,
+                ...theme,
             },
             typography: { ...overrides.typography },
         });
-    }, []);
+    }, [mode]);
 
     return (
-        <MuiProvider theme={theme}>
-            <StyledProvider theme={theme}>{children}</StyledProvider>
-        </MuiProvider>
+        <ColorModeContext.Provider value={colorMode}>
+            <MuiProvider theme={theme}>
+                <StyledProvider theme={theme}>{children}</StyledProvider>
+            </MuiProvider>
+        </ColorModeContext.Provider>
     );
 }

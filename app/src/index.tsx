@@ -9,7 +9,7 @@ import { RouterProvider, createBrowserRouter, createRoutesFromElements } from 'r
 import ApolloClientProvider from '~/core/stores/apollo';
 import ThemeModeProvider from '~/core/stores/themeMode';
 import { ToastProvider } from '~/core/stores/toastContext';
-import { refresh } from '~/features/authentication/public/utils/apolloRefresh';
+import { WindowSizeProvider } from '~/core/stores/windowSizeContext';
 import MainRoutes from '~/main.routes';
 
 const cookieName = import.meta.env.VITE_AUTH_COOKIE_NAME;
@@ -22,7 +22,7 @@ if (import.meta.env.DEV) {
     cookieDomain = import.meta.env.VITE_AUTH_HOST_DOMAIN;
 }
 
-const store = createStore({ authName: cookieName, authType: 'cookie', cookieDomain: cookieDomain, cookieSecure: secure, refresh });
+const store = createStore({ authName: cookieName, authType: 'cookie', cookieDomain: cookieDomain, cookieSecure: secure });
 
 export const router = createBrowserRouter(createRoutesFromElements(MainRoutes));
 
@@ -33,7 +33,9 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
                 <ToastProvider>
                     <ApolloClientProvider>
                         <HelmetProvider>
-                            <RouterProvider router={router} />
+                            <WindowSizeProvider>
+                                <RouterProvider router={router} />
+                            </WindowSizeProvider>
                         </HelmetProvider>
                     </ApolloClientProvider>
                 </ToastProvider>
