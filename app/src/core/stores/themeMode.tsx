@@ -52,7 +52,7 @@ export default function ThemeMode({ children }: ProviderToggleProps) {
 
     return (
         <ColorModeContext.Provider value={colorMode}>
-            <MuiProvider defaultMode={defaultMode} theme={theme}>
+            <MuiProvider theme={theme}>
                 <StyledProvider theme={theme}>{children}</StyledProvider>
             </MuiProvider>
         </ColorModeContext.Provider>

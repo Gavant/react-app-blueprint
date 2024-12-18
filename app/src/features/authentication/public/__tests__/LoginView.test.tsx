@@ -1,10 +1,13 @@
 import userEvent from '@testing-library/user-event';
 import { act } from 'react';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { Route, createRoutesFromChildren } from 'react-router';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import useWindowSize from '~/core/hooks/useWindowSize';
-import LoginView from '~/features/authentication/public/LoginView';
-import { render, screen, waitFor } from '~/vitest/utils';
+import ForgotPasswordView from '~/features/authentication/public/ForgotPasswordView';
+import Login from '~/features/authentication/public/LoginView';
+import { renderRoutes, screen, waitFor } from '~/vitest/utils';
+
 // Mock dependencies
 vi.mock('~/core/hooks/useWindowSize');
 
@@ -21,17 +24,39 @@ describe('LoginView', () => {
         });
     });
 
-    it('renders login form elements', () => {
-        render(<LoginView />);
+    afterEach(() => {
+        vi.clearAllMocks();
+    });
 
-        expect(screen.getByText(/Sign into/i)).toBeInTheDocument();
+    it('renders login form elements', async () => {
+        renderRoutes(
+            'memory',
+            createRoutesFromChildren(
+                <>
+                    <Route element={<Login />} path="/login" />
+                    <Route element={<ForgotPasswordView />} path="/forgot-password" />
+                </>
+            ),
+            '/login'
+        );
+
+        expect(await screen.findByText(/Sign into/i)).toBeInTheDocument();
         expect(screen.getByLabelText(/Email/i)).toBeInTheDocument();
         expect(screen.getByLabelText(/Password/i, { selector: 'input' })).toBeInTheDocument();
         expect(screen.getByRole('button', { name: /sign in/i })).toBeInTheDocument();
     });
 
     it('renders forgot password and create account links', () => {
-        render(<LoginView />);
+        renderRoutes(
+            'memory',
+            createRoutesFromChildren(
+                <>
+                    <Route element={<Login />} path="/login" />
+                    <Route element={<ForgotPasswordView />} path="/forgot-password" />
+                </>
+            ),
+            '/login'
+        );
 
         expect(screen.getByText('Forgot password?')).toHaveAttribute('href', '/forgot-password');
         expect(screen.getByText('Create Account')).toHaveAttribute('href', '/create-account');
@@ -39,8 +64,16 @@ describe('LoginView', () => {
 
     it('toggles password visibility when show/hide button is clicked', async () => {
         const user = userEvent.setup();
-        render(<LoginView />);
-
+        renderRoutes(
+            'memory',
+            createRoutesFromChildren(
+                <>
+                    <Route element={<Login />} path="/login" />
+                    <Route element={<ForgotPasswordView />} path="/forgot-password" />
+                </>
+            ),
+            '/login'
+        );
         const passwordInput = screen.getByLabelText(/Password/i, { selector: 'input' });
         expect(passwordInput).toHaveAttribute('type', 'password');
 
@@ -64,7 +97,17 @@ describe('LoginView', () => {
     });
 
     it('displays GSplash when isDesktop is true', () => {
-        render(<LoginView />);
+        renderRoutes(
+            'memory',
+            createRoutesFromChildren(
+                <>
+                    <Route element={<Login />} path="/login" />
+                    <Route element={<ForgotPasswordView />} path="/forgot-password" />
+                </>
+            ),
+            '/login'
+        );
+
         const gSplash = screen.getByTestId('g-splash');
         expect(gSplash).toBeInTheDocument();
     });
@@ -75,14 +118,33 @@ describe('LoginView', () => {
             isMobile: true,
             size: { height: 500, width: 350 },
         });
-        render(<LoginView />);
+        renderRoutes(
+            'memory',
+            createRoutesFromChildren(
+                <>
+                    <Route element={<Login />} path="/login" />
+                    <Route element={<ForgotPasswordView />} path="/forgot-password" />
+                </>
+            ),
+            '/login'
+        );
+
         const gSplash = screen.queryByTestId('g-splash');
         expect(gSplash).not.toBeInTheDocument();
     });
 
     it('toggles color mode when color mode toggle button is clicked', async () => {
         const user = userEvent.setup();
-        render(<LoginView />);
+        renderRoutes(
+            'memory',
+            createRoutesFromChildren(
+                <>
+                    <Route element={<Login />} path="/login" />
+                    <Route element={<ForgotPasswordView />} path="/forgot-password" />
+                </>
+            ),
+            '/login'
+        );
 
         // Find color mode toggle button
         const toggleButton = screen.getByRole('button', { name: /toggle-color-mode/i });
@@ -109,6 +171,28 @@ describe('LoginView', () => {
         // Should show dark mode icon again
         await waitFor(() => {
             expect(screen.getByTestId('Brightness4Icon')).toBeInTheDocument();
+        });
+    });
+
+    it('navigates to forgot password page when clicking forgot password link', async () => {
+        const user = userEvent.setup();
+        renderRoutes(
+            'memory',
+            createRoutesFromChildren(
+                <>
+                    <Route element={<Login />} path="/login" />
+                    <Route element={<ForgotPasswordView />} path="/forgot-password" />
+                </>
+            ),
+            '/login'
+        );
+
+        const forgotPasswordLink = screen.getByText('Forgot password?');
+
+        await user.click(forgotPasswordLink);
+
+        await waitFor(async () => {
+            expect(screen.getByText(/Reset Password/i)).toBeInTheDocument();
         });
     });
 });

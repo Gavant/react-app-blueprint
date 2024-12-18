@@ -1,11 +1,11 @@
 import { Route } from 'react-router-dom';
 
+import Splash from '~/core/components/G-splash';
 import { Authenticate } from '~/core/utils/routing';
 import FourOhFour from '~/features/404/public/FourOhFourView';
 import App from '~/features/app/public/AppView';
 import ForgotPasswordView from '~/features/authentication/public/ForgotPasswordView';
 import Login from '~/features/authentication/public/LoginView';
-import Splash from '~/core/components/G-splash';
 
 const MainRoutes = (
     <>

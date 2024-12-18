@@ -1,11 +1,10 @@
 import { InMemoryCache } from '@apollo/client';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
-import { Queries, RenderHookOptions, RenderOptions, act, fireEvent, queries, render, renderHook } from '@testing-library/react';
-import React, { ReactElement } from 'react';
+import { Queries, RenderHookOptions, RenderOptions, fireEvent, queries, render, renderHook } from '@testing-library/react';
+import React, { ReactElement, act } from 'react';
 import AuthProvider from 'react-auth-kit';
 import createStore from 'react-auth-kit/createStore';
-import { HelmetProvider } from 'react-helmet-async';
-import { MemoryRouter } from 'react-router-dom';
+import { RouteObject, RouterProvider, createBrowserRouter, createMemoryRouter } from 'react-router-dom';
 
 import ThemeModeProvider from '~/core/stores/themeMode';
 
@@ -79,9 +78,7 @@ const AllTheProviders = ({
         <ThemeModeProvider>
             <AuthProvider store={store}>
                 <MockedProvider addTypename={true} cache={ApolloCache} mocks={mocks}>
-                    <MemoryRouter>
-                        <HelmetProvider>{children}</HelmetProvider>
-                    </MemoryRouter>
+                    {children}
                 </MockedProvider>
             </AuthProvider>
         </ThemeModeProvider>
@@ -90,7 +87,10 @@ const AllTheProviders = ({
 
 const customRender = (
     ui: ReactElement,
-    options?: { mocks: readonly MockedResponse<Record<string, any>, Record<string, any>>[] | undefined } & Omit<RenderOptions, 'wrapper'>
+    options?: {
+        mocks?: readonly MockedResponse<Record<string, any>, Record<string, any>>[] | undefined;
+        router?: ReturnType<typeof createBrowserRouter | typeof createMemoryRouter>;
+    } & Omit<RenderOptions, 'wrapper'>
 ) => render(ui, { wrapper: (props) => <AllTheProviders {...props} mocks={options?.mocks} />, ...options });
 
 const renderWithProvider = (ui: ReactElement, provider: ({ children }: { children: React.ReactNode }) => JSX.Element) =>
@@ -118,11 +118,45 @@ const renderHookWithWrapper = <
     });
 };
 
+/**
+ * Render routes with the specified router type. If the router type is 'memory', the initial path can be specified.
+ *
+ *
+ * @template RT
+ * @param routerType
+ * @param routesOrRouter
+ * @param [initialPath]
+ * @returns {*}
+ */
+const renderRoutes = <RT extends 'browser' | 'memory'>(
+    routerType: RT,
+    routesOrRouter: RouteObject[],
+    initialPath?: RT extends 'memory' ? string : undefined
+) => {
+    const appRouter =
+        routerType === 'browser'
+            ? createBrowserRouter(routesOrRouter)
+            : createMemoryRouter(routesOrRouter, {
+                  initialEntries: [initialPath ?? routesOrRouter[0].path ?? '/'],
+              });
+    customRender(<RouterProvider router={appRouter} />);
+    return { router: appRouter };
+};
+
 const log = (value: string) => process.stdout.write(`${value} \n`);
 
 const reactHookFormSubmit = (element: HTMLElement) => {
+    // eslint-disable-next-line testing-library/no-unnecessary-act
     return act(async () => fireEvent.click(element));
 };
 
 export * from '@testing-library/react';
-export { AllTheProviders, customRender as render, log, reactHookFormSubmit, renderHookWithWrapper as renderHook, renderWithProvider };
+export {
+    AllTheProviders,
+    customRender as render,
+    log,
+    reactHookFormSubmit,
+    renderHookWithWrapper as renderHook,
+    renderRoutes,
+    renderWithProvider,
+};

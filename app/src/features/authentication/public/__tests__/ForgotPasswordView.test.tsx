@@ -1,10 +1,12 @@
 import userEvent from '@testing-library/user-event';
 import { act } from 'react';
+import { Route, createRoutesFromChildren } from 'react-router';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import useWindowSize from '~/core/hooks/useWindowSize';
 import ForgotPasswordView from '~/features/authentication/public/ForgotPasswordView';
-import { render, screen, waitFor } from '~/vitest/utils';
+import Login from '~/features/authentication/public/LoginView';
+import { fireEvent, render, renderRoutes, screen, waitFor } from '~/vitest/utils';
 
 // Mock dependencies
 vi.mock('~/core/hooks/useWindowSize');
@@ -22,7 +24,16 @@ describe('ForgotPasswordView', () => {
     });
 
     it('renders forgot password form elements', () => {
-        render(<ForgotPasswordView />);
+        renderRoutes(
+            'memory',
+            createRoutesFromChildren(
+                <>
+                    <Route element={<Login />} path="/login" />
+                    <Route element={<ForgotPasswordView />} path="/forgot-password" />
+                </>
+            ),
+            '/forgot-password'
+        );
 
         expect(screen.getByLabelText(/Email/i)).toBeInTheDocument();
         expect(screen.getByRole('button', { name: /reset password/i })).toBeInTheDocument();
@@ -30,12 +41,50 @@ describe('ForgotPasswordView', () => {
     });
 
     it('renders back to login link', () => {
-        render(<ForgotPasswordView />);
+        renderRoutes(
+            'memory',
+            createRoutesFromChildren(
+                <>
+                    <Route element={<Login />} path="/login" />
+                    <Route element={<ForgotPasswordView />} path="/forgot-password" />
+                </>
+            ),
+            '/forgot-password'
+        );
         expect(screen.getByText('Back to Login')).toHaveAttribute('href', '/login');
     });
 
+    it('navigates to login page when clicking back to login link', async () => {
+        const user = userEvent.setup();
+        renderRoutes(
+            'memory',
+            createRoutesFromChildren(
+                <>
+                    <Route element={<Login />} path="/login" />
+                    <Route element={<ForgotPasswordView />} path="/forgot-password" />
+                </>
+            ),
+            '/forgot-password'
+        );
+
+        const loginLink = screen.getByText('Back to Login');
+        await user.click(loginLink);
+
+        const button = await screen.findByRole('button', { name: /sign in/i });
+        expect(button).toBeInTheDocument();
+    });
+
     it('displays GSplash when isDesktop is true', () => {
-        render(<ForgotPasswordView />);
+        renderRoutes(
+            'memory',
+            createRoutesFromChildren(
+                <>
+                    <Route element={<Login />} path="/login" />
+                    <Route element={<ForgotPasswordView />} path="/forgot-password" />
+                </>
+            ),
+            '/forgot-password'
+        );
         const gSplash = screen.getByTestId('g-splash');
         expect(gSplash).toBeInTheDocument();
     });
@@ -46,14 +95,32 @@ describe('ForgotPasswordView', () => {
             isMobile: true,
             size: { height: 500, width: 350 },
         });
-        render(<ForgotPasswordView />);
+        renderRoutes(
+            'memory',
+            createRoutesFromChildren(
+                <>
+                    <Route element={<Login />} path="/login" />
+                    <Route element={<ForgotPasswordView />} path="/forgot-password" />
+                </>
+            ),
+            '/forgot-password'
+        );
         const gSplash = screen.queryByTestId('g-splash');
         expect(gSplash).not.toBeInTheDocument();
     });
 
     it('toggles color mode when color mode toggle button is clicked', async () => {
         const user = userEvent.setup();
-        render(<ForgotPasswordView />);
+        renderRoutes(
+            'memory',
+            createRoutesFromChildren(
+                <>
+                    <Route element={<Login />} path="/login" />
+                    <Route element={<ForgotPasswordView />} path="/forgot-password" />
+                </>
+            ),
+            '/forgot-password'
+        );
 
         const toggleButton = screen.getByRole('button', { name: /toggle-color-mode/i });
         expect(toggleButton).toBeInTheDocument();
