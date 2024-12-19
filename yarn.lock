@@ -365,7 +365,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@antfu/utils@npm:^0.7.2":
+"@antfu/utils@npm:^0.7.10":
   version: 0.7.10
   resolution: "@antfu/utils@npm:0.7.10"
   checksum: 10/c8c2797aeab3e88f0095dea5736d2f16137a7213195e568246792b2cceecb184234f018346dc07c252c62e4d9085c09ce6bd180da833266cafa65133fb03e075
@@ -6852,7 +6852,7 @@ __metadata:
     true-myth: "npm:^8.0.0"
     typescript: "npm:^5.1.6"
     vite: "npm:4.4.9"
-    vite-plugin-run: "npm:^0.4.1"
+    vite-plugin-run: "npm:^0.6.1"
     vitest: "npm:^2.1.2"
     vitest-preview: "npm:^0.0.1"
     zod: "npm:^3.23.8"
@@ -10831,7 +10831,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"execa@npm:^5.0.0":
+"execa@npm:5.1.1, execa@npm:^5.0.0":
   version: 5.1.1
   resolution: "execa@npm:5.1.1"
   dependencies:
@@ -14586,15 +14586,6 @@ __metadata:
   dependencies:
     brace-expansion: "npm:^2.0.1"
   checksum: 10/c81b47d28153e77521877649f4bab48348d10938df9e8147a58111fe00ef89559a2938de9f6632910c4f7bf7bb5cd81191a546167e58d357f0cfb1e18cecc1c5
-  languageName: node
-  linkType: hard
-
-"minimatch@npm:^8.0.3":
-  version: 8.0.4
-  resolution: "minimatch@npm:8.0.4"
-  dependencies:
-    brace-expansion: "npm:^2.0.1"
-  checksum: 10/aef05598ee565e1013bc8a10f53410ac681561f901c1a084b8ecfd016c9ed919f58f4bbd5b63e05643189dfb26e8106a84f0e1ff12e4a263aa37e1cae7ce9828
   languageName: node
   linkType: hard
 
@@ -18376,6 +18367,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"something@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "something@workspace:."
+  dependencies:
+    "@react-three/drei": "npm:^9.117.3"
+    "@react-three/fiber": "npm:^8.17.10"
+    "@types/jsonwebtoken": "npm:^9.0.7"
+    "@types/three": "npm:^0.170.0"
+    "@vitest/browser": "npm:^2.1.2"
+    jsonwebtoken: "npm:^9.0.2"
+    playwright: "npm:^1.48.0"
+    prettier: "npm:3.0.2"
+    rollup-plugin-visualizer: "npm:^5.12.0"
+    three: "npm:^0.170.0"
+    vite-plugin-node-polyfills: "npm:^0.22.0"
+    vitest: "npm:^2.1.2"
+  languageName: unknown
+  linkType: soft
+
 "sort-css-media-queries@npm:2.1.0":
   version: 2.1.0
   resolution: "sort-css-media-queries@npm:2.1.0"
@@ -20147,15 +20157,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-plugin-run@npm:^0.4.1":
-  version: 0.4.1
-  resolution: "vite-plugin-run@npm:0.4.1"
+"vite-plugin-run@npm:^0.6.1":
+  version: 0.6.1
+  resolution: "vite-plugin-run@npm:0.6.1"
   dependencies:
-    "@antfu/utils": "npm:^0.7.2"
-    debug: "npm:^4.3.4"
-    minimatch: "npm:^8.0.3"
-    picocolors: "npm:^1.0.0"
-  checksum: 10/68681f6d184d488521c9ac370b5a144f5878233812b067b61b6af5819a96e401500e03319bd9be3c78fc810ed60fb7cdff2e56387f41dc5ce7ef742e5321ecf2
+    "@antfu/utils": "npm:^0.7.10"
+    debug: "npm:^4.3.7"
+    execa: "npm:5.1.1"
+    minimatch: "npm:^9.0.5"
+    picocolors: "npm:^1.1.0"
+  checksum: 10/69109a0889afc43c9e99eb4f38a5a4c2c494f1bd030d9da3e84e1d1d04e07d29cd35b97d427c1e9ac3aa4ea0a34d00c465f2aed3adf0702a330ecaa7c285697d
   languageName: node
   linkType: hard
 
@@ -21172,22 +21183,3 @@ __metadata:
   checksum: 10/28a1bebacab3bc60150b6b0a2ba1db2ad033f068e81f05e4892ec0ea13ae63f5d140a1d692062ac0657840c8da076f35b94433b5f1c329d7803b247de80f064a
   languageName: node
   linkType: hard
-
-"{{APP_NAME}}@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "{{APP_NAME}}@workspace:."
-  dependencies:
-    "@react-three/drei": "npm:^9.117.3"
-    "@react-three/fiber": "npm:^8.17.10"
-    "@types/jsonwebtoken": "npm:^9.0.7"
-    "@types/three": "npm:^0.170.0"
-    "@vitest/browser": "npm:^2.1.2"
-    jsonwebtoken: "npm:^9.0.2"
-    playwright: "npm:^1.48.0"
-    prettier: "npm:3.0.2"
-    rollup-plugin-visualizer: "npm:^5.12.0"
-    three: "npm:^0.170.0"
-    vite-plugin-node-polyfills: "npm:^0.22.0"
-    vitest: "npm:^2.1.2"
-  languageName: unknown
-  linkType: soft
