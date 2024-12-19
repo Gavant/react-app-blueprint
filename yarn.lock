@@ -4124,18 +4124,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/styled-engine-sc@npm:^6.1.0":
-  version: 6.1.7
-  resolution: "@mui/styled-engine-sc@npm:6.1.7"
+"@mui/styled-engine-sc@npm:^6.2.1":
+  version: 6.2.1
+  resolution: "@mui/styled-engine-sc@npm:6.2.1"
   dependencies:
     "@babel/runtime": "npm:^7.26.0"
-    "@types/hoist-non-react-statics": "npm:^3.3.5"
+    "@types/hoist-non-react-statics": "npm:^3.3.6"
     csstype: "npm:^3.1.3"
     hoist-non-react-statics: "npm:^3.3.2"
     prop-types: "npm:^15.8.1"
   peerDependencies:
     styled-components: ^6.0.0
-  checksum: 10/20dd48c036c307794051b4a2c62473e858d835b6085ca4e44692999cb2f7f72f55c0053c49307551d6418f4b10a50d39ddd6232aa140d14cb0de0c1a76bd2f28
+  checksum: 10/6e82624fffa48a4c7fe33b8d9e2afc894191b38551bcddf480127de4e990a24df157ac65e84624bb9165bd00edf814cc4d33766b52c353cd317409abd05ad2ad
   languageName: node
   linkType: hard
 
@@ -5332,13 +5332,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/hoist-non-react-statics@npm:^3.3.5":
-  version: 3.3.5
-  resolution: "@types/hoist-non-react-statics@npm:3.3.5"
+"@types/hoist-non-react-statics@npm:^3.3.6":
+  version: 3.3.6
+  resolution: "@types/hoist-non-react-statics@npm:3.3.6"
   dependencies:
     "@types/react": "npm:*"
     hoist-non-react-statics: "npm:^3.3.0"
-  checksum: 10/b645b062a20cce6ab1245ada8274051d8e2e0b2ee5c6bd58215281d0ec6dae2f26631af4e2e7c8abe238cdcee73fcaededc429eef569e70908f82d0cc0ea31d7
+  checksum: 10/f03e43bd081876c49584ffa0eb690d69991f258203efca44dcc30efdda49a50653ff06402917d1edc9cb7e2adebbe9e2d1d0e739bc99c1b5372103b1cc534e47
   languageName: node
   linkType: hard
 
@@ -6800,7 +6800,7 @@ __metadata:
     "@mui/icons-material": "npm:^6.1.0"
     "@mui/lab": "npm:^6.0.0-beta.9"
     "@mui/material": "npm:^6.1.0"
-    "@mui/styled-engine-sc": "npm:^6.1.0"
+    "@mui/styled-engine-sc": "npm:^6.2.1"
     "@testing-library/jest-dom": "npm:^6.0.0"
     "@testing-library/react": "npm:^14.0.0"
     "@testing-library/react-hooks": "npm:^8.0.1"
@@ -18376,6 +18376,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"something@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "something@workspace:."
+  dependencies:
+    "@react-three/drei": "npm:^9.117.3"
+    "@react-three/fiber": "npm:^8.17.10"
+    "@types/jsonwebtoken": "npm:^9.0.7"
+    "@types/three": "npm:^0.170.0"
+    "@vitest/browser": "npm:^2.1.2"
+    jsonwebtoken: "npm:^9.0.2"
+    playwright: "npm:^1.48.0"
+    prettier: "npm:3.0.2"
+    rollup-plugin-visualizer: "npm:^5.12.0"
+    three: "npm:^0.170.0"
+    vite-plugin-node-polyfills: "npm:^0.22.0"
+    vitest: "npm:^2.1.2"
+  languageName: unknown
+  linkType: soft
+
 "sort-css-media-queries@npm:2.1.0":
   version: 2.1.0
   resolution: "sort-css-media-queries@npm:2.1.0"
@@ -21172,22 +21191,3 @@ __metadata:
   checksum: 10/28a1bebacab3bc60150b6b0a2ba1db2ad033f068e81f05e4892ec0ea13ae63f5d140a1d692062ac0657840c8da076f35b94433b5f1c329d7803b247de80f064a
   languageName: node
   linkType: hard
-
-"{{APP_NAME}}@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "{{APP_NAME}}@workspace:."
-  dependencies:
-    "@react-three/drei": "npm:^9.117.3"
-    "@react-three/fiber": "npm:^8.17.10"
-    "@types/jsonwebtoken": "npm:^9.0.7"
-    "@types/three": "npm:^0.170.0"
-    "@vitest/browser": "npm:^2.1.2"
-    jsonwebtoken: "npm:^9.0.2"
-    playwright: "npm:^1.48.0"
-    prettier: "npm:3.0.2"
-    rollup-plugin-visualizer: "npm:^5.12.0"
-    three: "npm:^0.170.0"
-    vite-plugin-node-polyfills: "npm:^0.22.0"
-    vitest: "npm:^2.1.2"
-  languageName: unknown
-  linkType: soft
