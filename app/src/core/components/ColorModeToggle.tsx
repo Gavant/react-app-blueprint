@@ -2,7 +2,7 @@ import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import { SvgIconPropsColorOverrides } from '@mui/material/SvgIcon/SvgIcon';
-import { useColorScheme, useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
 import { OverridableStringUnion } from '@mui/types';
 import { useContext } from 'react';
 import styled from 'styled-components';

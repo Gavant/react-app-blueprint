@@ -11,10 +11,10 @@
         "test": "yarn workspace app test"
     },
     "resolutions": {
-        "@mui/base": "5.0.0-beta.58"
+        "@mui/base": "5.0.0-beta.58",
+        "@mui/styled-engine": "npm:@mui/styled-engine-sc@latest"
     },
     "devDependencies": {
-        "@types/jsonwebtoken": "^9.0.7",
         "@vitest/browser": "^2.1.2",
         "playwright": "^1.48.0",
         "prettier": "3.0.2",
@@ -30,12 +30,5 @@
         "app",
         "deployment",
         "docs"
-    ],
-    "dependencies": {
-        "@react-three/drei": "^9.117.3",
-        "@react-three/fiber": "^8.17.10",
-        "@types/three": "^0.170.0",
-        "jsonwebtoken": "^9.0.2",
-        "three": "^0.170.0"
-    }
+    ]
 }
