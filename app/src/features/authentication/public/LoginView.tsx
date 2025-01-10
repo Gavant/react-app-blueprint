@@ -1,6 +1,5 @@
 import { Box, Container, Grid2 } from '@mui/material';
-import { type MRT_ColumnDef, MaterialReactTable, useMaterialReactTable } from 'material-react-table';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Lottie from 'react-lottie-player';
 import { useLocation } from 'react-router';
 import { Link, useSearchParams } from 'react-router-dom';
@@ -115,34 +114,6 @@ function Login() {
         import('~/assets/lottie/landing.json').then(setAnimationData);
     }, []);
 
-    const columns = useMemo<MRT_ColumnDef<Person>[]>(
-        () => [
-            {
-                accessorKey: 'name', //simple recommended way to define a column
-                enableHiding: false, //disable a feature for this column
-                header: 'Name',
-                muiTableHeadCellProps: { style: { color: 'green' } }, //custom props
-            },
-            {
-                Cell: ({ cell }) => <i>{cell.getValue<number>().toLocaleString()}</i>, //optional custom cell render
-                Header: <i style={{ color: 'red' }}>Age</i>, //optional custom markup
-                accessorFn: (originalRow) => parseInt(originalRow.age), //alternate way
-                header: 'Age',
-                id: 'age', //id required if you use accessorFn instead of accessorKey
-            },
-        ],
-        []
-    );
-
-    //pass table options to useMaterialReactTable
-    const table = useMaterialReactTable({
-        columns,
-        data, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
-        enableColumnOrdering: true, //enable a feature for all columns
-        enableGlobalFilter: false, //turn off a feature
-        enableRowSelection: true, //enable some features
-    });
-
     return (
         <>
             <UnauthorizedRootCss />
@@ -225,8 +196,6 @@ function Login() {
                     </CenteredContainer>
                 </FormBox>
             </FormBoxContainer>
-
-            <MaterialReactTable table={table} />
         </>
     );
 }
