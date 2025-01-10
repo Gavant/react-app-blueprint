@@ -9,7 +9,7 @@ interface QueryOnScroll {
     fetchMore: () => void;
     loading: boolean;
     pageRef: MutableRefObject<Page>;
-    scrollableContainer?: Element | null;
+    scrollableContainer?: string;
     totalRowCount: number;
 }
 
@@ -19,24 +19,28 @@ function useTableScroll<P extends Page>({
     fetchMore,
     loading,
     pageRef,
-    scrollableContainer,
+    scrollableContainer = 'body',
     totalRowCount,
 }: QueryOnScroll) {
     const tableContainerRef = useRef<HTMLDivElement | null>(null);
     const rowVirtualizerInstanceRef = useRef<Virtualizer<HTMLDivElement, HTMLTableRowElement> | null>(null);
-    const scrollContainer = scrollableContainer ?? tableContainerRef.current;
+
+    const getScrollContainer = useCallback(() => {
+        return document.querySelector(scrollableContainer) ?? tableContainerRef.current;
+    }, [scrollableContainer]);
 
     //called on scroll and possibly on mount to fetch more data as the user scrolls and reaches bottom of table
     const fetchMoreOnBottomReached = useCallback(async () => {
-        if (scrollContainer) {
-            const { clientHeight, scrollHeight, scrollTop } = scrollContainer;
+        const container = getScrollContainer();
+        if (container) {
+            const { clientHeight, scrollHeight, scrollTop } = container;
             //once the user has scrolled within (fetchHeight)px of the bottom of the table, fetch more data if we can
             if (scrollHeight - scrollTop - clientHeight < fetchHeight && !loading && currentRowCount < totalRowCount) {
                 pageRef.current.offset = currentRowCount;
                 await fetchMore();
             }
         }
-    }, [scrollContainer, fetchHeight, loading, currentRowCount, totalRowCount, pageRef, fetchMore]);
+    }, [getScrollContainer, fetchHeight, loading, currentRowCount, totalRowCount, pageRef, fetchMore]);
 
     useEffect(() => {
         try {
@@ -44,20 +48,17 @@ function useTableScroll<P extends Page>({
         } catch (error) {
             console.error(error);
         }
-    }, []);
+    }, [pageRef]);
 
     useEffect(() => {
-        fetchMoreOnBottomReached();
-    }, [fetchMoreOnBottomReached]);
-
-    useEffect(() => {
+        const container = getScrollContainer();
         const onScroll = () => {
             fetchMoreOnBottomReached();
         };
-        scrollContainer?.addEventListener('scroll', onScroll);
+        container?.addEventListener('scroll', onScroll);
 
-        return () => scrollContainer?.removeEventListener('scroll', onScroll);
-    }, [fetchMoreOnBottomReached, scrollContainer, scrollableContainer]);
+        return () => container?.removeEventListener('scroll', onScroll);
+    }, [fetchMoreOnBottomReached, getScrollContainer, scrollableContainer]);
 
     return { fetchMoreOnBottomReached, pageRef, rowVirtualizerInstanceRef, tableContainerRef };
 }

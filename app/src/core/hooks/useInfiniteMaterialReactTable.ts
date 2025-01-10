@@ -23,20 +23,27 @@ interface UseInfiniteMaterialReactTableProps<Q extends BaseQuery<R>, R extends M
     key: keyof Q;
     loading: boolean;
     pageRef: MutableRefObject<Page>;
+    scrollableContainer?: string;
     tableOptions?: Partial<MRT_TableOptions<R>>;
 }
 
-export function useInfiniteMaterialReactTable<Q extends BaseQuery<R>, R extends MRT_RowData>(
-    // type: 'container' | 'default' | 'window',
-    { columns, data, fetchMore, key, loading, pageRef, tableOptions }: UseInfiniteMaterialReactTableProps<Q, R>
-) {
+export function useInfiniteMaterialReactTable<Q extends BaseQuery<R>, R extends MRT_RowData>({
+    columns,
+    data,
+    fetchMore,
+    key,
+    loading,
+    pageRef,
+    scrollableContainer = 'body',
+    tableOptions,
+}: UseInfiniteMaterialReactTableProps<Q, R>) {
     const keyedItem = data?.[key];
     const { fetchMoreOnBottomReached, tableContainerRef } = useTableScroll({
         currentRowCount: typeof keyedItem === 'string' ? 0 : keyedItem?.items?.length ?? 0,
         fetchMore,
         loading,
         pageRef,
-        scrollableContainer: document.querySelector('#scrollable-content'),
+        scrollableContainer,
         totalRowCount: typeof keyedItem === 'string' ? 0 : keyedItem?.meta?.totalCount ?? 0,
     });
 
