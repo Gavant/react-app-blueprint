@@ -14,24 +14,6 @@ import useWindowSize from '~/core/hooks/useWindowSize';
 import { UnauthorizedRootCss } from '~/features/app/constants/UnauthorizedRootCss';
 import useLoginForm from '~/features/authentication/public/hooks/useLoginForm';
 
-//If using TypeScript, define the shape of your data (optional, but recommended)
-interface Person {
-    age: number;
-    name: string;
-}
-
-//mock data - strongly typed if you are using TypeScript (optional, but recommended)
-const data: Person[] = [
-    {
-        age: 30,
-        name: 'John',
-    },
-    {
-        age: 25,
-        name: 'Sara',
-    },
-];
-
 const GridLeft = styled(Grid2)`
     text-align: left;
 `;
