@@ -1,9 +1,9 @@
 import { MRT_ColumnDef, MRT_RowData, MRT_TableOptions, useMaterialReactTable } from 'material-react-table';
 import { MutableRefObject } from 'react';
 
-import { getDefaultMRTOptions } from '~/core/constants/table';
 import useTableScroll from '~/core/hooks/useTableScroll';
 import { Exact, Page } from '~/core/types/generated/graphql';
+import { getDefaultMRTOptions } from '~/core/utils/table';
 
 export type BaseQuery<R extends MRT_RowData> = {
     [key: string]:

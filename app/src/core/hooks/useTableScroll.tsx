@@ -43,11 +43,7 @@ function useTableScroll<P extends Page>({
     }, [getScrollContainer, fetchHeight, loading, currentRowCount, totalRowCount, pageRef, fetchMore]);
 
     useEffect(() => {
-        try {
-            pageRef.current = { limit: pageRef?.current?.limit ?? 10, offset: 0 } as P;
-        } catch (error) {
-            console.error(error);
-        }
+        pageRef.current = { limit: pageRef?.current?.limit ?? 10, offset: 0 } as P;
     }, [pageRef]);
 
     useEffect(() => {
