@@ -58,7 +58,7 @@ export function useInfiniteMaterialReactTable<Q extends BaseQuery<R>, R extends 
         ...getDefaultMRTOptions<R>(),
         ...tableOptions,
         state: {
-            isLoading: !data && loading,
+            isLoading: !keyedItem && loading,
             showProgressBars: loading,
             ...tableOptions?.state,
         },

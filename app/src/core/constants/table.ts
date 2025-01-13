@@ -8,16 +8,17 @@ export /**
  * @returns {*}
  */
 const getDefaultMRTOptions = <TData extends MRT_RowData>(): Partial<MRT_TableOptions<TData>> => ({
+    enableColumnActions: false,
+    enableColumnFilters: false,
     enableGlobalFilter: false,
-    enableRowPinning: true,
-    initialState: { showColumnFilters: true },
-    manualFiltering: true,
-    manualPagination: true,
-    manualSorting: true,
-    muiTableHeadCellProps: {
-        sx: { fontSize: '1.1rem' },
-    },
-    paginationDisplayMode: 'pages',
+    enableKeyboardShortcuts: false,
+    enablePagination: false,
+    enableSorting: false,
+    enableStickyHeader: true,
+
+    mrtTheme: (theme) => ({
+        baseBackgroundColor: theme.palette.background.default, //change default background color
+    }),
 });
 
 export const debugTable = <TData extends MRT_RowData>(table: MRT_TableInstance<TData>) => {
