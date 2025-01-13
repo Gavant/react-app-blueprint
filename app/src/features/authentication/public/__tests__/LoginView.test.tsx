@@ -84,7 +84,7 @@ describe('LoginView', () => {
         });
 
         await waitFor(() => {
-            expect(passwordInput).toHaveAttribute('type', 'text');
+            return expect(passwordInput).toHaveAttribute('type', 'text');
         });
 
         await act(async () => {
@@ -92,7 +92,7 @@ describe('LoginView', () => {
         });
 
         await waitFor(() => {
-            expect(passwordInput).toHaveAttribute('type', 'password');
+            return expect(passwordInput).toHaveAttribute('type', 'password');
         });
     });
 
@@ -160,7 +160,7 @@ describe('LoginView', () => {
 
         // Should show light mode icon in dark mode
         await waitFor(() => {
-            expect(screen.getByTestId('Brightness7Icon')).toBeInTheDocument();
+            return expect(screen.getByTestId('Brightness7Icon')).toBeInTheDocument();
         });
 
         // Click again to toggle back to light mode
@@ -170,7 +170,7 @@ describe('LoginView', () => {
 
         // Should show dark mode icon again
         await waitFor(() => {
-            expect(screen.getByTestId('Brightness4Icon')).toBeInTheDocument();
+            return expect(screen.getByTestId('Brightness4Icon')).toBeInTheDocument();
         });
     });
 
@@ -192,7 +192,7 @@ describe('LoginView', () => {
         await user.click(forgotPasswordLink);
 
         await waitFor(async () => {
-            expect(screen.getByText(/Reset Password/i)).toBeInTheDocument();
+            return expect(screen.getByText(/Reset Password/i)).toBeInTheDocument();
         });
     });
 });
