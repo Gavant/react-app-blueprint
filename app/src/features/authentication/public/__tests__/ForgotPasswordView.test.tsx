@@ -6,7 +6,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import useWindowSize from '~/core/hooks/useWindowSize';
 import ForgotPasswordView from '~/features/authentication/public/ForgotPasswordView';
 import Login from '~/features/authentication/public/LoginView';
-import { fireEvent, render, renderRoutes, screen, waitFor } from '~/vitest/utils';
+import { renderRoutes, screen, waitFor } from '~/vitest/utils';
 
 // Mock dependencies
 vi.mock('~/core/hooks/useWindowSize');
@@ -129,13 +129,8 @@ describe('ForgotPasswordView', () => {
         expect(screen.getByTestId('Brightness4Icon')).toBeInTheDocument();
 
         // Click to toggle to dark mode
-        await act(async () => {
-            await user.click(toggleButton);
-        });
+        await user.click(toggleButton);
 
-        // Should show light mode icon in dark mode
-        await waitFor(() => {
-            expect(screen.getByTestId('Brightness7Icon')).toBeInTheDocument();
-        });
+        expect(screen.getByTestId('Brightness7Icon')).toBeInTheDocument();
     });
 });
