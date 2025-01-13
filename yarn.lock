@@ -3958,6 +3958,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@mdx-js/react@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "@mdx-js/react@npm:3.1.0"
+  dependencies:
+    "@types/mdx": "npm:^2.0.0"
+  peerDependencies:
+    "@types/react": ">=16"
+    react: ">=16"
+  checksum: 10/cf89d6392c76091622fb647f205e1ab5cbdf5edd4401dde7092138cefc9fbb6d61428aa63557de0bccca3695d5a8854dd4a93b34a27cb8e27369da7eaeaa3e73
+  languageName: node
+  linkType: hard
+
 "@mdx-js/util@npm:1.6.22":
   version: 1.6.22
   resolution: "@mdx-js/util@npm:1.6.22"
@@ -5561,6 +5573,13 @@ __metadata:
   dependencies:
     "@types/unist": "npm:^2"
   checksum: 10/050a5c1383928b2688dd145382a22535e2af87dc3fd592c843abb7851bcc99893a1ee0f63be19fc4e89779387ec26a57486cfb425b016c0b2a98a17fc4a1e8b3
+  languageName: node
+  linkType: hard
+
+"@types/mdx@npm:^2.0.0":
+  version: 2.0.13
+  resolution: "@types/mdx@npm:2.0.13"
+  checksum: 10/b73ed5f08114879b9590dc6a9ee8b648643c57c708583cd24b2bc3cc8961361fc63139ac7e9291e7b3b6e6b45707749d01d6f9727ddec5533df75dc3b90871a4
   languageName: node
   linkType: hard
 
@@ -9459,7 +9478,7 @@ __metadata:
     "@docusaurus/core": "npm:2.4.3"
     "@docusaurus/module-type-aliases": "npm:2.4.3"
     "@docusaurus/preset-classic": "npm:2.4.3"
-    "@mdx-js/react": "npm:^1.6.22"
+    "@mdx-js/react": "npm:^3.1.0"
     "@tsconfig/docusaurus": "npm:^1.0.5"
     clsx: "npm:^1.2.1"
     docusaurus-plugin-typedoc: "npm:^1.0.0-next.17"
@@ -18455,6 +18474,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"something@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "something@workspace:."
+  dependencies:
+    "@vitest/browser": "npm:^2.1.2"
+    playwright: "npm:^1.48.0"
+    prettier: "npm:3.4.2"
+    rollup-plugin-visualizer: "npm:^5.12.0"
+    vite-plugin-node-polyfills: "npm:^0.22.0"
+    vitest: "npm:^2.1.8"
+  languageName: unknown
+  linkType: soft
+
 "sort-css-media-queries@npm:2.1.0":
   version: 2.1.0
   resolution: "sort-css-media-queries@npm:2.1.0"
@@ -21232,16 +21264,3 @@ __metadata:
   checksum: 10/28a1bebacab3bc60150b6b0a2ba1db2ad033f068e81f05e4892ec0ea13ae63f5d140a1d692062ac0657840c8da076f35b94433b5f1c329d7803b247de80f064a
   languageName: node
   linkType: hard
-
-"{{APP_NAME}}@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "{{APP_NAME}}@workspace:."
-  dependencies:
-    "@vitest/browser": "npm:^2.1.2"
-    playwright: "npm:^1.48.0"
-    prettier: "npm:3.4.2"
-    rollup-plugin-visualizer: "npm:^5.12.0"
-    vite-plugin-node-polyfills: "npm:^0.22.0"
-    vitest: "npm:^2.1.8"
-  languageName: unknown
-  linkType: soft
