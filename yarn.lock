@@ -6923,6 +6923,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:^6.4.0"
     "@typescript-eslint/parser": "npm:^6.4.0"
     "@vitejs/plugin-react": "npm:^4.0.4"
+    "@vitest/browser": "npm:^2.1.2"
     "@vitest/coverage-v8": "npm:^2.1.5"
     babel-plugin-styled-components: "npm:^2.1.4"
     dayjs: "npm:^1.11.9"
@@ -6949,6 +6950,7 @@ __metadata:
     lodash.debounce: "npm:^4.0.8"
     lottie-web: "npm:^5.12.2"
     material-react-table: "npm:^3.1.0"
+    playwright: "npm:^1.48.0"
     plop: "npm:^3.1.2"
     polished: "npm:^4.2.2"
     prettier: "npm:3.0.2"
@@ -6961,11 +6963,13 @@ __metadata:
     react-router: "npm:^6.15.0"
     react-router-dom: "npm:^6.15.0"
     react-spring: "npm:^9.7.3"
+    rollup-plugin-visualizer: "npm:^5.12.0"
     styled-components: "npm:^6.1.0"
     three: "npm:^0.170.0"
     true-myth: "npm:^8.0.0"
     typescript: "npm:^5.7.2"
     vite: "npm:4.4.9"
+    vite-plugin-node-polyfills: "npm:^0.22.0"
     vite-plugin-run: "npm:^0.4.1"
     vitest: "npm:^2.1.2"
     vitest-preview: "npm:^0.0.1"
@@ -20369,7 +20373,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vitest@npm:^2.1.2, vitest@npm:^2.1.8":
+"vitest@npm:^2.1.2":
   version: 2.1.8
   resolution: "vitest@npm:2.1.8"
   dependencies:
@@ -21237,11 +21241,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "{{APP_NAME}}@workspace:."
   dependencies:
-    "@vitest/browser": "npm:^2.1.2"
-    playwright: "npm:^1.48.0"
     prettier: "npm:3.4.2"
-    rollup-plugin-visualizer: "npm:^5.12.0"
-    vite-plugin-node-polyfills: "npm:^0.22.0"
-    vitest: "npm:^2.1.8"
   languageName: unknown
   linkType: soft

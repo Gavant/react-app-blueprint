@@ -15,12 +15,7 @@
         "@mui/styled-engine": "npm:@mui/styled-engine-sc@latest"
     },
     "devDependencies": {
-        "@vitest/browser": "^2.1.2",
-        "playwright": "^1.48.0",
-        "prettier": "3.4.2",
-        "rollup-plugin-visualizer": "^5.12.0",
-        "vite-plugin-node-polyfills": "^0.22.0",
-        "vitest": "^2.1.8"
+        "prettier": "3.4.2"
     },
     "volta": {
         "node": "22.12.0",
