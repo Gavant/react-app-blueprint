@@ -16,7 +16,7 @@
         "add-version": "docusaurus docs:version $version"
     },
     "dependencies": {
-        "@docusaurus/core": "2.4.3",
+        "@docusaurus/core": "3.7.0",
         "@docusaurus/preset-classic": "2.4.3",
         "@mdx-js/react": "^1.6.22",
         "clsx": "^1.2.1",
