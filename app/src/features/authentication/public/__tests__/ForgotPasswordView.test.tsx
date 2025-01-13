@@ -1,12 +1,12 @@
 import userEvent from '@testing-library/user-event';
-import { act } from 'react';
+
 import { Route, createRoutesFromChildren } from 'react-router';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import useWindowSize from '~/core/hooks/useWindowSize';
 import ForgotPasswordView from '~/features/authentication/public/ForgotPasswordView';
 import Login from '~/features/authentication/public/LoginView';
-import { renderRoutes, screen, waitFor } from '~/vitest/utils';
+import { renderRoutes, screen } from '~/vitest/utils';
 
 // Mock dependencies
 vi.mock('~/core/hooks/useWindowSize');
