@@ -1,4 +1,5 @@
 import userEvent from '@testing-library/user-event';
+import { act } from 'react';
 
 import { Route, createRoutesFromChildren } from 'react-router';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
@@ -54,26 +55,29 @@ describe('ForgotPasswordView', () => {
         expect(screen.getByText('Back to Login')).toHaveAttribute('href', '/login');
     });
 
-    // it('navigates to login page when clicking back to login link', async () => {
-    //     const user = userEvent.setup();
-    //     renderRoutes(
-    //         'memory',
-    //         createRoutesFromChildren(
-    //             <>
-    //                 <Route element={<Login />} path="/login" />
-    //                 <Route element={<ForgotPasswordView />} path="/forgot-password" />
-    //             </>
-    //         ),
-    //         '/forgot-password'
-    //     );
+    it('navigates to login page when clicking back to login link', async () => {
+        const user = userEvent.setup();
+        renderRoutes(
+            'memory',
+            createRoutesFromChildren(
+                <>
+                    <Route element={<Login />} path="/login" />
+                    <Route element={<ForgotPasswordView />} path="/forgot-password" />
+                </>
+            ),
+            '/forgot-password'
+        );
 
-    //     const loginLink = screen.getByText('Back to Login');
-    //     await user.click(loginLink);
+        const loginLink = screen.getByText('Back to Login');
 
-    //     await waitFor(async () => {
-    //         return expect(screen.getByRole('button', { name: /sign in/i })).toBeInTheDocument();
-    //     });
-    // });
+        await act(async () => {
+            await user.click(loginLink);
+        });
+
+        await waitFor(async () => {
+            return expect(screen.getByRole('button', { name: /sign in/i })).toBeInTheDocument();
+        });
+    });
 
     it('displays GSplash when isDesktop is true', () => {
         renderRoutes(
@@ -130,7 +134,9 @@ describe('ForgotPasswordView', () => {
         expect(screen.getByTestId('Brightness4Icon')).toBeInTheDocument();
 
         // Click to toggle to dark mode
-        await user.click(toggleButton);
+        await act(async () => {
+            await user.click(toggleButton);
+        });
 
         expect(screen.getByTestId('Brightness7Icon')).toBeInTheDocument();
     });
