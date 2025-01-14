@@ -189,7 +189,9 @@ describe('LoginView', () => {
 
         const forgotPasswordLink = screen.getByText('Forgot password?');
 
-        await user.click(forgotPasswordLink);
+        await act(async () => {
+            await user.click(forgotPasswordLink);
+        });
 
         await waitFor(async () => {
             return expect(screen.getByText(/Reset Password/i)).toBeInTheDocument();

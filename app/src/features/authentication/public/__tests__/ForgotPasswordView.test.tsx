@@ -1,7 +1,8 @@
 import userEvent from '@testing-library/user-event';
+import { act } from 'react';
 
 import { Route, createRoutesFromChildren } from 'react-router';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import useWindowSize from '~/core/hooks/useWindowSize';
 import ForgotPasswordView from '~/features/authentication/public/ForgotPasswordView';
@@ -21,6 +22,10 @@ describe('ForgotPasswordView', () => {
             isMobile: false,
             size: { height: 768, width: 1024 },
         });
+    });
+
+    afterEach(() => {
+        vi.clearAllMocks();
     });
 
     it('renders forgot password form elements', () => {
@@ -68,7 +73,10 @@ describe('ForgotPasswordView', () => {
         );
 
         const loginLink = screen.getByText('Back to Login');
-        await user.click(loginLink);
+
+        await act(async () => {
+            await user.click(loginLink);
+        });
 
         await waitFor(async () => {
             return expect(screen.getByRole('button', { name: /sign in/i })).toBeInTheDocument();
@@ -130,7 +138,9 @@ describe('ForgotPasswordView', () => {
         expect(screen.getByTestId('Brightness4Icon')).toBeInTheDocument();
 
         // Click to toggle to dark mode
-        await user.click(toggleButton);
+        await act(async () => {
+            await user.click(toggleButton);
+        });
 
         expect(screen.getByTestId('Brightness7Icon')).toBeInTheDocument();
     });
