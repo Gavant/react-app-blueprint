@@ -174,25 +174,25 @@ describe('LoginView', () => {
         });
     });
 
-    // it('navigates to forgot password page when clicking forgot password link', async () => {
-    //     const user = userEvent.setup();
-    //     renderRoutes(
-    //         'memory',
-    //         createRoutesFromChildren(
-    //             <>
-    //                 <Route element={<Login />} path="/login" />
-    //                 <Route element={<ForgotPasswordView />} path="/forgot-password" />
-    //             </>
-    //         ),
-    //         '/login'
-    //     );
+    it('navigates to forgot password page when clicking forgot password link', async () => {
+        const user = userEvent.setup();
+        renderRoutes(
+            'memory',
+            createRoutesFromChildren(
+                <>
+                    <Route element={<Login />} path="/login" />
+                    <Route element={<ForgotPasswordView />} path="/forgot-password" />
+                </>
+            ),
+            '/login'
+        );
 
-    //     const forgotPasswordLink = screen.getByText('Forgot password?');
+        const forgotPasswordLink = screen.getByText('Forgot password?');
 
-    //     await user.click(forgotPasswordLink);
+        await user.click(forgotPasswordLink);
 
-    //     await waitFor(async () => {
-    //         return expect(screen.getByText(/Reset Password/i)).toBeInTheDocument();
-    //     });
-    // });
+        await waitFor(async () => {
+            return expect(screen.getByText(/Reset Password/i)).toBeInTheDocument();
+        });
+    });
 });
