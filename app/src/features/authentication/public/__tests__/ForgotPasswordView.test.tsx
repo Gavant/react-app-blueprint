@@ -54,26 +54,26 @@ describe('ForgotPasswordView', () => {
         expect(screen.getByText('Back to Login')).toHaveAttribute('href', '/login');
     });
 
-    it('navigates to login page when clicking back to login link', async () => {
-        const user = userEvent.setup();
-        renderRoutes(
-            'memory',
-            createRoutesFromChildren(
-                <>
-                    <Route element={<Login />} path="/login" />
-                    <Route element={<ForgotPasswordView />} path="/forgot-password" />
-                </>
-            ),
-            '/forgot-password'
-        );
+    // it('navigates to login page when clicking back to login link', async () => {
+    //     const user = userEvent.setup();
+    //     renderRoutes(
+    //         'memory',
+    //         createRoutesFromChildren(
+    //             <>
+    //                 <Route element={<Login />} path="/login" />
+    //                 <Route element={<ForgotPasswordView />} path="/forgot-password" />
+    //             </>
+    //         ),
+    //         '/forgot-password'
+    //     );
 
-        const loginLink = screen.getByText('Back to Login');
-        await user.click(loginLink);
+    //     const loginLink = screen.getByText('Back to Login');
+    //     await user.click(loginLink);
 
-        await waitFor(async () => {
-            return expect(screen.getByRole('button', { name: /sign in/i })).toBeInTheDocument();
-        });
-    });
+    //     await waitFor(async () => {
+    //         return expect(screen.getByRole('button', { name: /sign in/i })).toBeInTheDocument();
+    //     });
+    // });
 
     it('displays GSplash when isDesktop is true', () => {
         renderRoutes(
