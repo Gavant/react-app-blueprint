@@ -122,6 +122,7 @@ export default defineConfig(({ mode }) => {
             disableConsoleIntercept: true,
             environment: 'jsdom',
             globals: true,
+            silent: false,
             reporters: ['default'],
             setupFiles: 'src/vitest/setup.ts',
         },

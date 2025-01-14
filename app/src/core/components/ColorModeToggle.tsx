@@ -1,23 +1,22 @@
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
-import { IconButtonProps } from '@mui/material/IconButton';
+import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import { SvgIconPropsColorOverrides } from '@mui/material/SvgIcon/SvgIcon';
 import { useTheme } from '@mui/material/styles';
 import { OverridableStringUnion } from '@mui/types';
 import { useContext } from 'react';
-// import styled from 'styled-components';
+import styled from 'styled-components';
 
 import { ColorModeContext } from '~/core/stores/themeMode';
-import { Button } from '@mui/material';
 
 type MuiIconColor = OverridableStringUnion<
     'error' | 'info' | 'inherit' | 'primary' | 'secondary' | 'success' | 'warning',
     SvgIconPropsColorOverrides
 >;
-//
-// const ToggleButton = styled(IconButton)`
-//     padding: ${({ theme }) => theme.spacing(1.5)};
-// `;
+
+const ToggleButton = styled(IconButton)`
+    padding: ${({ theme }) => theme.spacing(1.5)};
+`;
 
 export interface ColorModeToggleProps extends IconButtonProps {
     color?: MuiIconColor;
@@ -31,7 +30,7 @@ function ColorModeToggle({ color = 'inherit', ...others }: ColorModeToggleProps)
     }
 
     return (
-        <Button
+        <ToggleButton
             aria-label="toggle-color-mode"
             color="inherit"
             onClick={() => {
@@ -40,7 +39,7 @@ function ColorModeToggle({ color = 'inherit', ...others }: ColorModeToggleProps)
             {...others}
         >
             {theme.palette.mode === 'dark' ? <Brightness7Icon color={color} /> : <Brightness4Icon color={color} />}
-        </Button>
+        </ToggleButton>
     );
 }
 

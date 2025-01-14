@@ -6,7 +6,13 @@ import { fireEvent, render, screen } from '~/vitest/utils';
 
 describe('ColorModeToggle', () => {
     it('renders without crashing', () => {
+        console.log('ColorModeToggle Render')
+        console.log('ColorModeToggle Render')
+        console.log('ColorModeToggle Render')
         render(<ColorModeToggle />);
+        console.log('ColorModeToggle Rendered')
+        console.log('ColorModeToggle Rendered')
+        console.log('ColorModeToggle Rendered')
         expect(screen.getByRole('button')).toBeInTheDocument();
     });
 
