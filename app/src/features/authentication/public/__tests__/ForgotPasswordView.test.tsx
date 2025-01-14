@@ -2,7 +2,7 @@ import userEvent from '@testing-library/user-event';
 import { act } from 'react';
 
 import { Route, createRoutesFromChildren } from 'react-router';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import useWindowSize from '~/core/hooks/useWindowSize';
 import ForgotPasswordView from '~/features/authentication/public/ForgotPasswordView';
@@ -22,6 +22,10 @@ describe('ForgotPasswordView', () => {
             isMobile: false,
             size: { height: 768, width: 1024 },
         });
+    });
+
+    afterEach(() => {
+        vi.clearAllMocks();
     });
 
     it('renders forgot password form elements', () => {
