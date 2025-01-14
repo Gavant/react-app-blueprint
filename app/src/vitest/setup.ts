@@ -10,3 +10,7 @@ HTMLCanvasElement.prototype.getContext = () => {
         fillStyle: '',
     };
 };
+
+process.on('unhandledRejection', (reason) => {
+    process.exit(1);
+});

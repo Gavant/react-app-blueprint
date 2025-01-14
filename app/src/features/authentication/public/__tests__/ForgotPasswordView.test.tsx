@@ -6,7 +6,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import useWindowSize from '~/core/hooks/useWindowSize';
 import ForgotPasswordView from '~/features/authentication/public/ForgotPasswordView';
 import Login from '~/features/authentication/public/LoginView';
-import { renderRoutes, screen } from '~/vitest/utils';
+import { renderRoutes, screen, waitFor } from '~/vitest/utils';
 
 // Mock dependencies
 vi.mock('~/core/hooks/useWindowSize');
@@ -70,8 +70,9 @@ describe('ForgotPasswordView', () => {
         const loginLink = screen.getByText('Back to Login');
         await user.click(loginLink);
 
-        const button = await screen.findByRole('button', { name: /sign in/i });
-        expect(button).toBeInTheDocument();
+        await waitFor(async () => {
+            return expect(screen.getByRole('button', { name: /sign in/i })).toBeInTheDocument();
+        });
     });
 
     it('displays GSplash when isDesktop is true', () => {
