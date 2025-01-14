@@ -62,39 +62,39 @@ describe('LoginView', () => {
         expect(screen.getByText('Create Account')).toHaveAttribute('href', '/create-account');
     });
 
-    // it('toggles password visibility when show/hide button is clicked', async () => {
-    //     const user = userEvent.setup();
-    //     renderRoutes(
-    //         'memory',
-    //         createRoutesFromChildren(
-    //             <>
-    //                 <Route element={<Login />} path="/login" />
-    //                 <Route element={<ForgotPasswordView />} path="/forgot-password" />
-    //             </>
-    //         ),
-    //         '/login'
-    //     );
-    //     const passwordInput = screen.getByLabelText(/Password/i, { selector: 'input' });
-    //     expect(passwordInput).toHaveAttribute('type', 'password');
+    it('toggles password visibility when show/hide button is clicked', async () => {
+        const user = userEvent.setup();
+        renderRoutes(
+            'memory',
+            createRoutesFromChildren(
+                <>
+                    <Route element={<Login />} path="/login" />
+                    <Route element={<ForgotPasswordView />} path="/forgot-password" />
+                </>
+            ),
+            '/login'
+        );
+        const passwordInput = screen.getByLabelText(/Password/i, { selector: 'input' });
+        expect(passwordInput).toHaveAttribute('type', 'password');
 
-    //     const toggleButton = screen.getByRole('button', { name: /toggle password visibility/i });
+        const toggleButton = screen.getByRole('button', { name: /toggle password visibility/i });
 
-    //     await act(async () => {
-    //         await user.click(toggleButton);
-    //     });
+        await act(async () => {
+            await user.click(toggleButton);
+        });
 
-    //     await waitFor(() => {
-    //         return expect(passwordInput).toHaveAttribute('type', 'text');
-    //     });
+        await waitFor(() => {
+            return expect(passwordInput).toHaveAttribute('type', 'text');
+        });
 
-    //     await act(async () => {
-    //         await user.click(toggleButton);
-    //     });
+        await act(async () => {
+            await user.click(toggleButton);
+        });
 
-    //     await waitFor(() => {
-    //         return expect(passwordInput).toHaveAttribute('type', 'password');
-    //     });
-    // });
+        await waitFor(() => {
+            return expect(passwordInput).toHaveAttribute('type', 'password');
+        });
+    });
 
     // it('displays GSplash when isDesktop is true', () => {
     //     renderRoutes(
