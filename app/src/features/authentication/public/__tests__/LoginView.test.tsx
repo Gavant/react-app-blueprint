@@ -46,21 +46,21 @@ describe('LoginView', () => {
         expect(screen.getByRole('button', { name: /sign in/i })).toBeInTheDocument();
     });
 
-    // it('renders forgot password and create account links', () => {
-    //     renderRoutes(
-    //         'memory',
-    //         createRoutesFromChildren(
-    //             <>
-    //                 <Route element={<Login />} path="/login" />
-    //                 <Route element={<ForgotPasswordView />} path="/forgot-password" />
-    //             </>
-    //         ),
-    //         '/login'
-    //     );
+    it('renders forgot password and create account links', () => {
+        renderRoutes(
+            'memory',
+            createRoutesFromChildren(
+                <>
+                    <Route element={<Login />} path="/login" />
+                    <Route element={<ForgotPasswordView />} path="/forgot-password" />
+                </>
+            ),
+            '/login'
+        );
 
-    //     expect(screen.getByText('Forgot password?')).toHaveAttribute('href', '/forgot-password');
-    //     expect(screen.getByText('Create Account')).toHaveAttribute('href', '/create-account');
-    // });
+        expect(screen.getByText('Forgot password?')).toHaveAttribute('href', '/forgot-password');
+        expect(screen.getByText('Create Account')).toHaveAttribute('href', '/create-account');
+    });
 
     // it('toggles password visibility when show/hide button is clicked', async () => {
     //     const user = userEvent.setup();
