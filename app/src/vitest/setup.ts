@@ -12,5 +12,9 @@ HTMLCanvasElement.prototype.getContext = () => {
 };
 
 process.on('unhandledRejection', (reason) => {
-    process.exit(1);
+    // eslint-disable-next-line no-console
+    console.log('FAILED TO HANDLE PROMISE REJECTION');
+    throw reason;
 });
+
+export default {};
