@@ -4638,13 +4638,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@remix-run/router@npm:1.21.0":
-  version: 1.21.0
-  resolution: "@remix-run/router@npm:1.21.0"
-  checksum: 10/cf0fb69d19c1b79095ff67c59cea89086f3982a9a54c8a993818a60fc76e0ebab5a8db647c1a96a662729fad8e806ddd0a96622adf473f5a9f0b99998b2dbad4
-  languageName: node
-  linkType: hard
-
 "@repeaterjs/repeater@npm:^3.0.4, @repeaterjs/repeater@npm:^3.0.6":
   version: 3.0.6
   resolution: "@repeaterjs/repeater@npm:3.0.6"
@@ -6963,7 +6956,7 @@ __metadata:
     react-helmet-async: "npm:^1.3.0"
     react-hook-form: "npm:^7.54.2"
     react-lottie-player: "npm:^2.1.0"
-    react-router: "npm:^6.28.1"
+    react-router: "npm:^7.1.1"
     react-router-dom: "npm:^7.1.1"
     react-spring: "npm:^9.7.5"
     rollup-plugin-visualizer: "npm:^5.14.0"
@@ -16980,7 +16973,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router@npm:7.1.1":
+"react-router@npm:7.1.1, react-router@npm:^7.1.1":
   version: 7.1.1
   resolution: "react-router@npm:7.1.1"
   dependencies:
@@ -16995,17 +16988,6 @@ __metadata:
     react-dom:
       optional: true
   checksum: 10/f12e229d79bd6de561e697b64556959361365610450c12bfd89116fccca8428728d7c372a096eff570a917ef02473ef4f5145beb6a2881d6935f69fe25bebcfd
-  languageName: node
-  linkType: hard
-
-"react-router@npm:^6.28.1":
-  version: 6.28.1
-  resolution: "react-router@npm:6.28.1"
-  dependencies:
-    "@remix-run/router": "npm:1.21.0"
-  peerDependencies:
-    react: ">=16.8"
-  checksum: 10/5bf02fe9f43c49580ee162824c4e3597accbed37df8e0b0705d90f56c647ae2c4c19695fcef39ed2ea7434c6865b93afbddcf4643a5e51d77299577474070c39
   languageName: node
   linkType: hard
 
