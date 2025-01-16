@@ -3,7 +3,7 @@ import path from 'node:path';
 import react from '@vitejs/plugin-react';
 import { visualizer } from 'rollup-plugin-visualizer';
 import { defineConfig } from 'vite';
-import { nodePolyfills } from 'vite-plugin-node-polyfills';
+// import { nodePolyfills } from 'vite-plugin-node-polyfills';
 
 // eslint-disable-next-line import/extensions
 import { dependencies } from './package.json';
@@ -75,7 +75,7 @@ export default defineConfig(({ mode }) => {
             drop: setModeConfig({ candidate: [], development: [], production: ['console', 'debugger'], production_debug: [], staging: [] }),
         },
         plugins: [
-            nodePolyfills(),
+            // nodePolyfills(),
             react({
                 babel: {
                     plugins: [
