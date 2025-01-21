@@ -36,6 +36,8 @@ const modeConfig = (mode) => (modeConfig) => {
     return modeConfig[mode ?? 'production'] ?? modeConfig['production'] ?? null;
 };
 
+// React router 7 migration: Currently stalled on https://github.com/remix-run/react-router/issues/12641
+
 export default defineConfig(({ mode }) => {
     const setModeConfig = modeConfig(mode);
     return {
