@@ -1,4 +1,4 @@
-import { Box, Container, Grid2 } from '@mui/material';
+import { Box, Button, Container, DialogActions, Grid2 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import Lottie from 'react-lottie-player';
 import { useLocation } from 'react-router';
@@ -7,6 +7,7 @@ import styled, { css } from 'styled-components';
 
 import ColorModeToggle from '~/core/components/ColorModeToggle';
 import GSplash from '~/core/components/G-splash';
+import Modal from '~/core/components/Modal';
 import ShowHideTextAdornment from '~/core/components/ShowHideTextAdornment';
 import SubmitButton from '~/core/components/SubmitButton';
 import useFormFields from '~/core/hooks/useFormFields';
@@ -91,6 +92,8 @@ function Login() {
     const { isDesktop } = useWindowSize();
 
     const [animationData, setAnimationData] = useState<object>();
+
+    const [isOpen, setisOpen] = useState(false);
 
     useEffect(() => {
         import('~/assets/lottie/landing.json').then(setAnimationData);
@@ -177,6 +180,22 @@ function Login() {
                         </Form>
                     </CenteredContainer>
                 </FormBox>
+                <Button onClick={() => setisOpen(true)}>Open Modal</Button>
+                <Modal
+                    open={isOpen}
+                    actionChildren={
+                        <>
+                            <Button autoFocus onClick={() => setisOpen(false)}>
+                                Disagree
+                            </Button>
+                            <Button onClick={() => setisOpen(false)} autoFocus>
+                                Agree
+                            </Button>
+                        </>
+                    }
+                >
+                    Test - this is the body of the modal
+                </Modal>
             </FormBoxContainer>
         </>
     );
