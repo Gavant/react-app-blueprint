@@ -1,5 +1,6 @@
 import path from 'node:path';
 
+import { reactRouter } from '@react-router/dev/vite';
 import react from '@vitejs/plugin-react';
 import { visualizer } from 'rollup-plugin-visualizer';
 import { defineConfig } from 'vite';
@@ -39,6 +40,9 @@ export default defineConfig(({ mode }) => {
     const setModeConfig = modeConfig(mode);
     return {
         build: {
+            commonjsOptions: {
+                transformMixedEsModules: true,
+            },
             minify: setModeConfig({
                 candidate: false,
                 development: false,
@@ -74,9 +78,12 @@ export default defineConfig(({ mode }) => {
         esbuild: {
             drop: setModeConfig({ candidate: [], development: [], production: ['console', 'debugger'], production_debug: [], staging: [] }),
         },
+        optimizeDeps: {
+            include: ['lottie-web'],
+        },
         plugins: [
-            nodePolyfills(),
-            react({
+            nodePolyfills({ include: ['crypto'] }),
+            reactRouter({
                 babel: {
                     plugins: [
                         [
@@ -110,21 +117,22 @@ export default defineConfig(({ mode }) => {
         ],
         resolve: {
             alias: {
-                // eslint-disable-next-line no-undef
+                '@mui/material/utils': '@mui/material/node/utils',
                 '~': path.resolve(__dirname, 'src'),
             },
         },
         server: {
             port: 5173,
         },
+        ssr: false,
         test: {
             css: true,
             disableConsoleIntercept: true,
             environment: 'jsdom',
             globals: true,
-            silent: false,
             reporters: ['default'],
             setupFiles: 'src/vitest/setup.ts',
+            silent: false,
         },
     };
 });

@@ -2,7 +2,7 @@ import { Box, Container } from '@mui/material';
 import { useEffect, useState } from 'react';
 import Lottie from 'react-lottie-player';
 import { Link } from 'react-router-dom';
-import styled, { css } from 'styled-components';
+import { css, styled } from 'styled-components';
 
 import LoginImage from '~/assets/images/forgot-password.jpg';
 import ColorModeToggle from '~/core/components/ColorModeToggle';

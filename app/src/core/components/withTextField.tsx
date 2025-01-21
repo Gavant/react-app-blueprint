@@ -1,7 +1,7 @@
 import { TextField as MuiTextField, TextFieldProps } from '@mui/material';
 import { useState } from 'react';
 import { Control, Controller, FieldPath, FieldValues, Path, RegisterOptions } from 'react-hook-form';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { SomeZodObject } from 'zod';
 
 import { getLabelFromSchema } from '~/core/utils/zod';

@@ -5,7 +5,7 @@ import { SvgIconPropsColorOverrides } from '@mui/material/SvgIcon/SvgIcon';
 import { useTheme } from '@mui/material/styles';
 import { OverridableStringUnion } from '@mui/types';
 import { useContext } from 'react';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 import { ColorModeContext } from '~/core/stores/themeMode';
 

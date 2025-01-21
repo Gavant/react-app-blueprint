@@ -1,7 +1,7 @@
 import { AutocompleteProps, FormControl, Autocomplete as MuiAutocomplete, TextField } from '@mui/material';
 import { FC } from 'react';
 import { Control, Controller, FieldValues, Path, PathValue } from 'react-hook-form';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { SomeZodObject } from 'zod';
 
 import { ArrayMemberType } from '~/core/utils/typescript';
@@ -19,8 +19,6 @@ const Autocomplete = styled(MuiAutocomplete)`
     }
 `;
 
-type Options = Record<string, unknown>[];
-
 export interface WithAutocompleteProps<
     FV extends FieldValues,
     O extends Options,
@@ -28,13 +26,15 @@ export interface WithAutocompleteProps<
     Opt extends ArrayMemberType<O> = ArrayMemberType<O>,
 > extends Omit<AutocompleteProps<Opt, false, false, false>, 'onChange' | 'renderInput'> {
     field: P;
-    getOptionValue?: (option: PathValue<FV, P>) => Opt | null | undefined;
+    getOptionValue?: (option: PathValue<FV, P>) => null | Opt | undefined;
     label: string;
-    onChange?: (value: Opt | null) => void;
+    onChange?: (value: null | Opt) => void;
     options: Opt[];
     renderInput?: Pick<AutocompleteProps<Opt, false, false, false>, 'renderInput'>['renderInput'];
     type?: string;
 }
+
+type Options = Record<string, unknown>[];
 
 const withAutocompleteField = <FV extends FieldValues, Z extends SomeZodObject>(controller: Control<FV>, schema: Z) => {
     const ResultComponent = <O extends Options, Opt extends ArrayMemberType<O> = ArrayMemberType<O>, P extends Path<FV> = Path<FV>>({
@@ -53,17 +53,17 @@ const withAutocompleteField = <FV extends FieldValues, Z extends SomeZodObject>(
                     name={field}
                     render={({ field: { onChange: formOnChange, value }, fieldState: { error } }) => {
                         const translatedValue = getOptionValue
-                            ? getOptionValue(value) ?? value
+                            ? (getOptionValue(value) ?? value)
                             : options.find((option) => option.id === value);
                         const newValue = translatedValue === undefined ? null : translatedValue;
 
                         const translatedOnChange = (_event: any, newValue: unknown) => {
-                            props?.onChange?.(newValue as Opt | null);
-                            return formOnChange((newValue as Opt | null)?.id ?? null);
+                            props?.onChange?.(newValue as null | Opt);
+                            return formOnChange((newValue as null | Opt)?.id ?? null);
                         };
 
                         const translatedGetOptionLabel = (option: unknown): string => {
-                            return typeof option === 'string' ? (option as string) : getOptionLabel?.(option as Opt) ?? '';
+                            return typeof option === 'string' ? (option as string) : (getOptionLabel?.(option as Opt) ?? '');
                         };
 
                         return (

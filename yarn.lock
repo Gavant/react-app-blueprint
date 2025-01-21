@@ -4339,9 +4339,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-router/dev@npm:^7.1.2":
-  version: 7.1.2
-  resolution: "@react-router/dev@npm:7.1.2"
+"@react-router/dev@npm:^7.1.3":
+  version: 7.1.3
+  resolution: "@react-router/dev@npm:7.1.3"
   dependencies:
     "@babel/core": "npm:^7.21.8"
     "@babel/generator": "npm:^7.21.5"
@@ -4352,7 +4352,7 @@ __metadata:
     "@babel/traverse": "npm:^7.23.2"
     "@babel/types": "npm:^7.22.5"
     "@npmcli/package-json": "npm:^4.0.1"
-    "@react-router/node": "npm:7.1.2"
+    "@react-router/node": "npm:7.1.3"
     arg: "npm:^5.0.1"
     babel-dead-code-elimination: "npm:^1.0.6"
     chokidar: "npm:^4.0.0"
@@ -4373,8 +4373,8 @@ __metadata:
     valibot: "npm:^0.41.0"
     vite-node: "npm:3.0.0-beta.2"
   peerDependencies:
-    "@react-router/serve": ^7.1.2
-    react-router: ^7.1.2
+    "@react-router/serve": ^7.1.3
+    react-router: ^7.1.3
     typescript: ^5.1.0
     vite: ^5.1.0 || ^6.0.0
     wrangler: ^3.28.2
@@ -4387,25 +4387,25 @@ __metadata:
       optional: true
   bin:
     react-router: bin.js
-  checksum: 10/faff8decba816d41bd71257d2079d3da72276c9c958091f70724b072664d217e22af57be1d31b735934416c52ae4a20553a9ef1dd71e8fb1a24bb583138aaf2d
+  checksum: 10/25ca20cd96f20127b46cd758a729b5ff708c6d5eeba1de4117dbf38e7e5be168783b36ddab7335f34d6fda8d49d17364ead29e3f02a47007f2f28f0c4688712a
   languageName: node
   linkType: hard
 
-"@react-router/node@npm:7.1.2, @react-router/node@npm:^7.1.2":
-  version: 7.1.2
-  resolution: "@react-router/node@npm:7.1.2"
+"@react-router/node@npm:7.1.3, @react-router/node@npm:^7.1.3":
+  version: 7.1.3
+  resolution: "@react-router/node@npm:7.1.3"
   dependencies:
     "@mjackson/node-fetch-server": "npm:^0.2.0"
     source-map-support: "npm:^0.5.21"
     stream-slice: "npm:^0.1.2"
     undici: "npm:^6.19.2"
   peerDependencies:
-    react-router: 7.1.2
+    react-router: 7.1.3
     typescript: ^5.1.0
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10/ba5247125f08c6214bc7cf346f49943a2b6e3877d7338f0a98a7a3f5d8f1088c5bd92dde431d89aed73c073ed113d198ae8030e2dd31c853cc781f1262f012f6
+  checksum: 10/562db94545ff8bff351e530a92eee2b9a6ae66cedf5565cbc5ecbcdad5803a1523feab8678faee3914d2ecd496621ed163ab8e0a927d99d84b911f12c4856262
   languageName: node
   linkType: hard
 
@@ -6887,15 +6887,15 @@ __metadata:
     "@graphql-codegen/typescript": "npm:^4.1.2"
     "@graphql-codegen/typescript-operations": "npm:^4.4.0"
     "@hookform/resolvers": "npm:^3.10.0"
-    "@mui/base": "npm:5.0.0-beta.68"
+    "@mui/base": "npm:5.0.0-beta.58"
     "@mui/icons-material": "npm:^6.4.0"
     "@mui/lab": "npm:^6.0.0-dev.240424162023-9968b4889d"
     "@mui/material": "npm:^6.4.0"
     "@mui/styled-engine-sc": "npm:^6.4.0"
     "@mui/system": "npm:^6.4.0"
     "@mui/x-date-pickers": "npm:^7.23.6"
-    "@react-router/dev": "npm:^7.1.2"
-    "@react-router/node": "npm:^7.1.2"
+    "@react-router/dev": "npm:^7.1.3"
+    "@react-router/node": "npm:^7.1.3"
     "@react-three/drei": "npm:^9.121.1"
     "@react-three/fiber": "npm:^8.17.12"
     "@testing-library/dom": "npm:^10.4.0"
@@ -6931,6 +6931,7 @@ __metadata:
     eslint-plugin-testing-library: "npm:^6.5.0"
     graphql: "npm:^16.10.0"
     history: "npm:^5.3.0"
+    isbot: "npm:^5"
     js-cookie: "npm:^3.0.5"
     jsdom: "npm:^22.1.0"
     jsonwebtoken: "npm:^9.0.2"
@@ -13321,6 +13322,13 @@ __metadata:
   version: 4.0.10
   resolution: "isbinaryfile@npm:4.0.10"
   checksum: 10/7f9dbf3e992a020cd3e6845ba49b47de93cda19edadf338bbf82f1453d7a14a73c390ea7f18a1940f09324089e470cce9ea001bd544aea52df641a658ed51c54
+  languageName: node
+  linkType: hard
+
+"isbot@npm:^5":
+  version: 5.1.21
+  resolution: "isbot@npm:5.1.21"
+  checksum: 10/ef19941c34880f06e8d884091c5f500d6a2f942191c3629c605e595c9651f1ff320befe0b5721026ffcb9ba39ed9ee6c4fb77516ebd27b28e7398f4adba75ab5
   languageName: node
   linkType: hard
 

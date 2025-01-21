@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import Lottie from 'react-lottie-player';
 import { useLocation } from 'react-router';
 import { Link, useSearchParams } from 'react-router-dom';
-import styled, { css } from 'styled-components';
+import { css, styled } from 'styled-components';
 
 import ColorModeToggle from '~/core/components/ColorModeToggle';
 import GSplash from '~/core/components/G-splash';
@@ -146,8 +146,8 @@ function Login() {
                                         input: {
                                             endAdornment: (
                                                 <ShowHideTextAdornment
-                                                    IconButtonProps={{ color: 'secondary' }}
                                                     change={() => setShowPasswordView(!showPasswordView)}
+                                                    IconButtonProps={{ color: 'secondary' }}
                                                     visible={showPasswordView}
                                                 />
                                             ),

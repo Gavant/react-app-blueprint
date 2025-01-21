@@ -1,5 +1,5 @@
 import { Box, CssBaseline } from '@mui/material';
-import styled, { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle, styled } from 'styled-components';
 
 const Root = styled(Box)``;
 

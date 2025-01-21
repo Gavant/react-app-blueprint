@@ -1,5 +1,5 @@
 import { Icon } from '@mui/material';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 
 const IconRoot = styled(Icon)`
     text-align: center;
