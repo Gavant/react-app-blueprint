@@ -55,7 +55,6 @@ const config = {
                 out: `docs/api/core/${folder}`,
                 sidebar: {
                     autoConfiguration: true,
-                    filteredIds: [`api/core/${folder}/index`],
                 },
             },
         ]),
@@ -82,7 +81,7 @@ const config = {
             // Replace with your project's social card
             image: 'img/docusaurus-social-card.jpg',
             navbar: {
-                title: '{{APP_NAME}}',
+                title: '{{APP_NAME1}}',
                 logo: {
                     alt: 'My Site Logo',
                     src: 'img/logo.svg',

@@ -2,7 +2,7 @@ import { ApolloError, ServerError } from '@apollo/client';
 import {} from '@apollo/client/errors';
 import Result, { err, map, mapOr, ok } from 'true-myth/result';
 
-import { StatusCodeType, StatusCodes, StatusCodes400, StringErrorCodes } from '~/core/constants/errors';
+import { StatusCodes, StatusCodes400, StatusCodeType, StringErrorCodes } from '~/core/constants/errors';
 import { kickToLogin } from '~/core/utils/redirect';
 import { guard } from '~/core/utils/typescript';
 
@@ -25,9 +25,9 @@ export interface OptionsFor500Error {
  * Checks if the error is an ApolloError
  *
  * @param {unknown} error
- * @return {*}  {error is ApolloError}
+ * @return {boolean}  True if the error is an ApolloError; otherwise, false.
  */
-export const isApolloError = (error: unknown): error is ApolloError => {
+export const isApolloError = (error: unknown): boolean => {
     return guard<ApolloError>(error, ['graphQLErrors', 'networkError']);
 };
 
@@ -47,7 +47,7 @@ export const TryGetApolloErrorResponseMessage = (error: ApolloError): Result<str
     }
 };
 
-export const TryGetApolloErrorEntity = (error: ApolloError): string | null => {
+export const TryGetApolloErrorEntity = (error: ApolloError): null | string => {
     const networkError = error.networkError;
     if (
         networkError &&

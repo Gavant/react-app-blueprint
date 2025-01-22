@@ -3,11 +3,11 @@ import { ApolloError } from '@apollo/client';
 import { guard } from '~/core/utils/typescript';
 
 /**
- * Checks if the error is an ApolloError
+ * Checks if the error is an ApolloError.
  *
- * @param {unknown} error
- * @return {*}  {error is ApolloError}
+ * @param {unknown} error - The error to check.
+ * @return {boolean} True if the error is an ApolloError; otherwise, false.
  */
-export const isApolloError = (error: unknown): error is ApolloError => {
+export const isApolloError = (error: unknown): boolean => {
     return guard<ApolloError>(error, ['graphQLErrors', 'networkError']);
 };

@@ -4,7 +4,7 @@
  * @export
  * @template T
  * @param {keyof ImportMetaEnv} key
- * @return {*}  {(T | null)}
+ * @return {*}  (T | null)
  */
 export function getLocalStorageEnvironmentVariable<K extends keyof ImportMetaEnv>(key: K | null): ImportMetaEnv[K] | null {
     if (!key) return null;

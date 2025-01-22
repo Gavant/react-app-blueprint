@@ -4,7 +4,7 @@
  * @template T
  * @param {*} itemToCheck
  * @param {(Array<keyof T> | keyof T)} propertyNames
- * @returns {*}  {itemToCheck is T}
+ * @returns {*} itemToCheck is T
  */
 export const guard = <T extends object>(itemToCheck: any, propertyNames: Array<keyof T> | keyof T): itemToCheck is T => {
     return Array.isArray(propertyNames)
@@ -18,7 +18,7 @@ export const guard = <T extends object>(itemToCheck: any, propertyNames: Array<k
  * @template T
  * @param {any[]} itemToCheck
  * @param {(Array<keyof T> | keyof T)} propertyNames
- * @return {*}  {itemToCheck is T[]}
+ * @return {*} itemToCheck is T[]
  */
 export const isArrayOf = <T extends object>(itemToCheck: any[], propertyNames: Array<keyof T> | keyof T): itemToCheck is T[] => {
     return itemToCheck.some((item) => guard<T>(item, propertyNames));
@@ -42,11 +42,21 @@ export const pluck = <T, K extends keyof T>(o: T, propertyNames: K | K[]): T[K] 
  *
  * @template T
  * @param {T} e
- * @return {*}  {T[]}
+ * @return {*} T[]
  */
 export const flattenEnum = <T>(e: any): T[] => {
     return Object.values(e).filter((value) => typeof value === 'string') as T[];
 };
+
+export type ArrayMemberType<T> = T extends Array<infer U> ? U : never;
+
+export type DeepPartial<T> = T extends object
+    ? {
+          [P in keyof T]?: DeepPartial<T[P]>;
+      }
+    : T;
+
+export type ElementProps<T> = T extends React.ComponentType<infer Props> ? (Props extends object ? Props : never) : never;
 
 /**
  * Get all keys of an object that have a specific value type
@@ -57,13 +67,3 @@ export type KeyOfType<T, V> = keyof {
 };
 
 export type OmitTypename<T> = Omit<T, '__typename'>;
-
-export type ArrayMemberType<T> = T extends Array<infer U> ? U : never;
-
-export type ElementProps<T> = T extends React.ComponentType<infer Props> ? (Props extends object ? Props : never) : never;
-
-export type DeepPartial<T> = T extends object
-    ? {
-          [P in keyof T]?: DeepPartial<T[P]>;
-      }
-    : T;
