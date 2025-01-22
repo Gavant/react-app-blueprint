@@ -1,12 +1,21 @@
 import userEvent from '@testing-library/user-event';
 import { act } from 'react';
-import { Route, createRoutesFromChildren } from 'react-router';
+import { createRoutesFromChildren, Route } from 'react-router';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import useWindowSize from '~/core/hooks/useWindowSize';
 import ForgotPasswordView from '~/features/authentication/public/ForgotPasswordView';
 import Login from '~/features/authentication/public/LoginView';
 import { renderRoutes, screen, waitFor } from '~/vitest/utils';
+
+vi.mock('react-router', async () => {
+    const router = await vi.importActual<typeof import('react-router')>('react-router');
+    return {
+        ...router,
+        useLocation: vi.fn().mockReturnValue(vi.fn()),
+        useNavigate: vi.fn().mockReturnValue(vi.fn()),
+    };
+});
 
 // Mock dependencies
 vi.mock('~/core/hooks/useWindowSize');
