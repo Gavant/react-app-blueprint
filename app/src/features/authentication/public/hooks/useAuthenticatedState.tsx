@@ -17,7 +17,7 @@ export default function useIsAuthenticatedState() {
 
     useEffect(() => {
         const onTokenRefresh = () => {
-            const token = Cookies.get('test');
+            const token = Cookies.get(import.meta.env.VITE_AUTH_COOKIE_NAME);
             if (token) {
                 const decodedToken = jwt.decode(token, { complete: true });
                 const dateNow = new Date();
