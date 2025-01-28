@@ -5815,6 +5815,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/lodash.clonedeep@npm:^4.5.6":
+  version: 4.5.9
+  resolution: "@types/lodash.clonedeep@npm:4.5.9"
+  dependencies:
+    "@types/lodash": "npm:*"
+  checksum: 10/ef85512b7dce7a4f981a818ae44d11982907e1f26b5b26bedf0957c35e8591eb8e1d24fa31ca851d4b40e0a1ee88563853d762412691fe5f357e8335cead2325
+  languageName: node
+  linkType: hard
+
+"@types/lodash@npm:*":
+  version: 4.17.15
+  resolution: "@types/lodash@npm:4.17.15"
+  checksum: 10/27b348b5971b9c670215331b52448a13d7d65bf1fbd320a7049c9c153c1186ff5d116ba75f05f07d32d7ece8a992b26a30c7bdc9be22a3d1e4e3e6068aa04603
+  languageName: node
+  linkType: hard
+
 "@types/mdast@npm:^4.0.0, @types/mdast@npm:^4.0.2":
   version: 4.0.4
   resolution: "@types/mdast@npm:4.0.4"
@@ -7166,6 +7182,7 @@ __metadata:
     jsonwebtoken: "npm:^9.0.2"
     libphonenumber-js: "npm:^1.11.17"
     lodash.debounce: "npm:^4.0.8"
+    lottie-colorify: "npm:^0.8.0"
     lottie-web: "npm:^5.12.2"
     material-react-table: "npm:^3.1.0"
     playwright: "npm:^1.49.1"
@@ -14406,6 +14423,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash.clonedeep@npm:^4.5.0":
+  version: 4.5.0
+  resolution: "lodash.clonedeep@npm:4.5.0"
+  checksum: 10/957ed243f84ba6791d4992d5c222ffffca339a3b79dbe81d2eaf0c90504160b500641c5a0f56e27630030b18b8e971ea10b44f928a977d5ced3c8948841b555f
+  languageName: node
+  linkType: hard
+
 "lodash.debounce@npm:^4.0.8":
   version: 4.0.8
   resolution: "lodash.debounce@npm:4.0.8"
@@ -14551,6 +14575,16 @@ __metadata:
   bin:
     loose-envify: cli.js
   checksum: 10/6517e24e0cad87ec9888f500c5b5947032cdfe6ef65e1c1936a0c48a524b81e65542c9c3edc91c97d5bddc806ee2a985dbc79be89215d613b1de5db6d1cfe6f4
+  languageName: node
+  linkType: hard
+
+"lottie-colorify@npm:^0.8.0":
+  version: 0.8.0
+  resolution: "lottie-colorify@npm:0.8.0"
+  dependencies:
+    "@types/lodash.clonedeep": "npm:^4.5.6"
+    lodash.clonedeep: "npm:^4.5.0"
+  checksum: 10/8235a6a4d01cf8a1e45e32b764ac5bc11c9b7db8ad5bc1f048d16d76751c38c63298e001aa05260f6574c4cf7d7f21348dabcc92db058226e820298aaa454120
   languageName: node
   linkType: hard
 
