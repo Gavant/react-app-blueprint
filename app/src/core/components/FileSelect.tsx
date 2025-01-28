@@ -9,9 +9,9 @@ import { useTheme } from '@mui/material/styles';
 
 const UploadContainer = styled.div<{ $accept: boolean; $error: boolean; $reject: boolean }>`
     width: 100%;
-    background: ${({ theme }) => theme.palette.grey[200]};
+    background: ${({ theme }) => (theme.palette.mode === 'dark' ? theme.palette.grey[900] : theme.palette.grey[200])};
     border-radius: ${({ theme }) => theme.shape.borderRadius}px;
-    border: 2px dashed ${({ theme }) => theme.palette.grey[500]};
+    border: 2px dashed ${({ theme }) => (theme.palette.mode === 'dark' ? theme.palette.grey[800] : theme.palette.grey[300])};
     box-sizing: border-box;
     color: inherit;
     padding: ${({ theme }) => theme.spacing(4)};
@@ -53,7 +53,7 @@ function FileSelect<T extends File>({ children, error, id, onChange, accept }: F
         import('~/assets/lottie/upload.json').then((data) => {
             setAnimationData(replaceColor('#98D7FF', theme.palette.primary.main, data.default));
         });
-    }, []);
+    }, [theme.palette.mode]);
 
     return (
         <UploadContainer $accept={isDragAccept} $error={error} $reject={isDragReject} {...getRootProps()}>

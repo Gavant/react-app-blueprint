@@ -1,16 +1,15 @@
-import { describe, expect, it, vi } from 'vitest';
-import { render, screen } from '~/vitest/utils';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { fireEvent, render, screen } from '~/vitest/utils';
 
-import userEvent from '@testing-library/user-event';
 import FileSelect from '~/core/components/FileSelect';
+import { act } from 'react';
+import useToast from '~/core/hooks/useToast';
 
-vi.mock('~/core/hooks/useToast', () => ({
-    default: () => ({ toast: { error: vi.fn() } }),
-}));
+vi.mock('~/core/hooks/useToast');
 
 describe('FileSelect', () => {
     const mockOnChange = vi.fn();
-
+    const error = vi.fn();
     const defaultProps = {
         id: 'file-upload',
         error: false,
@@ -19,6 +18,18 @@ describe('FileSelect', () => {
             'image/*': ['.png', '.jpg', '.jpeg'],
         },
     };
+
+    beforeEach(() => {
+        vi.mocked(useToast).mockReturnValue({
+            toast: { error, success: vi.fn(), info: vi.fn(), warning: vi.fn() },
+            setToast: vi.fn(),
+            toastMsg: { key: '1', msg: '', open: false, severity: 'info' },
+        });
+    });
+
+    afterEach(() => {
+        vi.resetAllMocks();
+    });
 
     it('renders the FileSelect component with children', () => {
         render(
@@ -32,31 +43,27 @@ describe('FileSelect', () => {
 
     it('handles file drop correctly', async () => {
         const file = new File(['test'], 'test.png', { type: 'image/png' });
+        const data = mockData([file]);
+
         render(<FileSelect {...defaultProps} />);
 
         const dropzone = screen.getByRole('presentation');
 
-        const event = createDragEvent([file]);
-        await userEvent.upload(dropzone, file);
+        await act(() => fireEvent.drop(dropzone, data));
 
         expect(mockOnChange).toHaveBeenCalledWith([file]);
     });
 
     it('shows error state when invalid file is dropped', async () => {
         const file = new File(['test'], 'test.txt', { type: 'text/plain' });
-        const toast = vi.fn();
-        // vi.mock('~/core/hooks/useToast', () => ({
-        //     default: () => ({
-        //         toast: { error: toast },
-        //     }),
-        // }));
+        const data = mockData([file]);
 
         render(<FileSelect {...defaultProps} />);
 
         const dropzone = screen.getByRole('presentation');
-        await userEvent.upload(dropzone, file);
+        await act(() => fireEvent.drop(dropzone, data));
 
-        expect(toast).toHaveBeenCalledWith('Invalid File Type');
+        expect(error).toHaveBeenCalledWith('Invalid File Type');
     });
 
     it('renders with error state', () => {
@@ -71,7 +78,7 @@ describe('FileSelect', () => {
     });
 });
 
-function createDragEvent(files: File[]) {
+function mockData(files: File[]) {
     return {
         dataTransfer: {
             files,
