@@ -9,10 +9,12 @@ import ColorModeToggle from '~/core/components/ColorModeToggle';
 import GSplash from '~/core/components/G-splash';
 import ShowHideTextAdornment from '~/core/components/ShowHideTextAdornment';
 import SubmitButton from '~/core/components/SubmitButton';
+import ImageUpload from '~/core/components/FileSelect';
 import useFormFields from '~/core/hooks/useFormFields';
 import useWindowSize from '~/core/hooks/useWindowSize';
 import { UnauthorizedRootCss } from '~/features/app/constants/UnauthorizedRootCss';
 import useLoginForm from '~/features/authentication/public/hooks/useLoginForm';
+import FileList, { FileWithProgress } from '~/core/components/FileList';
 
 const GridLeft = styled(Grid2)`
     text-align: left;
@@ -96,6 +98,8 @@ function Login() {
         import('~/assets/lottie/landing.json').then(setAnimationData);
     }, []);
 
+    const [files, setFiles] = useState<FileWithProgress[]>([]);
+
     return (
         <>
             <UnauthorizedRootCss />
@@ -177,6 +181,31 @@ function Login() {
                         </Form>
                     </CenteredContainer>
                 </FormBox>
+                <div style={{ width: '500px' }}>
+                    <ImageUpload
+                        error={false}
+                        id="bannerImage"
+                        onChange={(files) => {
+                            setFiles(files.map((file) => ({ file, progress: 100 })));
+                        }}
+                    >
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                            Drag & Drop files to upload
+                            <SubmitButton color="primary" size="large" type="submit" variant="contained" sx={{ mt: 2 }}>
+                                Select files
+                            </SubmitButton>
+                        </div>
+                    </ImageUpload>
+                    <FileList
+                        files={files}
+                        onRemove={(removedFile) => {
+                            const newFiles = [...files];
+                            const index = newFiles.findIndex(({ file }) => file === removedFile);
+                            newFiles.splice(index, 1);
+                            setFiles(newFiles);
+                        }}
+                    />
+                </div>
             </FormBoxContainer>
         </>
     );
