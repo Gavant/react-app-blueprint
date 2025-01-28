@@ -1,22 +1,35 @@
-import { Route } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
 
-import Splash from '~/core/components/G-splash';
-import { Authenticate } from '~/core/utils/routing';
-import FourOhFour from '~/features/404/public/FourOhFourView';
 import App from '~/features/app/public/AppView';
-import ForgotPasswordView from '~/features/authentication/public/ForgotPasswordView';
-import Login from '~/features/authentication/public/LoginView';
+import RequireAuth from '~/features/authentication/public/utils/RequireAuth';
 
-const MainRoutes = (
-    <>
-        <Route element={<Login />} path="/login" />
-        <Route element={<ForgotPasswordView />} path="/forgot-password" />
-        <Route element={Authenticate(<App />)} path="/">
-            {/* add authenticated routes here */}
-        </Route>
-        <Route element={<FourOhFour />} path="*" />
-        <Route element={<Splash />} path="/splash" />
-    </>
-);
+// Route configuration with lazy loading
+const router = createBrowserRouter([
+    {
+        children: [],
+        element: (
+            <RequireAuth fallbackPath="/login">
+                <App />
+            </RequireAuth>
+        ), // We have to test this. Can't tell if its working in the blueprint
+        lazy: () => import('~/features/app/public/AppView').then((module) => ({ Component: module.default })),
+    },
+    {
+        lazy: () => import('~/features/authentication/public/LoginView').then((module) => ({ Component: module.default })),
+        path: '/login',
+    },
+    {
+        lazy: () => import('~/features/authentication/public/ForgotPasswordView').then((module) => ({ Component: module.default })),
+        path: '/forgot-password',
+    },
+    {
+        lazy: () => import('~/core/components/G-splash').then((module) => ({ Component: module.default })),
+        path: '/splash',
+    },
+    {
+        lazy: () => import('~/features/404/public/FourOhFourView').then((module) => ({ Component: module.default })),
+        path: '*',
+    },
+]);
 
-export default MainRoutes;
+export default router;

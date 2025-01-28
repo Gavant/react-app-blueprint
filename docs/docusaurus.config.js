@@ -55,7 +55,6 @@ const config = {
                 out: `docs/api/core/${folder}`,
                 sidebar: {
                     autoConfiguration: true,
-                    filteredIds: [`api/core/${folder}/index`],
                 },
             },
         ]),
