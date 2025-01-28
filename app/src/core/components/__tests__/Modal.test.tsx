@@ -52,7 +52,7 @@ describe('Modal', () => {
         expect(onCloseCallback).not.toHaveBeenCalled();
     });
 
-    it('renders in fullScreen mode on small screens', () => {
+    it('renders in fullScreen mode on small screens by default', () => {
         vi.mocked(useMediaQuery).mockReturnValue(true);
 
         render(
@@ -64,11 +64,31 @@ describe('Modal', () => {
         expect(document.querySelector('.MuiDialog-paperFullScreen')).toBeInTheDocument();
     });
 
-    it('renders in normal mode on large screens', () => {
+    it('renders in normal mode on large screens by default', () => {
         vi.mocked(useMediaQuery).mockReturnValue(false);
 
         render(
             <Modal open>
+                <div>Test Content</div>
+            </Modal>
+        );
+
+        expect(document.querySelector('.MuiDialog-paperFullScreen')).not.toBeInTheDocument();
+    });
+
+    it('renders in fullScreen mode when fullScreen prop is passed in as true', () => {
+        render(
+            <Modal open fullScreen>
+                <div>Test Content</div>
+            </Modal>
+        );
+
+        expect(document.querySelector('.MuiDialog-paperFullScreen')).toBeInTheDocument();
+    });
+
+    it('does not render in fullScreen mode when fullScreen prop is passed in as false', () => {
+        render(
+            <Modal open fullScreen={false}>
                 <div>Test Content</div>
             </Modal>
         );
