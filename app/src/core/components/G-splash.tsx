@@ -70,7 +70,7 @@ const calcColor = (x: number, theme: Theme) => {
 };
 
 const pointsInner = (theme: Theme) =>
-    Array.from(new Array(NUM_POINTS), (element, index) => index + 1).map((num) => {
+    Array.from(new Array(NUM_POINTS), (_element, index) => index + 1).map((num) => {
         const randomRadius = randomFromInterval(MIN_RADIUS, MAX_RADIUS);
         const radomAngle = Math.random() * Math.PI * 2;
         const x = Math.cos(radomAngle) * randomRadius;
@@ -105,8 +105,8 @@ function Points() {
     });
     return (
         <group ref={ref}>
-            {pointsInner(theme).map((point) => (
-                <Point color={point.color} position={point.position} />
+            {pointsInner(theme).map((point, i) => (
+                <Point key={i} color={point.color} position={point.position as unknown as [number, number, number]} />
             ))}
         </group>
     );
@@ -116,7 +116,7 @@ function GSplash() {
     return (
         <Container className="relative">
             <Logo />
-            <Canvas camera={{ position: [3, -7, -7] as Vector3 }} styles={{ height: '100vh' }}>
+            <Canvas camera={{ position: [3, -7, -7] as unknown as Vector3 }} styles={{ height: '100vh' }}>
                 <directionalLight />
                 <pointLight position={[-30, 0, -30]} power={10.0} />
                 <Points />

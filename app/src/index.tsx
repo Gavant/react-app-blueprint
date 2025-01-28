@@ -4,7 +4,7 @@ import createStore from 'react-auth-kit/createStore';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import { HelmetProvider } from 'react-helmet-async';
-import { RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
+import { RouterProvider } from 'react-router-dom';
 
 import ApolloClientProvider from '~/core/stores/apollo';
 import ThemeModeProvider from '~/core/stores/themeMode';
@@ -24,8 +24,6 @@ if (import.meta.env.DEV) {
 
 const store = createStore({ authName: cookieName, authType: 'cookie', cookieDomain: cookieDomain, cookieSecure: secure });
 
-export const router = createBrowserRouter(createRoutesFromElements(MainRoutes));
-
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <React.StrictMode>
         <ThemeModeProvider>
@@ -34,7 +32,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
                     <ApolloClientProvider>
                         <HelmetProvider>
                             <WindowSizeProvider>
-                                <RouterProvider router={router} />
+                                <RouterProvider router={MainRoutes} />
                             </WindowSizeProvider>
                         </HelmetProvider>
                     </ApolloClientProvider>

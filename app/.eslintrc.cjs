@@ -4,7 +4,12 @@ module.exports = {
         es2021: true,
         node: true,
     },
-    extends: ['plugin:react/recommended', 'eslint:recommended', 'plugin:perfectionist/recommended-natural', 'plugin:testing-library/react'],
+    extends: [
+        'plugin:react/recommended',
+        'eslint:recommended',
+        'plugin:perfectionist/recommended-natural-legacy',
+        'plugin:testing-library/react',
+    ],
     globals: {
         ImportMetaEnv: true,
         JSX: true,
@@ -49,18 +54,13 @@ module.exports = {
         // note you must disable the base rule as it can report incorrect errors
         'no-use-before-define': 'off',
         'perfectionist/sort-imports': 'off',
-        'perfectionist/sort-union-types': [
-            'error',
-            {
-                'nullable-last': true,
-            },
-        ],
+        'perfectionist/sort-union-types': ['error'],
         'prefer-const': 'error',
         'prettier/prettier': 'error',
+        'react-hooks/exhaustive-deps': 'warn',
+        'react-hooks/rules-of-hooks': 'error',
         'react/jsx-uses-react': 'off',
         'react/prop-types': 'off',
         'react/react-in-jsx-scope': 'off',
-        'react-hooks/exhaustive-deps': 'warn',
-        'react-hooks/rules-of-hooks': 'error',
     },
 };
