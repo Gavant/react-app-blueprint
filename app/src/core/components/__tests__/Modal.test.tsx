@@ -17,7 +17,7 @@ describe('Modal', () => {
 
     it('renders action children when provided', () => {
         render(
-            <Modal open actionChildren={<button>Action Button</button>}>
+            <Modal open actions={<button>Action Button</button>}>
                 <div>Test Content</div>
             </Modal>
         );
@@ -94,5 +94,15 @@ describe('Modal', () => {
         );
 
         expect(document.querySelector('.MuiDialog-paperFullScreen')).not.toBeInTheDocument();
+    });
+
+    it('renders title when provided', () => {
+        render(
+            <Modal open title="Test Title">
+                <div>Test Content</div>
+            </Modal>
+        );
+
+        expect(screen.getByText('Test Title')).toBeInTheDocument();
     });
 });

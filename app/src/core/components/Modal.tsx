@@ -2,9 +2,10 @@ import Dialog, { DialogProps } from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-import { DialogActions } from '@mui/material';
+import { DialogActions, DialogTitle } from '@mui/material';
+import { ReactNode } from 'react';
 
-interface ResponsiveModalProps extends DialogProps {
+interface ResponsiveModalProps extends Omit<DialogProps, 'title'> {
     /**
      * Callback function to be called when the modal is closed
      *
@@ -22,16 +23,22 @@ interface ResponsiveModalProps extends DialogProps {
      *
      * @memberof ResponsiveModalProps
      */
-    actionChildren?: DialogProps['children'];
+    actions?: ReactNode;
     /**
      * Overrides the default fullscreen behavior of showing full screen based upon the theme breakpoints (md or less)
      *
      * @memberof ResponsiveModalProps
      */
     fullScreen?: boolean;
+    /**
+     * Title of the modal
+     *
+     * @memberof ResponsiveModalProps
+     */
+    title?: ReactNode;
 }
 
-export default function Modal({ children, onCloseCallback, closeDisabled, actionChildren, fullScreen, ...rest }: ResponsiveModalProps) {
+export default function Modal({ title, children, onCloseCallback, closeDisabled, actions, fullScreen, ...rest }: ResponsiveModalProps) {
     const theme = useTheme();
     const isFullScreen = fullScreen ?? useMediaQuery(theme.breakpoints.down('md'));
 
@@ -45,8 +52,9 @@ export default function Modal({ children, onCloseCallback, closeDisabled, action
 
     return (
         <Dialog {...rest} fullScreen={isFullScreen} onClose={onClose}>
+            {title && <DialogTitle>{title}</DialogTitle>}
             <DialogContent>{children}</DialogContent>
-            {actionChildren && <DialogActions>{actionChildren}</DialogActions>}
+            {actions && <DialogActions>{actions}</DialogActions>}
         </Dialog>
     );
 }
