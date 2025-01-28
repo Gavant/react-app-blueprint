@@ -38,9 +38,9 @@ interface ResponsiveModalProps extends Omit<DialogProps, 'title'> {
     title?: ReactNode;
 }
 
-export default function Modal({ title, children, onCloseCallback, closeDisabled, actions, fullScreen, ...rest }: ResponsiveModalProps) {
+export default function Modal({ title, children, onCloseCallback, closeDisabled, actions, ...rest }: ResponsiveModalProps) {
     const theme = useTheme();
-    const isFullScreen = fullScreen ?? useMediaQuery(theme.breakpoints.down('md'));
+    const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
     const onClose = () => {
         if (!closeDisabled) {
@@ -51,7 +51,7 @@ export default function Modal({ title, children, onCloseCallback, closeDisabled,
     };
 
     return (
-        <Dialog {...rest} fullScreen={isFullScreen} onClose={onClose}>
+        <Dialog fullScreen={fullScreen} {...rest} onClose={onClose}>
             {title && <DialogTitle>{title}</DialogTitle>}
             <DialogContent>{children}</DialogContent>
             {actions && <DialogActions>{actions}</DialogActions>}
