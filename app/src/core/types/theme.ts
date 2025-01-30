@@ -24,15 +24,6 @@ declare module '@mui/material/styles/createMixins' {
     }
 }
 
-// export interface Sizing {
-//     (): string;
-//     (value: SizingArgument): string;
-//     (width: SizingArgument): string;
-//     (height: SizingArgument): string;
-//     (width: SizingArgument, height: SizingArgument): string;
-// }
-// export type SizingArgument = number | string;
-
 declare module '@mui/material/styles' {
     interface Theme {
         sizing: Sizing;
