@@ -46,6 +46,7 @@ export default function ThemeMode({ children }: ProviderToggleProps) {
             palette: {
                 ...theme,
             },
+            sizing: (factor: number) => `${factor * 8}px`,
             typography: { ...overrides.typography },
         });
     }, [mode]);

@@ -30,6 +30,7 @@
         "@react-three/drei": "^9.121.3",
         "@react-three/fiber": "^8.17.12",
         "@types/three": "^0.172.0",
+        "axios": "^1.7.9",
         "dayjs": "^1.11.13",
         "graphql": "^16.10.0",
         "history": "^5.3.0",

@@ -1,6 +1,5 @@
-import { Box, List, ListItem, ListItemIcon, ListItemText, Typography, LinearProgress } from '@mui/material';
-
 import { InsertDriveFile } from '@mui/icons-material';
+import { Box, LinearProgress, List, ListItem, ListItemIcon, ListItemText, Typography } from '@mui/material';
 import styled from 'styled-components';
 
 const FileListContainer = styled(List)`
@@ -16,8 +15,8 @@ const FileListItem = styled(ListItem)`
 `;
 
 const FileListImage = styled.img`
-    width: 40px;
-    height: 40px;
+    width: ${({ theme }) => theme.sizing(5)};
+    height: ${({ theme }) => theme.sizing(5)};
     object-fit: cover;
     margin-right: ${({ theme }) => theme.spacing(2)};
     border-radius: ${({ theme }) => theme.shape.borderRadius}px;
@@ -34,8 +33,8 @@ const FileListIcon = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    width: ${({ theme }) => theme.sizing(5)};
+    height: ${({ theme }) => theme.sizing(5)};
     margin-right: ${({ theme }) => theme.spacing(2)};
     border-radius: ${({ theme }) => theme.shape.borderRadius}px;
 `;
@@ -50,24 +49,23 @@ const ProgressContainer = styled.div`
 `;
 
 export interface FileWithProgress {
+    error?: boolean;
     file: File;
     progress: number;
-    error?: boolean;
 }
 
 interface FileListProps {
     files: FileWithProgress[];
-    onRemove: (file: File) => void;
 }
 
-function FileList({ files, onRemove, error }: FileListProps) {
+function FileList({ files }: FileListProps) {
     return (
         <FileListContainer>
-            {files.map(({ file, progress }) => (
+            {files.map(({ error, file, progress }) => (
                 <FileListItem key={`${file.name}-${file.size}`}>
                     <ListItemIcon>
                         {file.type.startsWith('image/') ? (
-                            <FileListImage src={URL.createObjectURL(file)} alt={file.name} />
+                            <FileListImage alt={file.name} src={URL.createObjectURL(file)} />
                         ) : (
                             <FileListIcon>
                                 <InsertDriveFile />
@@ -77,7 +75,7 @@ function FileList({ files, onRemove, error }: FileListProps) {
                     <ListItemText
                         primary={
                             <FileListItemTextBox>
-                                <FileListItemTitle variant="h5" fontSize={15} noWrap>
+                                <FileListItemTitle fontSize={15} noWrap variant="h5">
                                     {file.name}
                                 </FileListItemTitle>
 
@@ -90,10 +88,10 @@ function FileList({ files, onRemove, error }: FileListProps) {
                         secondary={
                             <FileListItemTextBox>
                                 <ProgressContainer>
-                                    <LinearProgress variant="determinate" value={progress} color={error ? 'error' : 'primary'} />
+                                    <LinearProgress color={error ? 'error' : 'primary'} value={progress} variant="determinate" />
                                 </ProgressContainer>
                                 <Box>
-                                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>{`${Math.round(progress)}%`}</Typography>
+                                    <Typography sx={{ color: 'text.secondary' }} variant="body2">{`${Math.round(progress)}%`}</Typography>
                                 </Box>
                             </FileListItemTextBox>
                         }
