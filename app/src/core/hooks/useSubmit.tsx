@@ -3,9 +3,9 @@ import { MouseEvent } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import Result, { err } from 'true-myth/result';
 
-export type UnknownMouseEvent = MouseEvent<unknown, Event>;
-
 export type ReactHookForm<T extends FieldValues> = ReturnType<typeof useForm<T>>;
+
+export type UnknownMouseEvent = MouseEvent<unknown, Event>;
 
 export interface UseSubmitProps<T extends FieldValues> {
     form: ReactHookForm<T>;

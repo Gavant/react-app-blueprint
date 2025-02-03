@@ -11,6 +11,7 @@ describe('FadeElementInDown', () => {
                 <div>Test Content</div>
             </FadeElementInDown>
         );
+        // eslint-disable-next-line testing-library/prefer-screen-queries
         expect(getByText('Test Content')).toBeInTheDocument();
     });
 
@@ -25,15 +26,17 @@ describe('FadeElementInDown', () => {
         expect(animatedDiv.style.transform).toBe('translateY(-2rem)');
     });
 
-    it('applies final styles correctly', () => {
+    it('applies final styles correctly', async () => {
         const { container } = render(
             <FadeElementInDown offset={2}>
                 <div>Test Content</div>
             </FadeElementInDown>
         );
         const animatedDiv = container.firstChild as HTMLElement;
-        waitFor(() => {
+        await waitFor(() => {
             expect(animatedDiv.style.opacity).toBe('1');
+        });
+        await waitFor(() => {
             expect(animatedDiv.style.transform).toBe('translateY(0)');
         });
     });

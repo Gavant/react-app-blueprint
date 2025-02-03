@@ -8,7 +8,7 @@ import { darkPalette, lightPalette } from '~/core/constants/palette';
 import ThemeOverrides from '~/core/constants/theme';
 import { getLocalStorageEnvironmentVariable } from '~/core/utils/localStorage';
 
-export const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
+export const ColorModeContext = React.createContext({ mode: 'light', toggleColorMode: () => {} });
 
 interface ProviderToggleProps {
     children: ReactElement | ReactNode;
@@ -28,6 +28,7 @@ export default function ThemeMode({ children }: ProviderToggleProps) {
 
     const colorMode = React.useMemo(
         () => ({
+            mode,
             toggleColorMode: () => {
                 setMode((prevMode) => {
                     localStorage.setItem('VITE_THEME_STORAGE_KEY', prevMode === 'light' ? 'dark' : 'light');
@@ -35,7 +36,7 @@ export default function ThemeMode({ children }: ProviderToggleProps) {
                 });
             },
         }),
-        []
+        [mode]
     );
 
     const theme = React.useMemo(() => {

@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import userEvent from '@testing-library/user-event';
 import { act } from 'react';
 import { FieldValues, Path, useForm } from 'react-hook-form';
 import { describe, expect, it, Mock, vi } from 'vitest';
@@ -6,13 +7,9 @@ import { SomeZodObject, z } from 'zod';
 
 import withAutocompleteField from '../withAutocompleteField';
 
-import { render, screen, fireEvent, waitFor } from '~/vitest/utils';
-import { debug } from 'vitest-preview';
-import userEvent from '@testing-library/user-event';
 import { WithAutocompleteProps } from '~/core/components/withAutocompleteField';
 import { ArrayMemberType } from '~/core/utils/typescript';
-
-type Options = Record<string, unknown>[];
+import { render, screen, waitFor } from '~/vitest/utils';
 
 interface FormComponentProps<
     FV extends FieldValues,
@@ -23,6 +20,8 @@ interface FormComponentProps<
     schema: SomeZodObject;
     submit?: Mock;
 }
+
+type Options = Record<string, unknown>[];
 
 const FormComponent = <FV extends FieldValues, O extends Options, P extends Path<FV>, Opt extends ArrayMemberType<O> = ArrayMemberType<O>>(
     props: FormComponentProps<FV, O, P, Opt>
@@ -50,13 +49,13 @@ describe('WithAutocompleteField', () => {
         render(
             <FormComponent
                 field="test"
-                label="Test Field"
-                schema={schema}
                 getOptionLabel={(option) => option.label}
                 getOptionValue={(option) => {
                     return defaultOptions.find((type) => type.value === option);
                 }}
+                label="Test Field"
                 options={defaultOptions}
+                schema={schema}
             />
         );
 
@@ -74,14 +73,14 @@ describe('WithAutocompleteField', () => {
         render(
             <FormComponent
                 field="test"
-                label="Test Field"
-                schema={schema}
-                onChange={onChange}
                 getOptionLabel={(option) => option.label}
                 getOptionValue={(option) => {
                     return defaultOptions.find((type) => type.value === option);
                 }}
+                label="Test Field"
+                onChange={onChange}
                 options={defaultOptions}
+                schema={schema}
             />
         );
 
@@ -90,10 +89,12 @@ describe('WithAutocompleteField', () => {
 
         await waitFor(() => {
             const option1 = screen.getByRole('option', { name: 'Option 1' });
-            const option2 = screen.getByRole('option', { name: 'Option 2' });
             expect(option1).toBeInTheDocument();
+        });
+
+        await waitFor(() => {
+            const option2 = screen.getByRole('option', { name: 'Option 2' });
             expect(option2).toBeInTheDocument();
-            debug();
         });
     });
 
@@ -108,14 +109,14 @@ describe('WithAutocompleteField', () => {
         render(
             <FormComponent
                 field="test"
-                label="Test Field"
-                schema={schema}
-                onChange={onChange}
                 getOptionLabel={(option) => option.label}
                 getOptionValue={(option) => {
                     return defaultOptions.find((type) => type.value === option);
                 }}
+                label="Test Field"
+                onChange={onChange}
                 options={defaultOptions}
+                schema={schema}
             />
         );
 
@@ -135,22 +136,20 @@ describe('WithAutocompleteField', () => {
         render(
             <FormComponent
                 field="test"
-                label="Test Field"
-                schema={schema}
                 getOptionLabel={(option) => option.label}
                 getOptionValue={(option) => {
                     return defaultOptions.find((type) => type.value === option);
                 }}
-                submit={onSubmit}
+                label="Test Field"
                 options={defaultOptions}
+                schema={schema}
+                submit={onSubmit}
             />
         );
 
         await act(async () => {
             await onSubmit();
         });
-
-        debug();
 
         expect(screen.getByLabelText('Test Field is required')).toBeInTheDocument();
     });
@@ -164,13 +163,13 @@ describe('WithAutocompleteField', () => {
         render(
             <FormComponent
                 field="test"
-                label="Test Field"
-                schema={schema}
                 getOptionLabel={(option) => option.label}
                 getOptionValue={(option) => {
                     return defaultOptions.find((type) => type.value === option);
                 }}
+                label="Test Field"
                 options={defaultOptions}
+                schema={schema}
             />
         );
 

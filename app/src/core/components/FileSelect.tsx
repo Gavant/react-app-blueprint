@@ -1,11 +1,12 @@
 import { Box } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import { replaceColor } from 'lottie-colorify';
 import { ReactNode, useEffect, useState } from 'react';
 import { Accept, useDropzone } from 'react-dropzone';
 import Lottie from 'react-lottie-player';
 import styled from 'styled-components';
-import { replaceColor } from 'lottie-colorify';
+
 import useToast from '~/core/hooks/useToast';
-import { useTheme } from '@mui/material/styles';
 
 const UploadContainer = styled.div<{ $accept: boolean; $error: boolean; $reject: boolean }>`
     width: 100%;
@@ -27,15 +28,15 @@ const UploadContainer = styled.div<{ $accept: boolean; $error: boolean; $reject:
 `;
 
 interface FileSelectProps<T extends File> {
+    accept?: Accept;
     children?: ReactNode;
     error: boolean;
     id: string;
     onChange: (files: T[]) => void;
     value?: File;
-    accept?: Accept;
 }
 
-function FileSelect<T extends File>({ children, error, id, onChange, accept }: FileSelectProps<T>) {
+function FileSelect<T extends File>({ accept, children, error, id, onChange }: FileSelectProps<T>) {
     const { toast } = useToast();
     const theme = useTheme();
 

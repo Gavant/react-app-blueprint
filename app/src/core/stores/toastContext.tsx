@@ -1,5 +1,5 @@
 import { AlertColor } from '@mui/material';
-import { ReactNode, createContext, useState } from 'react';
+import { createContext, ReactNode, useState } from 'react';
 
 enum ToastSeverity {
     ERROR = 'error',
@@ -8,14 +8,18 @@ enum ToastSeverity {
     WARNING = 'warning',
 }
 
-type SetToast = (message: string, options?: { autohideDuration?: number; key?: string; open?: boolean }) => void;
-
 export type Toast = {
     [ToastSeverity.ERROR]: SetToast;
     [ToastSeverity.INFO]: SetToast;
     [ToastSeverity.SUCCESS]: SetToast;
     [ToastSeverity.WARNING]: SetToast;
 };
+
+export interface ToastContextValue {
+    setToast: (toastMsg: ToastMsg) => void;
+    toast: Toast;
+    toastMsg: null | ToastMsg;
+}
 
 export type ToastMsg = {
     autohideOverride?: number;
@@ -25,11 +29,7 @@ export type ToastMsg = {
     severity: AlertColor;
 };
 
-export interface ToastContextValue {
-    setToast: (toastMsg: ToastMsg) => void;
-    toast: Toast;
-    toastMsg: ToastMsg | null;
-}
+type SetToast = (message: string, options?: { autohideDuration?: number; key?: string; open?: boolean }) => void;
 
 const defaultContext: ToastContextValue = {
     setToast: () => {},
@@ -48,7 +48,7 @@ export interface ToastProviderProps {
 }
 
 const ToastProvider = ({ children }: ToastProviderProps) => {
-    const [toastMsg, setToastMsg] = useState<ToastMsg | null>(null);
+    const [toastMsg, setToastMsg] = useState<null | ToastMsg>(null);
 
     const createSetToastFunction =
         (severity: ToastSeverity): SetToast =>

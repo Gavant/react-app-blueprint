@@ -23,7 +23,7 @@ function useTableScroll<P extends Page>({
     totalRowCount,
 }: QueryOnScroll) {
     const tableContainerRef = useRef<HTMLDivElement | null>(null);
-    const rowVirtualizerInstanceRef = useRef<Virtualizer<HTMLDivElement, HTMLTableRowElement> | null>(null);
+    const rowVirtualizerInstanceRef = useRef<null | Virtualizer<HTMLDivElement, HTMLTableRowElement>>(null);
 
     const getScrollContainer = useCallback(() => {
         return document.querySelector(scrollableContainer) ?? tableContainerRef.current;

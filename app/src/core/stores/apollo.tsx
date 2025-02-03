@@ -1,12 +1,12 @@
 import {
     ApolloClient,
     ApolloProvider,
+    createHttpLink,
+    from,
     InMemoryCache,
     NormalizedCacheObject,
     Observable,
     ServerError,
-    createHttpLink,
-    from,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { onError } from '@apollo/client/link/error';
@@ -21,7 +21,7 @@ const httpLink = createHttpLink({
     uri: `${import.meta.env.VITE_API_BASE_URI}graphql`,
 });
 
-const createErrorLink = ({ refreshToken }: { refreshToken: () => Promise<boolean> }) =>
+export const createErrorLink = ({ refreshToken }: { refreshToken: () => Promise<boolean> }) =>
     onError(({ forward, networkError, operation }) => {
         if (networkError && (networkError as ServerError).statusCode === 401) {
             return new Observable((observer) => {

@@ -7,7 +7,6 @@ import styled, { css } from 'styled-components';
 
 import ColorModeToggle from '~/core/components/ColorModeToggle';
 import GSplash from '~/core/components/G-splash';
-
 import ShowHideTextAdornment from '~/core/components/ShowHideTextAdornment';
 import SubmitButton from '~/core/components/SubmitButton';
 import useFormFields from '~/core/hooks/useFormFields';
@@ -147,8 +146,8 @@ function Login() {
                                         input: {
                                             endAdornment: (
                                                 <ShowHideTextAdornment
-                                                    IconButtonProps={{ color: 'secondary' }}
                                                     change={() => setShowPasswordView(!showPasswordView)}
+                                                    IconButtonProps={{ color: 'secondary' }}
                                                     visible={showPasswordView}
                                                 />
                                             ),

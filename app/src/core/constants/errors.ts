@@ -21,6 +21,6 @@ export enum StatusCodes {
     Unexpected = 500,
 }
 
-export type StatusCodeType = `${Extract<StatusCodes, number>}` extends `${infer N extends number}` ? N : never;
-
 export type StatusCodes400 = StatusCodes.BadRequest | StatusCodes.Conflict | StatusCodes.Forbidden | StatusCodes.Unauthorized;
+
+export type StatusCodeType = `${Extract<StatusCodes, number>}` extends `${infer N extends number}` ? N : never;

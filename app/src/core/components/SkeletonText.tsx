@@ -24,7 +24,7 @@ export default function SkeletonText({ className, skeletonFontSize, sx, typograp
             className={className}
             data-testid="skeleton"
             sx={{
-                fontSize: skeletonFontSize ?? (theme.typography[typographyVariant as keyof typeof theme.typography] as CSSProperties),
+                fontSize: skeletonFontSize ?? theme.typography[typographyVariant as keyof typeof theme.typography],
                 ...sx,
             }}
             variant="text"
