@@ -1,5 +1,11 @@
 # {{APP_NAME}}
 
+```md
+| Statements                  | Branches                | Functions                 | Lines             |
+| --------------------------- | ----------------------- | ------------------------- | ----------------- |
+| ![Statements](#statements#) | ![Branches](#branches#) | ![Functions](#functions#) | ![Lines](#lines#) |
+```
+
 ## Requirements
 
 TODO - basic info on app environment requirements
