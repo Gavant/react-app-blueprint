@@ -40,3 +40,7 @@ schema.graphql
 /schema/*
 /src/core/types/generated/*
 /**/*.generated.*
+
+
+#coverage
+coverage/*

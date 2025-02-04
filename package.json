@@ -8,7 +8,8 @@
         "start": "yarn workspace app dev",
         "build": "yarn workspace app build",
         "docs": "yarn workspace docs start",
-        "test": "yarn workspace app test"
+        "test": "yarn workspace app test",
+        "generate-coverage": "npx istanbul-badges-readme --coverageDir='./app/coverage'"
     },
     "resolutions": {
         "@mui/styled-engine": "npm:@mui/styled-engine-sc@latest"
