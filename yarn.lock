@@ -13886,6 +13886,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"istanbul-badges-readme@npm:^1.9.0":
+  version: 1.9.0
+  resolution: "istanbul-badges-readme@npm:1.9.0"
+  bin:
+    istanbul-badges-readme: lib/index.js
+  checksum: 10/c4f2c9bcf6520b07bd88b78307355b24d079a76fa41e5dc6f75cd511dfb9c6e14f4c53281412bb55d78fb7567600dfc5a78db1e0fa422f0913f68f7d3bc6bd23
+  languageName: node
+  linkType: hard
+
 "istanbul-lib-coverage@npm:^3.0.0, istanbul-lib-coverage@npm:^3.2.2":
   version: 3.2.2
   resolution: "istanbul-lib-coverage@npm:3.2.2"
@@ -18448,6 +18457,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "react-app-blueprint@workspace:."
   dependencies:
+    istanbul-badges-readme: "npm:^1.9.0"
     prettier: "npm:3.4.2"
   languageName: unknown
   linkType: soft

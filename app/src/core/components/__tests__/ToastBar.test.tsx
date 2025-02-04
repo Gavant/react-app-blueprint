@@ -1,4 +1,4 @@
-import { Mock, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, Mock, vi } from 'vitest';
 
 import ToastBar from '../ToastBar';
 

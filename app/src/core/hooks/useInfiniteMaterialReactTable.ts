@@ -5,16 +5,16 @@ import useTableScroll from '~/core/hooks/useTableScroll';
 import { Exact, Page } from '~/core/types/generated/graphql';
 import { getDefaultMRTOptions } from '~/core/utils/table';
 
-export type BaseQuery<R extends MRT_RowData> = {
+export type BaseQuery<R extends MRT_RowData> = Exact<{ __typename?: 'Query' }> & {
     [key: string]:
+        | string
         | {
               items: R[];
               meta: {
                   totalCount: number;
               };
-          }
-        | string;
-} & Exact<{ __typename?: 'Query' }>;
+          };
+};
 
 interface UseInfiniteMaterialReactTableProps<Q extends BaseQuery<R>, R extends MRT_RowData> {
     columns: MRT_ColumnDef<R, unknown>[];
@@ -39,17 +39,17 @@ export function useInfiniteMaterialReactTable<Q extends BaseQuery<R>, R extends 
 }: UseInfiniteMaterialReactTableProps<Q, R>) {
     const keyedItem = data?.[key];
     const { fetchMoreOnBottomReached, tableContainerRef } = useTableScroll({
-        currentRowCount: typeof keyedItem === 'string' ? 0 : keyedItem?.items?.length ?? 0,
+        currentRowCount: typeof keyedItem === 'string' ? 0 : (keyedItem?.items?.length ?? 0),
         fetchMore,
         loading,
         pageRef,
         scrollableContainer,
-        totalRowCount: typeof keyedItem === 'string' ? 0 : keyedItem?.meta?.totalCount ?? 0,
+        totalRowCount: typeof keyedItem === 'string' ? 0 : (keyedItem?.meta?.totalCount ?? 0),
     });
 
     const table = useMaterialReactTable<R>({
         columns,
-        data: typeof keyedItem === 'string' ? [] : keyedItem?.items ?? [],
+        data: typeof keyedItem === 'string' ? [] : (keyedItem?.items ?? []),
         muiTableContainerProps: {
             onScroll: () => fetchMoreOnBottomReached(),
             ref: tableContainerRef,

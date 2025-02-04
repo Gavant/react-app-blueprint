@@ -1,5 +1,5 @@
 import debounce from 'lodash.debounce';
-import { ReactElement, createContext, useCallback, useEffect, useRef, useState } from 'react';
+import { createContext, ReactElement, useCallback, useEffect, useRef, useState } from 'react';
 
 export interface WindowSize {
     height: number;
@@ -10,7 +10,7 @@ export interface WindowSizeContextValue {
     size: WindowSize;
 }
 
-const WindowSizeContext = createContext<WindowSizeContextValue | undefined>(undefined);
+const WindowSizeContext = createContext<undefined | WindowSizeContextValue>(undefined);
 
 const WindowSizeProvider = ({ children }: { children: ReactElement | ReactElement[] }) => {
     const [size, setSize] = useState<WindowSize>({ height: 0, width: 0 });

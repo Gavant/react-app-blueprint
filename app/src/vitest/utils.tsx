@@ -1,10 +1,10 @@
 import { InMemoryCache } from '@apollo/client';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
-import { Queries, RenderHookOptions, RenderOptions, fireEvent, queries, render, renderHook } from '@testing-library/react';
-import React, { ReactElement, act } from 'react';
+import { fireEvent, Queries, queries, render, renderHook, RenderHookOptions, RenderOptions } from '@testing-library/react';
+import React, { act, ReactElement } from 'react';
 import AuthProvider from 'react-auth-kit';
 import createStore from 'react-auth-kit/createStore';
-import { RouteObject, RouterProvider, createBrowserRouter, createMemoryRouter } from 'react-router-dom';
+import { createBrowserRouter, createMemoryRouter, RouteObject, RouterProvider } from 'react-router-dom';
 
 import ThemeModeProvider from '~/core/stores/themeMode';
 
@@ -87,10 +87,10 @@ const AllTheProviders = ({
 
 const customRender = (
     ui: ReactElement,
-    options?: {
+    options?: Omit<RenderOptions, 'wrapper'> & {
         mocks?: readonly MockedResponse<Record<string, any>, Record<string, any>>[] | undefined;
         router?: ReturnType<typeof createBrowserRouter | typeof createMemoryRouter>;
-    } & Omit<RenderOptions, 'wrapper'>
+    }
 ) => render(ui, { wrapper: (props) => <AllTheProviders {...props} mocks={options?.mocks} />, ...options });
 
 const renderWithProvider = (ui: ReactElement, provider: ({ children }: { children: React.ReactNode }) => JSX.Element) =>
@@ -106,9 +106,9 @@ const renderHookWithWrapper = <
     BaseElement extends DocumentFragment | Element = Container,
 >(
     hook: (initialProps: Props) => Result,
-    options?: {
+    options?: RenderHookOptions<Props, Q, Container, BaseElement> & {
         mocks?: readonly MockedResponse<Record<string, any>, Record<string, any>>[] | undefined;
-    } & RenderHookOptions<Props, Q, Container, BaseElement>
+    }
 ) => {
     const { wrapper: Wrapper, ...rest } = options ?? {};
 
@@ -153,9 +153,9 @@ const reactHookFormSubmit = (element: HTMLElement) => {
 export * from '@testing-library/react';
 export {
     AllTheProviders,
-    customRender as render,
     log,
     reactHookFormSubmit,
+    customRender as render,
     renderHookWithWrapper as renderHook,
     renderRoutes,
     renderWithProvider,

@@ -1,4 +1,4 @@
-import { useApolloClient, useMutation } from '@apollo/client';
+import { ApolloError, useApolloClient, useMutation } from '@apollo/client';
 import Cookies from 'js-cookie';
 import { useEffect } from 'react';
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
@@ -88,7 +88,7 @@ export default function useAuth() {
         } catch (error: unknown) {
             if (isApolloError(error)) {
                 const errorContext = { navigate, password, toast, username };
-                const result = handleApolloAuthError(error, errorContext);
+                const result = handleApolloAuthError(error as ApolloError, errorContext);
                 return err(unwrapOr('Unknown error occurred', result));
             } else {
                 toast.error('Unknown error occurred');

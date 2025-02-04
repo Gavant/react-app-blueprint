@@ -1,5 +1,4 @@
-// import { useTheme } from '@emotion/react';
-import { Theme, darken, lighten, useTheme } from '@mui/material';
+import { darken, lighten, Theme, useTheme } from '@mui/material';
 import { Sphere } from '@react-three/drei';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useRef } from 'react';
@@ -86,6 +85,19 @@ const pointsInner = (theme: Theme) =>
         };
     });
 
+export default function GSplash() {
+    return (
+        <Container className="relative">
+            <Logo />
+            <Canvas camera={{ position: [3, -7, -7] as unknown as Vector3 }} styles={{ height: '100vh' }}>
+                <directionalLight />
+                <pointLight position={[-30, 0, -30]} power={10.0} />
+                <Points />
+            </Canvas>
+        </Container>
+    );
+}
+
 function Point({ color, position }: { color: Color; position: [number, number, number] }) {
     // random point between 0 and .5
     const randomNumber = Math.random() * 0.125;
@@ -106,23 +118,8 @@ function Points() {
     return (
         <group ref={ref}>
             {pointsInner(theme).map((point, i) => (
-                <Point key={i} color={point.color} position={point.position as unknown as [number, number, number]} />
+                <Point color={point.color} key={i} position={point.position as unknown as [number, number, number]} />
             ))}
         </group>
     );
 }
-
-function GSplash() {
-    return (
-        <Container className="relative">
-            <Logo />
-            <Canvas camera={{ position: [3, -7, -7] as unknown as Vector3 }} styles={{ height: '100vh' }}>
-                <directionalLight />
-                <pointLight position={[-30, 0, -30]} power={10.0} />
-                <Points />
-            </Canvas>
-        </Container>
-    );
-}
-
-export default GSplash;

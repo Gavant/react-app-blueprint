@@ -65,10 +65,10 @@ function FileList({ files }: FileListProps) {
                 <FileListItem key={`${file.name}-${file.size}`}>
                     <ListItemIcon>
                         {file.type.startsWith('image/') ? (
-                            <FileListImage alt={file.name} src={URL.createObjectURL(file)} />
+                            <FileListImage alt={file.name} src={URL.createObjectURL && URL.createObjectURL(file)} />
                         ) : (
                             <FileListIcon>
-                                <InsertDriveFile />
+                                <InsertDriveFile role="img" />
                             </FileListIcon>
                         )}
                     </ListItemIcon>

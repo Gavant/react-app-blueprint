@@ -1,28 +1,42 @@
+import { act } from 'react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { fireEvent, render, screen } from '~/vitest/utils';
 
 import FileSelect from '~/core/components/FileSelect';
-import { act } from 'react';
 import useToast from '~/core/hooks/useToast';
+import { fireEvent, render, screen } from '~/vitest/utils';
 
 vi.mock('~/core/hooks/useToast');
+
+function mockData(files: File[]) {
+    return {
+        dataTransfer: {
+            files,
+            items: files.map((file) => ({
+                getAsFile: () => file,
+                kind: 'file',
+                type: file.type,
+            })),
+            types: ['Files'],
+        },
+    };
+}
 
 describe('FileSelect', () => {
     const mockOnChange = vi.fn();
     const error = vi.fn();
     const defaultProps = {
-        id: 'file-upload',
-        error: false,
-        onChange: mockOnChange,
         accept: {
             'image/*': ['.png', '.jpg', '.jpeg'],
         },
+        error: false,
+        id: 'file-upload',
+        onChange: mockOnChange,
     };
 
     beforeEach(() => {
         vi.mocked(useToast).mockReturnValue({
-            toast: { error, success: vi.fn(), info: vi.fn(), warning: vi.fn() },
             setToast: vi.fn(),
+            toast: { error, info: vi.fn(), success: vi.fn(), warning: vi.fn() },
             toastMsg: { key: '1', msg: '', open: false, severity: 'info' },
         });
     });
@@ -49,6 +63,7 @@ describe('FileSelect', () => {
 
         const dropzone = screen.getByRole('presentation');
 
+        // eslint-disable-next-line testing-library/no-unnecessary-act
         await act(() => fireEvent.drop(dropzone, data));
 
         expect(mockOnChange).toHaveBeenCalledWith([file]);
@@ -61,6 +76,7 @@ describe('FileSelect', () => {
         render(<FileSelect {...defaultProps} />);
 
         const dropzone = screen.getByRole('presentation');
+        // eslint-disable-next-line testing-library/no-unnecessary-act
         await act(() => fireEvent.drop(dropzone, data));
 
         expect(error).toHaveBeenCalledWith('Invalid File Type');
@@ -77,17 +93,3 @@ describe('FileSelect', () => {
         expect(container).toHaveStyle({ borderColor: expect.stringContaining('error') });
     });
 });
-
-function mockData(files: File[]) {
-    return {
-        dataTransfer: {
-            files,
-            items: files.map((file) => ({
-                kind: 'file',
-                type: file.type,
-                getAsFile: () => file,
-            })),
-            types: ['Files'],
-        },
-    };
-}

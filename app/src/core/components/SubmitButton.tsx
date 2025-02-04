@@ -8,7 +8,6 @@ import Result, { isErr, isOk } from 'true-myth/result';
 const wobbleVolume = 5;
 const AnimatedButton = animated(LoadingButton);
 
-type MuiButtonProps = ButtonTypeMap['props'];
 export interface SubmitButtonProps extends MuiButtonProps {
     disableErrorState?: boolean;
     disableSuccessState?: boolean; // TODO
@@ -17,6 +16,7 @@ export interface SubmitButtonProps extends MuiButtonProps {
     onClick?: (event: MouseEvent<HTMLButtonElement, Event>) => Promise<Result<unknown, unknown>>;
     type: 'button' | 'submit';
 }
+type MuiButtonProps = ButtonTypeMap['props'];
 
 export default function SubmitButton({
     children,

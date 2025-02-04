@@ -1,7 +1,8 @@
-import { describe, expect, it, vi } from 'vitest';
-import { render, screen } from '~/vitest/utils';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { describe, expect, it, vi } from 'vitest';
+
 import Modal from '~/core/components/Modal';
+import { render, screen } from '~/vitest/utils';
 
 vi.mock('@mui/material/useMediaQuery');
 
@@ -17,7 +18,7 @@ describe('Modal', () => {
 
     it('renders action children when provided', () => {
         render(
-            <Modal open actions={<button>Action Button</button>}>
+            <Modal actions={<button>Action Button</button>} open>
                 <div>Test Content</div>
             </Modal>
         );
@@ -27,7 +28,7 @@ describe('Modal', () => {
     it('calls onCloseCallback when dialog is closed', () => {
         const onCloseCallback = vi.fn();
         render(
-            <Modal open onCloseCallback={onCloseCallback} data-testid="test-backdrop">
+            <Modal data-testid="test-backdrop" onCloseCallback={onCloseCallback} open>
                 <div>Test Content</div>
             </Modal>
         );
@@ -41,7 +42,7 @@ describe('Modal', () => {
     it('does not call onCloseCallback when closeDisabled is true', () => {
         const onCloseCallback = vi.fn();
         render(
-            <Modal open onCloseCallback={onCloseCallback} closeDisabled data-testid="test-backdrop">
+            <Modal closeDisabled data-testid="test-backdrop" onCloseCallback={onCloseCallback} open>
                 <div>Test Content</div>
             </Modal>
         );
@@ -78,7 +79,7 @@ describe('Modal', () => {
 
     it('renders in fullScreen mode when fullScreen prop is passed in as true', () => {
         render(
-            <Modal open fullScreen>
+            <Modal fullScreen open>
                 <div>Test Content</div>
             </Modal>
         );
@@ -88,7 +89,7 @@ describe('Modal', () => {
 
     it('does not render in fullScreen mode when fullScreen prop is passed in as false', () => {
         render(
-            <Modal open fullScreen={false}>
+            <Modal fullScreen={false} open>
                 <div>Test Content</div>
             </Modal>
         );

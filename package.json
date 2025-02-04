@@ -14,6 +14,7 @@
         "@mui/styled-engine": "npm:@mui/styled-engine-sc@latest"
     },
     "devDependencies": {
+        "istanbul-badges-readme": "^1.9.0",
         "prettier": "3.4.2"
     },
     "volta": {

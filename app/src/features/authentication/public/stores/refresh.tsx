@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { ReactElement, createContext, useRef } from 'react';
+import { createContext, ReactElement, useRef } from 'react';
 import useSignIn from 'react-auth-kit/hooks/useSignIn';
 import useSignOut from 'react-auth-kit/hooks/useSignOut';
 
@@ -62,7 +62,7 @@ const dumpSession = async (logout: () => void) => {
 
 export const RefreshProvider = ({ children }: { children: ReactElement | ReactElement[] }) => {
     const { refreshMutation } = useAxiosRefresh();
-    const refreshPromise = useRef<Promise<boolean> | null>(null);
+    const refreshPromise = useRef<null | Promise<boolean>>(null);
     const login = useSignIn();
     const logout = useSignOut();
     const callbacks = useRef<Set<RefreshCallback>>(new Set());
