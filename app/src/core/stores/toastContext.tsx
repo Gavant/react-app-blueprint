@@ -31,16 +31,7 @@ export type ToastMsg = {
 
 type SetToast = (message: string, options?: { autohideDuration?: number; key?: string; open?: boolean }) => void;
 
-const defaultContext: ToastContextValue = {
-    setToast: () => {},
-    toast: Object.keys(ToastSeverity).reduce((acc, severity) => {
-        acc[severity as ToastSeverity] = () => {};
-        return acc;
-    }, {} as Toast),
-    toastMsg: null,
-};
-
-const ToastContext = createContext<ToastContextValue>(defaultContext);
+const ToastContext = createContext<ToastContextValue | undefined>(undefined);
 ToastContext.displayName = 'ToastContext';
 
 export interface ToastProviderProps {
