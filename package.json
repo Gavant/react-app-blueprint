@@ -9,6 +9,7 @@
         "build": "yarn workspace app build",
         "docs": "yarn workspace docs start",
         "test": "yarn workspace app test",
+        "test-ci": "yarn workspace app test --coverage.enabled",
         "generate-coverage": "npx istanbul-badges-readme --coverageDir='./app/coverage'"
     },
     "resolutions": {

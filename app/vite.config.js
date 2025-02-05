@@ -119,12 +119,15 @@ export default defineConfig(({ mode }) => {
         },
         test: {
             coverage: {
-                reporter: ['json-summary'],
+                enabled: true,
+                include: ['src/core/**/*', 'src/features/**/*'],
+                reporter: ['json-summary', 'text', 'html'],
             },
             css: true,
             disableConsoleIntercept: true,
             environment: 'jsdom',
             globals: true,
+            include: ['src/core/**/*.{test,spec}.?(c|m)[jt]s?(x)', 'src/features/**/*.{test,spec}.?(c|m)[jt]s?(x)'],
             reporters: ['default'],
             setupFiles: 'src/vitest/setup.ts',
             silent: false,

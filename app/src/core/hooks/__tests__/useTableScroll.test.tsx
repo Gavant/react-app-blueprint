@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react';
 import { fireEvent, waitFor } from '@testing-library/react';
 import { MutableRefObject } from 'react';
-import { Mock, beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, Mock, vi } from 'vitest';
 
 import useTableScroll from '../useTableScroll';
 

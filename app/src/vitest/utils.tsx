@@ -7,6 +7,7 @@ import createStore from 'react-auth-kit/createStore';
 import { createBrowserRouter, createMemoryRouter, RouteObject, RouterProvider } from 'react-router-dom';
 
 import ThemeModeProvider from '~/core/stores/themeMode';
+import { ToastProvider } from '~/core/stores/toastContext';
 
 const ApolloCache = new InMemoryCache({
     addTypename: true,
@@ -77,9 +78,11 @@ const AllTheProviders = ({
     return (
         <ThemeModeProvider>
             <AuthProvider store={store}>
-                <MockedProvider addTypename={true} cache={ApolloCache} mocks={mocks}>
-                    {children}
-                </MockedProvider>
+                <ToastProvider>
+                    <MockedProvider addTypename={true} cache={ApolloCache} mocks={mocks}>
+                        {children}
+                    </MockedProvider>
+                </ToastProvider>
             </AuthProvider>
         </ThemeModeProvider>
     );
