@@ -1,7 +1,7 @@
 import { TextField as MuiTextField, TextFieldProps } from '@mui/material';
 import { useState } from 'react';
 import { Control, Controller, FieldPath, FieldValues, Path, RegisterOptions } from 'react-hook-form';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { SomeZodObject } from 'zod';
 
 import { getLabelFromSchema } from '~/core/utils/zod';
@@ -19,6 +19,28 @@ const TextField = styled(MuiTextField)`
         & > .MuiInputBase-root {
             background: ${({ theme }) => theme.palette.background.paper};
         }
+
+        ${({ theme }) =>
+            theme.palette.mode === 'dark' &&
+            css`
+                & .MuiOutlinedInput-root {
+                    &.Mui-focused fieldset {
+                        border-color: ${({ theme }) => theme.palette.grey[200]};
+                    }
+                    &.Mui-error fieldset {
+                        border-color: ${({ theme }) => theme.palette.error.main} !important;
+                    }
+                }
+
+                & .MuiFormLabel-root {
+                    &.Mui-focused {
+                        color: ${({ theme }) => theme.palette.grey[200]};
+                        &.Mui-error {
+                            color: ${({ theme }) => theme.palette.error.main};
+                        }
+                    }
+                }
+            `}
 
         & .MuiInputBase-input.Mui-disabled {
             cursor: not-allowed !important;
