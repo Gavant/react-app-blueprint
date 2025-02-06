@@ -1,5 +1,5 @@
 import { Box, Container, Grid2 } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Lottie from 'react-lottie-player';
 import { useLocation } from 'react-router';
 import { Link, useSearchParams } from 'react-router-dom';
@@ -92,6 +92,8 @@ function Login() {
 
     const [animationData, setAnimationData] = useState<object>();
 
+    const memoizedGSplash = useMemo(() => <GSplash />, []);
+
     useEffect(() => {
         import('~/assets/lottie/landing.json').then(setAnimationData);
     }, []);
@@ -101,11 +103,7 @@ function Login() {
             <UnauthorizedRootCss />
 
             <FormBoxContainer>
-                {isDesktop && (
-                    <ImageBox>
-                        <GSplash />
-                    </ImageBox>
-                )}
+                {isDesktop && <ImageBox>{memoizedGSplash}</ImageBox>}
                 <FormBox>
                     <ColorModeToggle style={{ position: 'absolute', right: 10, top: 10 }} />
                     <CenteredContainer>

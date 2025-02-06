@@ -1,5 +1,5 @@
 import { Box, Container } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Lottie from 'react-lottie-player';
 import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
@@ -83,6 +83,8 @@ function ForgotPasswordView() {
     const { isDesktop } = useWindowSize();
     const [animationData, setAnimationData] = useState<object>();
 
+    const memoizedGSplash = useMemo(() => <GSplash />, []);
+
     useEffect(() => {
         import('~/assets/lottie/ForgotPassword.json').then(setAnimationData);
     }, []);
@@ -91,11 +93,7 @@ function ForgotPasswordView() {
         <>
             <UnauthorizedRootCss />
             <FormBoxContainer>
-                {isDesktop && (
-                    <ImageBox>
-                        <GSplash />
-                    </ImageBox>
-                )}
+                {isDesktop && <ImageBox>{memoizedGSplash}</ImageBox>}
                 <FormBox>
                     <ColorModeToggle style={{ position: 'absolute', right: 10, top: 10 }} />
                     <CenteredContainer>
