@@ -4989,9 +4989,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-three/drei@npm:^9.121.3":
-  version: 9.121.3
-  resolution: "@react-three/drei@npm:9.121.3"
+"@react-three/drei@npm:^9.121.5":
+  version: 9.121.5
+  resolution: "@react-three/drei@npm:9.121.5"
   dependencies:
     "@babel/runtime": "npm:^7.26.0"
     "@mediapipe/tasks-vision": "npm:0.10.17"
@@ -5023,7 +5023,7 @@ __metadata:
   peerDependenciesMeta:
     react-dom:
       optional: true
-  checksum: 10/61d06effeb9e21948faef66ea38021fca9986eba0798b517213a5336f567a8fec500b58abda483567f9bfb0e6e6f2989907bb4995bbfd23f430b9be0c12cb147
+  checksum: 10/83f85066997a1a58a0db99478a12670e7195b34c3957203f0927bb90be12ce298189b7da4838e560ab516dfe2b7c314128bbeb637e271c1953f46b759aad17fb
   languageName: node
   linkType: hard
 
@@ -7321,7 +7321,7 @@ __metadata:
     "@mui/x-date-pickers": "npm:^7.25.0"
     "@react-router/dev": "npm:^7.1.5"
     "@react-router/node": "npm:^7.1.2"
-    "@react-three/drei": "npm:^9.121.3"
+    "@react-three/drei": "npm:^9.121.5"
     "@react-three/fiber": "npm:^8.17.12"
     "@testing-library/dom": "npm:^10.4.0"
     "@testing-library/jest-dom": "npm:^6.6.3"
