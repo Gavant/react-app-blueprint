@@ -7318,7 +7318,7 @@ __metadata:
     react-image-file-resizer: "npm:^0.4.8"
     react-lottie-player: "npm:^2.1.0"
     react-router: "npm:^7.1.3"
-    react-router-dom: "npm:^7.1.3"
+    react-router-dom: "npm:^7.1.5"
     react-spring: "npm:^9.7.5"
     rollup-plugin-visualizer: "npm:^5.14.0"
     styled-components: "npm:^6.1.14"
@@ -18724,15 +18724,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router-dom@npm:^7.1.3":
-  version: 7.1.3
-  resolution: "react-router-dom@npm:7.1.3"
+"react-router-dom@npm:^7.1.5":
+  version: 7.1.5
+  resolution: "react-router-dom@npm:7.1.5"
   dependencies:
-    react-router: "npm:7.1.3"
+    react-router: "npm:7.1.5"
   peerDependencies:
     react: ">=18"
     react-dom: ">=18"
-  checksum: 10/c98f8eb3ee6d36c164444711b378cd63e6cdd67629b5300eb4d16d3183304ff978a892f593518cdd23323fe66ee92de4fbd7a61af582b08b94f94ff48462dbf2
+  checksum: 10/caf34daec7ef6fdd4043dd56295fe6d5de4a2bfbbd650897b8cde23571a51f73f2b0ef2681a55f46ef524dc7e360b1f6c55d5b5bb1875196b48917042b52d82d
   languageName: node
   linkType: hard
 
@@ -18755,7 +18755,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router@npm:7.1.3, react-router@npm:^7.1.3":
+"react-router@npm:7.1.5":
+  version: 7.1.5
+  resolution: "react-router@npm:7.1.5"
+  dependencies:
+    "@types/cookie": "npm:^0.6.0"
+    cookie: "npm:^1.0.1"
+    set-cookie-parser: "npm:^2.6.0"
+    turbo-stream: "npm:2.4.0"
+  peerDependencies:
+    react: ">=18"
+    react-dom: ">=18"
+  peerDependenciesMeta:
+    react-dom:
+      optional: true
+  checksum: 10/3802ff0e0419aa53c1824b1ad2ebac6facb918306c67ff64ed86b5cbc49197c15f077b84e425f57beb24dd01cd5818a100da5269b8e160deee62b06fda008b56
+  languageName: node
+  linkType: hard
+
+"react-router@npm:^7.1.3":
   version: 7.1.3
   resolution: "react-router@npm:7.1.3"
   dependencies:
