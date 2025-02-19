@@ -1,21 +1,30 @@
 import userEvent from '@testing-library/user-event';
 import { act } from 'react';
-import { Route, createRoutesFromChildren } from 'react-router';
+import { createRoutesFromChildren, Route } from 'react-router';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import useWindowSize from '~/core/hooks/useWindowSize';
 import ForgotPasswordView from '~/features/authentication/public/ForgotPasswordView';
 import Login from '~/features/authentication/public/LoginView';
+import axe from '~/vitest/axe';
 import { renderRoutes, screen, waitFor } from '~/vitest/utils';
+
+vi.mock('react-router', async () => {
+    const router = await vi.importActual<typeof import('react-router')>('react-router');
+    return {
+        ...router,
+        useLocation: vi.fn().mockReturnValue(vi.fn()),
+        useNavigate: vi.fn().mockReturnValue(vi.fn()),
+    };
+});
 
 // Mock dependencies
 vi.mock('~/core/hooks/useWindowSize');
-
 vi.mock('~/core/components/G-splash', () => ({
     default: () => <div data-testid="g-splash" />,
 }));
 
-describe.skip('LoginView', () => {
+describe('LoginView', () => {
     beforeEach(() => {
         vi.mocked(useWindowSize).mockReturnValue({
             isDesktop: true,
@@ -196,5 +205,20 @@ describe.skip('LoginView', () => {
         await waitFor(async () => {
             return expect(screen.getByText(/Reset Password/i)).toBeInTheDocument();
         });
+    });
+
+    it('AXE Violations', async () => {
+        const { container } = renderRoutes(
+            'memory',
+            createRoutesFromChildren(
+                <>
+                    <Route element={<Login />} path="/login" />
+                    <Route element={<ForgotPasswordView />} path="/forgot-password" />
+                </>
+            ),
+            '/login'
+        );
+
+        expect(await axe(container)).toHaveNoViolations();
     });
 });

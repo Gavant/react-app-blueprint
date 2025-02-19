@@ -19,7 +19,9 @@ const TextField = styled(MuiTextField)`
         & > .MuiInputBase-root {
             background: ${({ theme }) => theme.palette.background.paper};
         }
-
+        & .MuiFormLabel-root {
+            color: ${({ theme }) => theme.palette.grey[100]};
+        }
         ${({ theme }) =>
             theme.palette.mode === 'dark' &&
             css`

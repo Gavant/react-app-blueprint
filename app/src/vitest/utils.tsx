@@ -142,8 +142,8 @@ const renderRoutes = <RT extends 'browser' | 'memory'>(
             : createMemoryRouter(routesOrRouter, {
                   initialEntries: [initialPath ?? routesOrRouter[0].path ?? '/'],
               });
-    customRender(<RouterProvider router={appRouter} />);
-    return { router: appRouter };
+    const { container } = customRender(<RouterProvider router={appRouter} />);
+    return { container, router: appRouter };
 };
 
 const log = (value: string) => process.stdout.write(`${value} \n`);
