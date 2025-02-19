@@ -9921,7 +9921,7 @@ __metadata:
     "@tsconfig/docusaurus": "npm:^1.0.7"
     clsx: "npm:^1.2.1"
     docusaurus-plugin-typedoc: "npm:^1.2.2"
-    prism-react-renderer: "npm:^1.3.5"
+    prism-react-renderer: "npm:^2.4.1"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
     typedoc: "npm:^0.27.6"
@@ -18134,16 +18134,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prism-react-renderer@npm:^1.3.5":
-  version: 1.3.5
-  resolution: "prism-react-renderer@npm:1.3.5"
-  peerDependencies:
-    react: ">=0.14.9"
-  checksum: 10/6deeef1bf497b5ce2ea5113f253f5d5e0842caa74eee385f15f17b75012fdea994cddf097759d0a2a9426ff857ea44bf2febe219392be4c72f887c7df88cc34d
-  languageName: node
-  linkType: hard
-
-"prism-react-renderer@npm:^2.3.0":
+"prism-react-renderer@npm:^2.3.0, prism-react-renderer@npm:^2.4.1":
   version: 2.4.1
   resolution: "prism-react-renderer@npm:2.4.1"
   dependencies:
