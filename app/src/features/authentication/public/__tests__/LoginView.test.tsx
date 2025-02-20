@@ -1,6 +1,6 @@
 import userEvent from '@testing-library/user-event';
 import { act } from 'react';
-import { Route, createRoutesFromChildren } from 'react-router';
+import { createRoutesFromChildren, Route } from 'react-router';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import useWindowSize from '~/core/hooks/useWindowSize';
@@ -15,7 +15,16 @@ vi.mock('~/core/components/G-splash', () => ({
     default: () => <div data-testid="g-splash" />,
 }));
 
-describe.skip('LoginView', () => {
+vi.mock('react-router', async () => {
+    const router = await vi.importActual<typeof import('react-router')>('react-router');
+    return {
+        ...router,
+        useLocation: vi.fn().mockReturnValue(vi.fn()),
+        useNavigate: vi.fn().mockReturnValue(vi.fn()),
+    };
+});
+
+describe('LoginView', () => {
     beforeEach(() => {
         vi.mocked(useWindowSize).mockReturnValue({
             isDesktop: true,
