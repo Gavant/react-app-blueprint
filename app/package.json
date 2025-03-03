@@ -36,7 +36,7 @@
         "history": "^5.3.0",
         "js-cookie": "^3.0.5",
         "jsonwebtoken": "^9.0.2",
-        "libphonenumber-js": "^1.11.17",
+        "libphonenumber-js": "^1.12.4",
         "lottie-colorify": "^0.8.0",
         "material-react-table": "^3.1.0",
         "polished": "^4.3.1",

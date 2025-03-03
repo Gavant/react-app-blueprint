@@ -7359,7 +7359,7 @@ __metadata:
     js-cookie: "npm:^3.0.5"
     jsdom: "npm:^26.0.0"
     jsonwebtoken: "npm:^9.0.2"
-    libphonenumber-js: "npm:^1.11.17"
+    libphonenumber-js: "npm:^1.12.4"
     lodash.debounce: "npm:^4.0.8"
     lottie-colorify: "npm:^0.8.0"
     lottie-web: "npm:^5.12.2"
@@ -14424,10 +14424,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"libphonenumber-js@npm:^1.11.17":
-  version: 1.11.18
-  resolution: "libphonenumber-js@npm:1.11.18"
-  checksum: 10/102ecd0b93e392aca14330801c4e9da60008ba04f9ea1db7a0e1bdf46d6b4279fb31421ae38b0ca74bb37fe5a194004c4bf375d6cd5c953cdbb30bb01cec5e3f
+"libphonenumber-js@npm:^1.12.4":
+  version: 1.12.4
+  resolution: "libphonenumber-js@npm:1.12.4"
+  checksum: 10/c6b800504c99b3eee6d418a43235b94c14db718523f011bd464dd68462c5a3fe85dba75cbb7f79c115381fd19e66f0167a673a1b879cea421d140c2a68b8bae1
   languageName: node
   linkType: hard
 
