@@ -17,7 +17,7 @@
     },
     "devDependencies": {
         "istanbul-badges-readme": "^1.9.0",
-        "prettier": "3.4.2"
+        "prettier": "3.6.2"
     },
     "volta": {
         "node": "22.12.0",
