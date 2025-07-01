@@ -15,14 +15,14 @@ const lightPalette: PaletteOptions = {
 
 const darkPalette: PaletteOptions = {
     error: {
-        main: '#FF5252',
+        main: '#f44336',
     },
     mode: 'dark',
     primary: {
-        main: '#081533',
+        main: '#90caf9',
     },
     secondary: {
-        main: '#789DBC',
+        main: '#ce93d8',
     },
 };
 

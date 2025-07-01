@@ -22,6 +22,7 @@ interface InfiniteScrollTableProps<Q extends BaseQuery<R>, R extends MRT_RowData
     loading: boolean;
     pageRef: MutableRefObject<Page>;
     tableOptions?: Partial<MRT_TableOptions<R>>;
+    enableTopToolbar?: boolean;
 }
 // TODO: Make Generic Table
 const InfiniteScrollTable = <Q extends BaseQuery<R>, R extends MRT_RowData>({
@@ -31,6 +32,8 @@ const InfiniteScrollTable = <Q extends BaseQuery<R>, R extends MRT_RowData>({
     gqlKey,
     loading,
     pageRef,
+    tableOptions,
+    enableTopToolbar = true,
 }: InfiniteScrollTableProps<Q, R>) => {
     const { table } = useInfiniteMaterialReactTable<Q, R>({
         columns,
@@ -39,11 +42,12 @@ const InfiniteScrollTable = <Q extends BaseQuery<R>, R extends MRT_RowData>({
         key: gqlKey,
         loading,
         pageRef,
+        tableOptions,
     });
 
     return (
         <TableContainer sx={{ overflowX: 'initial' }}>
-            <MRT_TopToolbar table={table} />
+            {enableTopToolbar && <MRT_TopToolbar table={table} />}
             <MRT_Table aria-label="sticky table" stickyHeader table={table}>
                 <MRT_TableHead table={table} />
                 <MRT_TableBody table={table} />

@@ -36,9 +36,15 @@ interface ResponsiveModalProps extends Omit<DialogProps, 'title'> {
      * @memberof ResponsiveModalProps
      */
     title?: ReactNode;
+    /**
+     * Wraps children in <DialogContent> (defaults to `true`)
+     *
+     * @memberof ResponsiveModalProps
+     */
+    wrapContent?: boolean;
 }
 
-export default function Modal({ actions, children, closeDisabled, onCloseCallback, title, ...rest }: ResponsiveModalProps) {
+export default function Modal({ actions, children, closeDisabled, onCloseCallback, title, wrapContent = true, ...rest }: ResponsiveModalProps) {
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -53,7 +59,7 @@ export default function Modal({ actions, children, closeDisabled, onCloseCallbac
     return (
         <Dialog fullScreen={fullScreen} {...rest} onClose={onClose}>
             {title && <DialogTitle>{title}</DialogTitle>}
-            <DialogContent>{children}</DialogContent>
+            {wrapContent ? <DialogContent>{children}</DialogContent> : children}
             {actions && <DialogActions>{actions}</DialogActions>}
         </Dialog>
     );

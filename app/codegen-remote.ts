@@ -7,6 +7,11 @@ const config: CodegenConfig = {
             plugins: ['introspection'],
             schema: process.env.SCHEMA_PATH || 'SOME-FALLBACK-PATH',
         },
+        'src/core/types/generated/graphql.ts': {
+            documents: 'src/**/*.gql.ts',
+            plugins: ['typescript', 'typescript-operations'],
+            schema: process.env.SCHEMA_PATH || 'SOME-FALLBACK-PATH',
+        },
     },
     overwrite: true,
 };
